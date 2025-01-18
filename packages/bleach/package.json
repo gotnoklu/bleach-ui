@@ -15,7 +15,7 @@
   "module": "./dist/index.js",
   "packageManager": "yarn@4.6.0",
   "scripts": {
-    "dev": "yarn build && chokidar \"./**/*.{ts,swcrc,json}\" -i \"./dist/**/*.{ts,json}\" -c \"yarn build\"",
+    "dev": "yarn build && chokidar \"./**/*.{ts,tsx,swcrc,json}\" -i \"./dist/**/*.{ts,json}\" -c \"yarn build\"",
     "build": "yarn lint && swc -d dist --sync --workers 2 --copy-files --delete-dir-on-start --strip-leading-paths --include-dotfiles src && tsc --declaration --emitDeclarationOnly",
     "lint": "biome lint && tsc --noEmit --skipLibCheck",
     "lint:fix": "biome lint --fix",
@@ -27,35 +27,28 @@
     "@swc/core": "^1.10.7",
     "@types/react": "^18",
     "chokidar-cli": "^3.0.0",
+    "react": "^18",
+    "react-native": "^0.76.6",
+    "react-native-reanimated": "^3.16.7",
     "typescript": "^5.7.3"
   },
   "peerDependencies": {
-    "react": "^18.0.0",
+    "react": "*",
     "react-native": "*",
     "react-native-reanimated": "*"
   },
-  "resolutions": {
-    "react": "^18"
-  },
-  "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "require": "./dist/index.js",
-      "types": "./dist/index.d.ts"
-    }
-  },
+  "files": [
+    "dist"
+  ],
   "publishConfig": {
     "access": "public",
-    "main": "./dist/index.js",
-    "types": "./dist/index.d.ts",
-    "exports": {
-      ".": {
-        "import": "./dist/index.js",
-        "require": "./dist/index.js",
-        "types": "./dist/index.d.ts"
-      },
-      "./package.json": "./package.json"
-    }
+    "directory": "dist"
+  },
+  "exports": {
+    ".": "./dist/index.js",
+    "./components/*": "./dist/components/*.js",
+    "./theme/*": "./dist/theme/*.js",
+    "./package.json": "./package.json"
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.4"
