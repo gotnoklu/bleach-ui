@@ -35,6 +35,8 @@ const StyledTrack = styled(View)<ProgressBarProps & { children: ViewProps['child
     if (size === 'large') {
       return merge(baseStyles, { height: 8 })
     }
+
+    return merge(baseStyles, { height: 2 })
   }
 )
 
