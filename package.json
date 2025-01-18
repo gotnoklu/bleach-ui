@@ -1,8 +1,8 @@
 {
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
+  "workspaces": ["apps/*", "packages/*"],
+  "scripts": {
+    "build:bleach": "yarn workspace bleach build"
+  },
   "packageManager": "yarn@4.6.0",
   "devDependencies": {
     "@biomejs/biome": "1.9.4"
