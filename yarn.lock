@@ -3826,12 +3826,9 @@ __metadata:
     "@swc/core": "npm:^1.10.7"
     "@types/react": "npm:^18"
     chokidar-cli: "npm:^3.0.0"
-    react: "npm:^18"
-    react-native: "npm:^0.76.6"
-    react-native-reanimated: "npm:^3.16.7"
     typescript: "npm:^5.7.3"
   peerDependencies:
-    react: "*"
+    react: ^18.0.0
     react-native: "*"
     react-native-reanimated: "*"
   languageName: unknown
@@ -9356,7 +9353,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-reanimated@npm:^3.16.7, react-native-reanimated@npm:~3.16.1":
+"react-native-reanimated@npm:~3.16.1":
   version: 3.16.7
   resolution: "react-native-reanimated@npm:3.16.7"
   dependencies:
@@ -9434,7 +9431,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native@npm:0.76.6, react-native@npm:^0.76.6":
+"react-native@npm:0.76.6":
   version: 0.76.6
   resolution: "react-native@npm:0.76.6"
   dependencies:
@@ -9534,7 +9531,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:18.3.1, react@npm:^18":
+"react@npm:18.3.1":
   version: 18.3.1
   resolution: "react@npm:18.3.1"
   dependencies:
