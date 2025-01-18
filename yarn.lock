@@ -3817,7 +3817,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bleach@workspace:packages/bleach":
+"bleach@workspace:^, bleach@workspace:packages/bleach":
   version: 0.0.0-use.local
   resolution: "bleach@workspace:packages/bleach"
   dependencies:
@@ -4860,6 +4860,7 @@ __metadata:
     "@types/jest": "npm:^29.5.12"
     "@types/react": "npm:~18.3.12"
     "@types/react-test-renderer": "npm:^18.3.0"
+    bleach: "workspace:^"
     expo: "npm:~52.0.25"
     expo-blur: "npm:~14.0.2"
     expo-constants: "npm:~17.0.4"
