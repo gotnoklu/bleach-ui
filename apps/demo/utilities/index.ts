@@ -1,9 +1,9 @@
-
 import type { Theme as ReactNavigationTheme } from '@react-navigation/native'
+import type { Theme } from 'bleach'
 
 export function getNativeTheme(theme: Theme): ReactNavigationTheme {
   return {
-    dark: theme.palette.mode === 'dark',
+    dark: theme.mode === 'dark',
     colors: {
       primary: theme.palette.primary.main,
       background: theme.palette.backgrounds.default,
