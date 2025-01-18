@@ -1,5 +1,12 @@
 {
   "name": "bleach",
+  "description": "The stylish UI library for React Native",
+  "version": "0.0.0",
+  "repository": "https://github.com/delalify/conjoin-monorepo",
+  "author": "Enoch Klu <cyronix787@gmail.com>",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
   "packageManager": "yarn@4.6.0",
   "scripts": {
     "dev": "yarn build && chokidar \"./**/*.{ts,swcrc,json}\" -i \"./dist/**/*.{ts,json}\" -c \"yarn build\"",
@@ -18,5 +25,25 @@
   "peerDependencies": {
     "react": "*",
     "react-native": "*"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "publishConfig": {
+    "access": "public",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+      ".": {
+        "import": "./dist/index.js",
+        "require": "./dist/index.js",
+        "types": "./dist/index.d.ts"
+      },
+      "./package.json": "./package.json"
+    }
   }
 }
