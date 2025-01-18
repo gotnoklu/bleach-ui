@@ -14,7 +14,7 @@ export function BaseThemeProvider({ theme, children }: BaseThemeProviderProps) {
 }
 
 export type ThemeProviderProps = {
-  themes: { [_ in ThemeMode]: Theme }
+  themes?: { [_ in ThemeMode]: Theme }
   children: ReactNode
 }
 
