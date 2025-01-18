@@ -118,6 +118,7 @@ export function styled<
           } as any
         )
       }
+
       return createElement(
         el as any,
         { style: [finalStyles, finalSx, style], ref, ...props } as any
@@ -130,18 +131,6 @@ export function styled<
       > &
         RefAttributes<Component<TProps>>
     >
-
-    // return function Component({ sx, style, ...props }: TProps & { sx?: Sx<TElement> }) {
-    //   const theme = useTheme()
-    //   let finalStyles = style
-    //   let finalSx: Sx<TElement> | StyleProp<any> | undefined = sx
-    //   if (typeof styles === 'function') finalStyles = styles(theme, props)
-    //   if (typeof sx === 'function') finalSx = sx(theme)
-    //   return createElement(
-    //     el as any,
-    //     { style: [finalStyles, finalSx, style], ref, ...props } as any
-    //   )
-    // } as FC<TProps & { sx?: Sx<TElement>; ref?: Ref<TElement> }>
   }
 }
 
@@ -181,6 +170,7 @@ export function selectStyles<
   }>,
 >(...styles: TStyles): TStyles[number]['styles'] {
   const result = [] as Array<TStyles[number]['styles']>
+
   for (const def of styles) {
     if (def.if === true || !('if' in def)) {
       result.push(def.styles)
@@ -188,5 +178,6 @@ export function selectStyles<
       result.push(def.fallback)
     }
   }
+
   return merge(...result.filter((style) => style !== null)) as TStyles[number]['styles']
 }
