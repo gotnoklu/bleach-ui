@@ -1,6 +1,6 @@
 import { View, type ViewProps } from 'react-native'
-import { styled } from '../../../theme/utilities'
-import type { SxProps } from '../../../theme/types'
+import { styled } from '../../theme/utilities'
+import type { SxProps } from '../../theme/types'
 import { type ForwardedRef, forwardRef } from 'react'
 
 export interface PaperProps extends ViewProps, SxProps<ViewProps> {

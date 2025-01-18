@@ -17,9 +17,9 @@ import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-na
 import Show from '../Show'
 import TextField from '../TextField'
 import ListItemButton from '../ListItemButton'
-import { selectStyles, styled } from '../../../theme/utilities'
+import { selectStyles, styled } from '../../theme/utilities'
 import Divider from '../Divider'
-import type { SxProps } from '../../../theme/types'
+import type { SxProps } from '../../theme/types'
 
 export type SelectVariant = 'base' | 'outlined'
 

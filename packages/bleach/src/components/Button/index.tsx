@@ -2,15 +2,9 @@ import { Children, type ReactNode } from 'react'
 import { Pressable, type PressableProps } from 'react-native'
 import type { ButtonVariant } from './types'
 import Typography, { type TypographyProps } from '../Typography'
-import type { Palette, SxProps, TextColor } from '../../../theme/types'
-import { useTheme } from '../../../theme/hooks'
-import {
-  createStyles,
-  getPaletteColor,
-  merge,
-  selectStyles,
-  styled,
-} from '../../../theme/utilities'
+import type { Palette, SxProps, TextColor } from '../../theme/types'
+import { useTheme } from '../../theme/hooks'
+import { createStyles, getThemeProperty, merge, selectStyles, styled } from '../../theme/utilities'
 
 type PressableStyle = Exclude<
   PressableProps['style'],
@@ -33,7 +27,7 @@ export interface ButtonProps extends Omit<PressableProps, 'style'>, SxProps<Pres
 const StyledButton = styled(Pressable)<ButtonProps>(
   (theme, { variant = 'text', color = 'primary', size = 'medium', fullWidth, disabled }) => {
     const buttonSizes = { small: 32, medium: 40, large: 48 }
-    const buttonColor = getPaletteColor({ palette: theme.palette, key: color, fallback: color })
+    const buttonColor = getThemeProperty({ object: theme.palette, key: color, fallback: color })
     return selectStyles(
       {
         if: variant === 'contained',
@@ -82,13 +76,17 @@ const useButtonStyles = createStyles(
     }: Pick<ButtonProps, 'variant' | 'color' | 'size'>
   ) => {
     const labelSizes = { small: 14, medium: 16, large: 18 }
-    const buttonColor = getPaletteColor({ palette: theme.palette, key: color, fallback: color })
+    const buttonColor = getThemeProperty({ object: theme.palette, key: color, fallback: color })
 
     const labelStyles = selectStyles(
       {
         if: variant === 'contained',
         styles: {
-          color: getPaletteColor({ palette: theme.palette, key: `${color}.text`, fallback: color }),
+          color: getThemeProperty({
+            object: theme.palette,
+            key: `${color}.text`,
+            fallback: color,
+          }),
         },
       },
       {
@@ -125,8 +123,8 @@ export default function Button({
     color: props.color,
     size: props.size,
   })
-  const pressablePressedColor = getPaletteColor({
-    palette: theme.palette,
+  const pressablePressedColor = getThemeProperty({
+    object: theme.palette,
     key: pressedColor,
     fallback: pressedColor ?? 'rgba(150, 150, 150, 0.2)',
   })

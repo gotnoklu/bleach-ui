@@ -1,6 +1,6 @@
 import { Pressable, type PressableProps } from 'react-native'
-import { styled } from '../../../theme/utilities'
-import type { SxProps } from '../../../theme/types'
+import { styled } from '../../theme/utilities'
+import type { SxProps } from '../../theme/types'
 
 export interface ListItemButtonProps extends PressableProps, SxProps<PressableProps> {
   disablePadding?: boolean

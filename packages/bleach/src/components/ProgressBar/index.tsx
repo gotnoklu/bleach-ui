@@ -1,6 +1,6 @@
 import { View, type ViewProps } from 'react-native'
-import { getPaletteColor, merge, styled } from '../../../theme/utilities'
-import type { Palette, SxProps, TextColor } from '../../../theme/types'
+import { getThemeProperty, merge, styled } from '../../theme/utilities'
+import type { Palette, SxProps, TextColor } from '../../theme/types'
 
 export interface IndicatorProps extends Omit<ViewProps, 'children'>, SxProps<ViewProps> {}
 
@@ -53,8 +53,8 @@ const StyledIndicator = styled(View)<
     const currentColor = progress === 100 ? completedColor : intermediateColor
 
     return {
-      backgroundColor: getPaletteColor({
-        palette: theme.palette,
+      backgroundColor: getThemeProperty({
+        object: theme.palette,
         key: currentColor,
         fallback: currentColor,
       }),

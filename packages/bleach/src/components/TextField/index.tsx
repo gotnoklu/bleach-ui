@@ -9,8 +9,8 @@ import {
   type ViewProps,
 } from 'react-native'
 import Typography, { type TypographyProps } from '../Typography'
-import { selectStyles, styled } from '../../../theme/utilities'
-import type { SxProps } from '../../../theme/types'
+import { selectStyles, styled } from '../../theme/utilities'
+import type { SxProps } from '../../theme/types'
 
 export type TextFieldVariant = 'base' | 'filled' | 'outlined'
 

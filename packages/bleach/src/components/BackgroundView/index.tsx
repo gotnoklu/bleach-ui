@@ -1,6 +1,6 @@
 import { View, type ViewProps } from 'react-native'
-import { selectStyles, styled } from '../../../theme/utilities'
-import type { SxProps } from '../../../theme/types'
+import { selectStyles, styled } from '../../theme/utilities'
+import type { SxProps } from '../../theme/types'
 
 export interface BackgroundViewProps extends ViewProps, SxProps<ViewProps> {
   fillParent?: boolean
