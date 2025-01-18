@@ -5,31 +5,26 @@
     "parser": {
       "syntax": "typescript",
       "tsx": true,
-      "dynamicImport": true,
-      "decorators": false
+      "decorators": true,
+      "dynamicImport": true
     },
     "transform": {
       "legacyDecorator": true,
       "decoratorMetadata": true,
       "react": {
-        "throwIfNamespace": true,
-        "development": false,
-        "useBuiltins": false,
         "runtime": "automatic"
       }
     },
-    "target": "esnext",
-    "loose": true,
+    "target": "es2018",
     "keepClassNames": true,
-    "preserveAllComments": true
+    "loose": true
   },
   "module": {
-    "type": "es6",
+    "type": "commonjs",
     "strict": true,
     "strictMode": true,
     "lazy": false,
-    "noInterop": false,
-    "ignoreDynamic": false
+    "noInterop": false
   },
-  "sourceMaps": true
+  "sourceMaps": "inline"
 }

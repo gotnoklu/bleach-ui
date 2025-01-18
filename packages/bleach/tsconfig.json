@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "jsx": "react-native",
+    "jsx": "react-jsx",
     "target": "ESNext",
     "module": "NodeNext",
     "declaration": true,
