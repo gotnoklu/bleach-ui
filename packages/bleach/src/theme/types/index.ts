@@ -120,11 +120,16 @@ export type TypographyVariants = {
 }
 
 export type Typography = {
+  fontFamily?: string
   weights: TypographyWeights
   variants: TypographyVariants
 }
 
 export type LocaleDirection = 'ltr' | 'rtl'
+
+export type LoadedFonts =
+  | string
+  | { bold?: string; medium?: string; italic?: string; regular: string }
 
 export interface Theme {
   mode: ThemeMode

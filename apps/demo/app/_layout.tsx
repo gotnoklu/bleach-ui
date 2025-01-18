@@ -22,5 +22,5 @@ export default function RootLayout() {
     return null
   }
 
-  return <MainLayout />
+  return <MainLayout fonts="SpaceMono" />
 }

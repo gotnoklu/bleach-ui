@@ -49,61 +49,52 @@ export const _DEFAULT_BASE_THEME: Theme = {
   typography: {
     weights: {
       bold: {
-        fontFamily: 'KumbhSans Bold',
+        fontFamily: '',
         fontWeight: 'bold',
       },
       regular: {
-        fontFamily: 'KumbhSans',
+        fontFamily: '',
         fontWeight: 'normal',
       },
       medium: {
-        fontFamily: 'KumbhSans Medium',
+        fontFamily: '',
         fontWeight: 'normal',
       },
     },
     variants: {
       h1: {
-        fontFamily: 'KumbhSans Bold',
         fontWeight: 'bold',
         fontSize: 28,
       },
       h2: {
-        fontFamily: 'KumbhSans Bold',
         fontWeight: 'bold',
         fontSize: 25,
       },
       h3: {
-        fontFamily: 'KumbhSans Bold',
         fontWeight: 'bold',
         fontSize: 22,
       },
       h4: {
-        fontFamily: 'KumbhSans Bold',
         fontWeight: 'bold',
         fontSize: 20,
       },
       h5: {
-        fontFamily: 'KumbhSans Bold',
         fontWeight: 'bold',
         fontSize: 18,
       },
       h6: {
-        fontFamily: 'KumbhSans Bold',
         fontWeight: 'bold',
         fontSize: 16,
       },
       body1: {
-        fontFamily: 'KumbhSans',
         fontWeight: 'normal',
         fontSize: 14,
       },
       body2: {
-        fontFamily: 'KumbhSans',
         fontWeight: 'normal',
         fontSize: 12,
       },
       caption: {
-        fontFamily: 'KumbhSans',
         fontWeight: 'normal',
         fontSize: 10.5,
       },
