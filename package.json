@@ -1,5 +1,8 @@
 {
-  "workspaces": ["apps/*", "packages/*"],
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
     "build:bleach": "yarn workspace bleach build"
   },
