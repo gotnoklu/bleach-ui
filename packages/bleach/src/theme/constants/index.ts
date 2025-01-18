@@ -15,6 +15,18 @@ export const _DEFAULT_BASE_THEME: Theme = {
       dark: '',
       text: '',
     },
+    info: {
+      light: '',
+      main: '',
+      dark: '',
+      text: '',
+    },
+    success: {
+      light: '',
+      main: '',
+      dark: '',
+      text: '',
+    },
     error: {
       light: '#FF8A37',
       main: '#FF6A00',
@@ -32,6 +44,7 @@ export const _DEFAULT_BASE_THEME: Theme = {
     },
     divider: 'rgba(100, 100, 100, 0.2)',
     action: 'rgba(75, 75, 75, 0.4)',
+    disabled: 'rgba(123, 123, 123, 0.4)',
   },
   typography: {
     weights: {
