@@ -4,7 +4,13 @@ import type { ButtonVariant } from './types'
 import Typography, { type TypographyProps } from '../Typography'
 import type { Palette, SxProps, TextColor } from '../../theme/types'
 import { useTheme } from '../../theme/hooks'
-import { createStyles, getThemeProperty, merge, selectStyles, styled } from '../../theme/utilities'
+import {
+  createComponentStyles,
+  getThemeProperty,
+  merge,
+  selectStyles,
+  styled,
+} from '../../theme/utilities'
 
 type PressableStyle = Exclude<
   PressableProps['style'],
@@ -22,10 +28,14 @@ export interface ButtonProps extends Omit<PressableProps, 'style'>, SxProps<Pres
   fullWidth?: boolean
   style?: PressableStyle
   children: ReactNode
+  rounded?: boolean
 }
 
 const StyledButton = styled(Pressable)<ButtonProps>(
-  (theme, { variant = 'text', color = 'primary', size = 'medium', fullWidth, disabled }) => {
+  (
+    theme,
+    { variant = 'text', color = 'primary', size = 'medium', fullWidth, disabled, rounded }
+  ) => {
     const buttonSizes = { small: 32, medium: 40, large: 48 }
     const buttonColor = getThemeProperty({ object: theme.palette, key: color, fallback: color })
     return selectStyles(
@@ -52,7 +62,7 @@ const StyledButton = styled(Pressable)<ButtonProps>(
           flexDirection: 'row',
           height: buttonSizes[size],
           maxHeight: buttonSizes[size],
-          borderRadius: theme.radius.create(10),
+          borderRadius: theme.radius.create(rounded ? 100 : 2),
           gap: theme.spacing.create(1),
           paddingHorizontal:
             size === 'small'
@@ -60,13 +70,14 @@ const StyledButton = styled(Pressable)<ButtonProps>(
               : size === 'medium'
                 ? theme.spacing.create(3)
                 : theme.spacing.create(4),
+          ...theme.typography.variants.body1,
         },
       }
     )
   }
 )
 
-const useButtonStyles = createStyles(
+const useLabelStyles = createComponentStyles(
   (
     theme,
     {
@@ -78,7 +89,7 @@ const useButtonStyles = createStyles(
     const labelSizes = { small: 14, medium: 16, large: 18 }
     const buttonColor = getThemeProperty({ object: theme.palette, key: color, fallback: color })
 
-    const labelStyles = selectStyles(
+    return selectStyles(
       {
         if: variant === 'contained',
         styles: {
@@ -104,10 +115,6 @@ const useButtonStyles = createStyles(
         },
       }
     )
-
-    return {
-      label: labelStyles,
-    }
   }
 )
 
@@ -118,7 +125,7 @@ export default function Button({
   ...props
 }: ButtonProps) {
   const theme = useTheme()
-  const styles = useButtonStyles({
+  const labelStyles = useLabelStyles({
     variant: props.variant,
     color: props.color,
     size: props.size,
@@ -152,7 +159,7 @@ export default function Button({
             <Typography
               fontWeight="medium"
               {...slotProps?.label}
-              style={[styles.label, slotProps?.label?.style]}
+              style={[labelStyles, slotProps?.label?.style]}
             >
               {child}
             </Typography>
