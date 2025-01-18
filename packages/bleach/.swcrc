@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json.schemastore.org/swcrc",
+  "test": ".*.ts$",
+  "jsc": {
+    "parser": {
+      "syntax": "typescript",
+      "decorators": true,
+      "dynamicImport": true
+    },
+    "transform": {
+      "legacyDecorator": true,
+      "decoratorMetadata": true
+    },
+    "target": "esnext",
+    "loose": true,
+    "keepClassNames": true,
+    "preserveAllComments": true
+  },
+  "module": {
+    "type": "es6",
+    "strict": true,
+    "strictMode": true,
+    "lazy": false,
+    "noInterop": false
+  },
+  "sourceMaps": true
+}

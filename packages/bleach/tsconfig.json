@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "jsx": "react-native",
+    "target": "ESNext",
+    "module": "NodeNext",
+    "declaration": true,
+    "outDir": "dist",
+    "moduleDetection": "auto",
+    "moduleResolution": "nodenext",
+    "verbatimModuleSyntax": false,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "paths": {
+      "@/*": ["./*"]
+    }
+  },
+  "include": ["**/*.ts", "**/*.tsx"]
+}
