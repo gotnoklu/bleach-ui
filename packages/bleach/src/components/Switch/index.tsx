@@ -132,7 +132,7 @@ function ControlledSwitch({ checked, rounded, disabled, onChange, ...props }: Sw
   )
 }
 
-function UncontrolledSwitch({ defaultChecked, ...props }: Omit<SwitchProps, 'checked'>) {
+function UncontrolledSwitch({ defaultChecked = false, ...props }: Omit<SwitchProps, 'checked'>) {
   const [checked, setChecked] = useState(defaultChecked)
 
   function handleChange(checked: boolean) {
@@ -147,5 +147,5 @@ export default function Switch({ checked, defaultChecked, ...props }: SwitchProp
     return <ControlledSwitch checked={checked} {...props} />
   }
 
-  return <UncontrolledSwitch defaultChecked={checked} {...props} />
+  return <UncontrolledSwitch defaultChecked={defaultChecked} {...props} />
 }
