@@ -1,10 +1,15 @@
-import Animated, { useAnimatedStyle, useSharedValue, runOnJS } from 'react-native-reanimated'
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  runOnJS,
+  useAnimatedReaction,
+} from 'react-native-reanimated'
 import { GestureHandlerRootView, Gesture, GestureDetector } from 'react-native-gesture-handler'
 import type { SxProps } from '../../theme/types'
 import { styled } from '../../theme/utilities'
 import { View, type ViewProps } from 'react-native'
 import Typography from '../Typography'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 export interface SliderProps extends ViewProps, SxProps<ViewProps> {
   value?: number
@@ -77,10 +82,19 @@ export default function Slider({
 }: SliderProps) {
   const position = useSharedValue(((value - min) / (max - min)) * 100)
   const startX = useSharedValue(0)
+  const [displayValue, setDisplayValue] = useState(value)
 
   useEffect(() => {
     position.value = ((value - min) / (max - min)) * 100
   }, [value, min, max, position])
+
+  useAnimatedReaction(
+    () => position.value,
+    (currentPosition) => {
+      const newValue = min + (currentPosition / 100) * (max - min)
+      runOnJS(setDisplayValue)(Math.round(newValue))
+    }
+  )
 
   const panGesture = Gesture.Pan()
     .enabled(!disabled)
@@ -130,8 +144,8 @@ export default function Slider({
           </GestureDetector>
         </StyledContainer>
         {showValue && (
-          <Typography variant="caption" style={{ marginTop: 8, textAlign: 'center' }}>
-            {Math.round(min + (position.value / 100) * (max - min))}
+          <Typography variant="caption" style={{ textAlign: 'center' }}>
+            {displayValue}
           </Typography>
         )}
       </View>
