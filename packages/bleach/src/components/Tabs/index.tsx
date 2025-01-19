@@ -15,6 +15,16 @@ export interface TabProps extends Omit<PressableProps, 'children'>, SxProps<Pres
   onPress?: () => void
 }
 
+interface TabSlotState {
+  value: string
+  isSelected: boolean
+  disabled?: boolean
+}
+
+interface TabsSlotState {
+  value?: string
+}
+
 export interface TabsProps extends ViewProps, SxProps<ViewProps> {
   value?: string
   onChange?: (value: string) => void
@@ -23,11 +33,15 @@ export interface TabsProps extends ViewProps, SxProps<ViewProps> {
   children: ReactNode
   indicatorColor?: keyof Palette | keyof TextColor | (string & {})
   slotProps?: {
-    container?: ViewProps
-    tabsContainer?: ViewProps
-    indicator?: ViewProps
-    tab?: Omit<TabProps, 'label' | 'value' | 'icon' | 'disabled' | 'isSelected'>
-    label?: ViewProps
+    container?: ViewProps | ((state: TabsSlotState) => ViewProps)
+    tabsContainer?: ViewProps | ((state: TabsSlotState) => ViewProps)
+    indicator?: ViewProps | ((state: TabsSlotState) => ViewProps)
+    tab?:
+      | Omit<TabProps, 'label' | 'value' | 'icon' | 'disabled' | 'isSelected'>
+      | ((
+          state: TabSlotState
+        ) => Omit<TabProps, 'label' | 'value' | 'icon' | 'disabled' | 'isSelected'>)
+    label?: ViewProps | ((state: TabSlotState) => ViewProps)
   }
 }
 
@@ -49,6 +63,7 @@ const StyledTabsContainer = styled(View)<StyledTabsContainerProps>((theme: Theme
 interface StyledTabProps extends PressableProps {
   disabled?: boolean
   isSelected?: boolean
+  pressed?: boolean
   children?: ReactNode
 }
 
@@ -62,6 +77,7 @@ const StyledTab = styled(Pressable)<StyledTabProps>((theme: Theme, props) => ({
   opacity: props.disabled ? 0.5 : 1,
   minHeight: 48,
   flex: 1,
+  backgroundColor: props.pressed && !props.isSelected ? 'rgba(0, 0, 0, 0.04)' : undefined,
 }))
 
 interface StyledIndicatorProps extends ViewProps {
@@ -79,6 +95,8 @@ const AnimatedIndicator = Animated.createAnimatedComponent(StyledIndicator)
 
 const Tab = forwardRef<View, TabProps>(
   ({ label, value, icon, disabled, isSelected, onPress, ...props }, ref) => {
+    const [pressed, setPressed] = useState(false)
+
     const iconElement =
       icon && React.isValidElement(icon)
         ? React.cloneElement(icon, {
@@ -92,6 +110,9 @@ const Tab = forwardRef<View, TabProps>(
         ref={ref}
         disabled={disabled}
         isSelected={isSelected}
+        pressed={pressed}
+        onPressIn={() => setPressed(true)}
+        onPressOut={() => setPressed(false)}
         onPress={disabled ? undefined : onPress}
         {...props}
       >
@@ -131,31 +152,70 @@ const Tabs = function Tabs({
   const updateTabMetrics = (tabValue: string) => {
     const tabRef = tabRefs.current[tabValue]
     if (tabRef && containerRef.current) {
-      containerRef.current.measure((_cx, _cy, _cwidth, _cheight, containerPageX) => {
-        tabRef.measure((_x, _y, width, _height, pageX) => {
-          setSelectedTabWidth(width)
-          setSelectedTabX(pageX - containerPageX)
-        })
-      })
+      containerRef.current.measure(
+        (_cx: number, _cy: number, _cwidth: number, _cheight: number, containerPageX: number) => {
+          tabRef.measure(
+            (_x: number, _y: number, width: number, _height: number, pageX: number) => {
+              setSelectedTabWidth(width)
+              setSelectedTabX(pageX - containerPageX)
+            }
+          )
+        }
+      )
     }
   }
 
   useEffect(() => {
     if (value) {
-      // Use requestAnimationFrame to ensure the layout is complete
       requestAnimationFrame(() => {
         updateTabMetrics(value)
       })
     }
   }, [value])
 
+  const getContainerProps = (state: TabsSlotState) => {
+    const slotProp = slotProps?.container
+    if (typeof slotProp === 'function') {
+      return slotProp(state)
+    }
+    return slotProp
+  }
+
+  const getTabsContainerProps = (state: TabsSlotState) => {
+    const slotProp = slotProps?.tabsContainer
+    if (typeof slotProp === 'function') {
+      return slotProp(state)
+    }
+    return slotProp
+  }
+
+  const getTabProps = (state: TabSlotState) => {
+    const slotProp = slotProps?.tab
+    if (typeof slotProp === 'function') {
+      return slotProp(state)
+    }
+    return slotProp
+  }
+
+  const getIndicatorProps = (state: TabsSlotState) => {
+    const slotProp = slotProps?.indicator
+    if (typeof slotProp === 'function') {
+      return slotProp(state)
+    }
+    return slotProp
+  }
+
   return (
     <View
       style={{ width: variant === 'fullWidth' ? '100%' : 'auto' }}
-      {...slotProps?.container}
+      {...getContainerProps({ value })}
       {...props}
     >
-      <StyledTabsContainer ref={containerRef} variant={variant} {...slotProps?.tabsContainer}>
+      <StyledTabsContainer
+        ref={containerRef}
+        variant={variant}
+        {...getTabsContainerProps({ value })}
+      >
         {Children.map(children, (child) => {
           if (!child) return null
 
@@ -164,7 +224,11 @@ const Tabs = function Tabs({
 
           return (
             <Tab
-              {...slotProps?.tab}
+              {...getTabProps({
+                value: tab.props.value,
+                isSelected,
+                disabled: tab.props.disabled,
+              })}
               {...tab.props}
               key={tab.props.value}
               ref={(ref: View | null) => {
@@ -186,7 +250,7 @@ const Tabs = function Tabs({
             />
           )
         })}
-        <AnimatedIndicator style={indicatorStyle} {...slotProps?.indicator} />
+        <AnimatedIndicator style={indicatorStyle} {...getIndicatorProps({ value })} />
       </StyledTabsContainer>
     </View>
   )
