@@ -2,6 +2,7 @@ import Button from 'bleach/dist/components/Button'
 import Typography from 'bleach/dist/components/Typography'
 import Checkbox from 'bleach/dist/components/Checkbox'
 import Box from 'bleach/dist/components/Box'
+import Slider from 'bleach/dist/components/Slider'
 import { Alert, ScrollView } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useState } from 'react'
@@ -10,6 +11,8 @@ export default function HomeScreen() {
   const [isChecked1, setIsChecked1] = useState(false)
   const [isChecked2, setIsChecked2] = useState(true)
   const [loading, setLoading] = useState(false)
+  const [sliderValue1, setSliderValue1] = useState(50)
+  const [sliderValue2, setSliderValue2] = useState(25)
 
   const handleLoadingPress = () => {
     setLoading(true)
@@ -131,6 +134,41 @@ export default function HomeScreen() {
                   <Checkbox disabled />
                   <Typography>Disabled unchecked</Typography>
                 </Box>
+              </Box>
+            </Box>
+          </Box>
+
+          {/* Sliders Section */}
+          <Box sx={() => ({ gap: 16 })}>
+            <Typography variant="h2">Sliders</Typography>
+
+            <Box sx={() => ({ gap: 8 })}>
+              <Typography variant="h6" color="text.secondary">
+                Basic Sliders
+              </Typography>
+              <Box sx={() => ({ gap: 12 })}>
+                <Box>
+                  <Slider value={sliderValue1} onChange={setSliderValue1} showValue />
+                </Box>
+                <Box>
+                  <Slider
+                    value={sliderValue2}
+                    onChange={setSliderValue2}
+                    min={0}
+                    max={50}
+                    step={5}
+                    showValue
+                  />
+                </Box>
+              </Box>
+            </Box>
+
+            <Box sx={() => ({ gap: 8 })}>
+              <Typography variant="h6" color="text.secondary">
+                States
+              </Typography>
+              <Box sx={() => ({ gap: 12 })}>
+                <Slider value={30} disabled />
               </Box>
             </Box>
           </Box>
