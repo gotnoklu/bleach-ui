@@ -14,20 +14,20 @@ export function getNativeTheme(theme: Theme): ReactNavigationTheme {
     },
     fonts: {
       bold: {
-        fontFamily: theme.typography.weights.bold.fontFamily,
-        fontWeight: theme.typography.weights.bold.fontWeight,
+        fontFamily: theme.typography.types.bold.fontFamily,
+        fontWeight: 'bold',
       },
       regular: {
-        fontFamily: theme.typography.weights.regular.fontFamily,
-        fontWeight: theme.typography.weights.regular.fontWeight,
+        fontFamily: theme.typography.types.regular.fontFamily,
+        fontWeight: 'normal',
       },
       medium: {
-        fontFamily: theme.typography.weights.medium.fontFamily,
-        fontWeight: theme.typography.weights.medium.fontWeight,
+        fontFamily: theme.typography.types.medium.fontFamily,
+        fontWeight: 'normal',
       },
       heavy: {
-        fontFamily: theme.typography.weights.bold.fontFamily,
-        fontWeight: theme.typography.weights.bold.fontWeight,
+        fontFamily: theme.typography.types.bold.fontFamily,
+        fontWeight: 'normal',
       },
     },
   }
