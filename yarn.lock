@@ -4861,6 +4861,7 @@ __metadata:
   resolution: "demo@workspace:apps/demo"
   dependencies:
     "@babel/core": "npm:^7.25.2"
+    "@biomejs/biome": "npm:1.9.4"
     "@expo/vector-icons": "npm:^14.0.2"
     "@react-navigation/bottom-tabs": "npm:^7.2.0"
     "@react-navigation/native": "npm:^7.0.14"
