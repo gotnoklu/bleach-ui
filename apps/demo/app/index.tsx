@@ -97,13 +97,11 @@ export default function HomeScreen() {
             <Typography variant="h6" color="text.secondary">
               Basic Sliders
             </Typography>
-            <Box sx={() => ({ gap: 12 })}>
-              <Box>
-                <Slider value={sliderValue1} onChange={setSliderValue1} showValue />
-              </Box>
-              <Box>
-                <Slider min={0} max={50} step={5} showValue />
-              </Box>
+            <Box>
+              <Slider value={sliderValue1} onChange={setSliderValue1} showValue />
+            </Box>
+            <Box>
+              <Slider min={0} max={50} step={5} showValue />
             </Box>
           </SubSection>
           <SubSection>
