@@ -2,7 +2,7 @@ import Button from 'bleach/dist/components/Button'
 import Typography from 'bleach/dist/components/Typography'
 import Checkbox from 'bleach/dist/components/Checkbox'
 import Box from 'bleach/dist/components/Box'
-import { ScrollView } from 'react-native'
+import { Alert, ScrollView } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useState } from 'react'
 
@@ -14,6 +14,10 @@ export default function HomeScreen() {
   const handleLoadingPress = () => {
     setLoading(true)
     setTimeout(() => setLoading(false), 2000)
+  }
+
+  const handleButtonAlertPress = () => {
+    Alert.alert('Button pressed')
   }
 
   return (
@@ -66,6 +70,9 @@ export default function HomeScreen() {
                 </Button>
                 <Button variant="contained" disabled>
                   Disabled
+                </Button>
+                <Button variant="contained" onPress={handleButtonAlertPress}>
+                  Action
                 </Button>
               </Box>
             </Box>
