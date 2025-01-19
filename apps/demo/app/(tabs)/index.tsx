@@ -5,6 +5,7 @@ import Box from 'bleach/dist/components/Box'
 import Slider from 'bleach/dist/components/Slider'
 import { Alert, ScrollView } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 import { useState } from 'react'
 
 export default function HomeScreen() {
@@ -13,6 +14,7 @@ export default function HomeScreen() {
   const [loading, setLoading] = useState(false)
   const [sliderValue1, setSliderValue1] = useState(50)
   const [sliderValue2, setSliderValue2] = useState(25)
+  const tabBarHeight = useBottomTabBarHeight()
 
   const handleLoadingPress = () => {
     setLoading(true)
@@ -26,7 +28,7 @@ export default function HomeScreen() {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView style={{ flex: 1 }}>
-        <Box sx={() => ({ padding: 16, gap: 32 })}>
+        <Box sx={() => ({ padding: 16, gap: 32, paddingBottom: tabBarHeight + 16 })}>
           <Box>
             <Typography variant="h1" gutterBottom>
               Bleach UI
