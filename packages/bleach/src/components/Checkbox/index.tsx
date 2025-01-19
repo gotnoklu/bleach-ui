@@ -20,11 +20,11 @@ const StyledCheckbox = styled(Pressable)<CheckboxProps>(
     height: size,
     borderRadius: theme.radius.create(1),
     borderWidth: 2,
-    borderColor: disabled ? theme.palette.disabled : theme.palette.action,
+    borderColor: disabled ? theme.palette.disabled : theme.palette.primary.main,
     backgroundColor: disabled
       ? theme.palette.disabled
       : checked
-        ? theme.palette.action
+        ? theme.palette.primary.main
         : theme.palette.backgrounds.paper,
     alignItems: 'center',
     justifyContent: 'center',
@@ -48,7 +48,7 @@ export default function Checkbox({
       {...props}
     >
       {checked && (
-        <Icon name="check" size={size * 0.75} color={disabled ? 'text.disabled' : 'common.white'} />
+        <Icon name="check" size={size * 0.6} color={disabled ? 'text.disabled' : 'primary.text'} />
       )}
     </StyledCheckbox>
   )
