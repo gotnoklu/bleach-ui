@@ -1,16 +1,18 @@
-import { Children, type ReactNode, useState } from 'react'
+import { Children, type ReactNode } from 'react'
 import { Pressable, type PressableProps } from 'react-native'
-import type { ButtonVariant } from './types'
 import Typography, { type TypographyProps } from '../Typography'
 import type { Palette, SxProps, TextColor } from '../../theme/types'
 import { useTheme } from '../../theme/hooks'
 import {
+  alpha,
   createComponentStyles,
   getThemeProperty,
   merge,
   selectStyles,
   styled,
 } from '../../theme/utilities'
+
+export type ButtonVariant = 'contained' | 'outlined' | 'text'
 
 type PressableStyle = Exclude<
   PressableProps['style'],
@@ -125,16 +127,14 @@ export default function Button({
   ...props
 }: ButtonProps) {
   const theme = useTheme()
-  const [isPressed, setIsPressed] = useState(false)
+
   const labelStyles = useLabelStyles({
     variant,
-    color:
-      isPressed && !disabled && (variant === 'text' || variant === 'outlined')
-        ? 'primary.text'
-        : props.color,
+    color: props.color,
     size: props.size,
     disabled,
   })
+
   const pressablePressedColor = getThemeProperty({
     object: theme.palette,
     key: pressedColor,
@@ -150,11 +150,15 @@ export default function Button({
         borderless: false,
         foreground: true,
       }}
-      onPressIn={() => !disabled && setIsPressed(true)}
-      onPressOut={() => !disabled && setIsPressed(false)}
       {...props}
       style={(state) => ({
-        backgroundColor: !disabled && state.pressed ? pressablePressedColor : undefined,
+        backgroundColor: disabled
+          ? theme.palette.disabled
+          : state.pressed
+            ? variant !== 'contained'
+              ? alpha(pressablePressedColor as string, 0.1)
+              : pressablePressedColor
+            : undefined,
         ...(typeof props.style === 'function'
           ? props.style(state)
           : Array.isArray(props.style)
@@ -165,11 +169,7 @@ export default function Button({
       {Children.map(children, (child) => {
         if (typeof child === 'string' || typeof child === 'number') {
           return (
-            <Typography
-              fontWeight="medium"
-              {...slotProps?.label}
-              style={[labelStyles, slotProps?.label?.style]}
-            >
+            <Typography {...slotProps?.label} style={[labelStyles, slotProps?.label?.style]}>
               {child}
             </Typography>
           )

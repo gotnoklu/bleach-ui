@@ -148,7 +148,7 @@ export const _DEFAULT_BASE_THEME: Theme = {
     },
     text: {
       primary: '#444444',
-      secondary: '#999999',
+      secondary: '#777777',
     },
     backgrounds: {
       default: '#FCFCFC',
