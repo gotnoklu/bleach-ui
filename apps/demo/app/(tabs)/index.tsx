@@ -3,6 +3,8 @@ import Typography from 'bleach/dist/components/Typography'
 import Checkbox from 'bleach/dist/components/Checkbox'
 import Box from 'bleach/dist/components/Box'
 import Slider from 'bleach/dist/components/Slider'
+import Tabs from 'bleach/dist/components/Tabs'
+import Icon from 'bleach/dist/components/Icon'
 import { Alert, ScrollView } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
@@ -14,6 +16,10 @@ export default function HomeScreen() {
   const [loading, setLoading] = useState(false)
   const [sliderValue1, setSliderValue1] = useState(50)
   const [sliderValue2, setSliderValue2] = useState(25)
+  const [basicTab, setBasicTab] = useState('tab1')
+  const [iconTab, setIconTab] = useState('home')
+  const [fullWidthTab, setFullWidthTab] = useState('tab1')
+  const [stateTab, setStateTab] = useState('active')
   const tabBarHeight = useBottomTabBarHeight()
 
   const handleLoadingPress = () => {
@@ -171,6 +177,63 @@ export default function HomeScreen() {
               </Typography>
               <Box sx={() => ({ gap: 12 })}>
                 <Slider value={30} disabled />
+              </Box>
+            </Box>
+          </Box>
+
+          {/* Tabs Section */}
+          <Box sx={() => ({ gap: 16 })}>
+            <Typography variant="h2">Tabs</Typography>
+
+            <Box sx={() => ({ gap: 8 })}>
+              <Typography variant="h6" color="text.secondary">
+                Basic Tabs
+              </Typography>
+              <Box sx={() => ({ gap: 12 })}>
+                <Tabs value={basicTab} onChange={setBasicTab}>
+                  <Tabs.Tab label="Tab 1" value="tab1" />
+                  <Tabs.Tab label="Tab 2" value="tab2" />
+                  <Tabs.Tab label="Tab 3" value="tab3" />
+                </Tabs>
+              </Box>
+            </Box>
+
+            <Box sx={() => ({ gap: 8 })}>
+              <Typography variant="h6" color="text.secondary">
+                Tabs with Icons
+              </Typography>
+              <Box sx={() => ({ gap: 12 })}>
+                <Tabs value={iconTab} onChange={setIconTab}>
+                  <Tabs.Tab label="Home" value="home" icon={<Icon name="home" size={20} />} />
+                  <Tabs.Tab label="Search" value="search" icon={<Icon name="search" size={20} />} />
+                  <Tabs.Tab label="Gear" value="settings" icon={<Icon name="gear" size={20} />} />
+                </Tabs>
+              </Box>
+            </Box>
+
+            <Box sx={() => ({ gap: 8 })}>
+              <Typography variant="h6" color="text.secondary">
+                Full Width Tabs
+              </Typography>
+              <Box sx={() => ({ gap: 12 })}>
+                <Tabs value={fullWidthTab} onChange={setFullWidthTab} variant="fullWidth">
+                  <Tabs.Tab label="Tab 1" value="tab1" />
+                  <Tabs.Tab label="Tab 2" value="tab2" />
+                  <Tabs.Tab label="Tab 3" value="tab3" />
+                </Tabs>
+              </Box>
+            </Box>
+
+            <Box sx={() => ({ gap: 8 })}>
+              <Typography variant="h6" color="text.secondary">
+                States
+              </Typography>
+              <Box sx={() => ({ gap: 12 })}>
+                <Tabs value={stateTab} onChange={setStateTab}>
+                  <Tabs.Tab label="Active" value="active" />
+                  <Tabs.Tab label="Disabled" value="disabled" disabled />
+                  <Tabs.Tab label="Long Tab Label" value="long" />
+                </Tabs>
               </Box>
             </Box>
           </Box>
