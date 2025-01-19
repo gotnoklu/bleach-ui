@@ -1,12 +1,125 @@
 import type { Theme } from '../types'
 
+const ThemeTypographyTypes: Theme['typography']['types'] = {
+  black: {
+    fontFamily: '',
+    fontWeight: 'black',
+    fontStyle: 'normal',
+  },
+  heavy: {
+    fontFamily: '',
+    fontWeight: 'heavy',
+    fontStyle: 'normal',
+  },
+  bold: {
+    fontFamily: '',
+    fontWeight: 'bold',
+    fontStyle: 'normal',
+  },
+  semibold: {
+    fontFamily: '',
+    fontWeight: 'semibold',
+    fontStyle: 'normal',
+  },
+  condensedBold: {
+    fontFamily: '',
+    fontWeight: 'condensedBold',
+    fontStyle: 'normal',
+  },
+  condensed: {
+    fontFamily: '',
+    fontWeight: 'condensed',
+    fontStyle: 'normal',
+  },
+  normal: {
+    fontFamily: '',
+    fontWeight: 'normal',
+    fontStyle: 'normal',
+  },
+  regular: {
+    fontFamily: '',
+    fontWeight: 'regular',
+    fontStyle: 'normal',
+  },
+  medium: {
+    fontFamily: '',
+    fontWeight: 'medium',
+    fontStyle: 'normal',
+  },
+  italic: {
+    fontFamily: '',
+    fontWeight: 'normal',
+    fontStyle: 'italic',
+  },
+  light: {
+    fontFamily: '',
+    fontWeight: 'light',
+    fontStyle: 'normal',
+  },
+  ultralight: {
+    fontFamily: '',
+    fontWeight: 'ultralight',
+    fontStyle: 'normal',
+  },
+  thin: {
+    fontFamily: '',
+    fontWeight: 'thin',
+    fontStyle: 'normal',
+  },
+  100: {
+    fontFamily: '',
+    fontWeight: '100',
+    fontStyle: 'normal',
+  },
+  200: {
+    fontFamily: '',
+    fontWeight: '200',
+    fontStyle: 'normal',
+  },
+  300: {
+    fontFamily: '',
+    fontWeight: '300',
+    fontStyle: 'normal',
+  },
+  400: {
+    fontFamily: '',
+    fontWeight: '400',
+    fontStyle: 'normal',
+  },
+  500: {
+    fontFamily: '',
+    fontWeight: '500',
+    fontStyle: 'normal',
+  },
+  600: {
+    fontFamily: '',
+    fontWeight: '600',
+    fontStyle: 'normal',
+  },
+  700: {
+    fontFamily: '',
+    fontWeight: '700',
+    fontStyle: 'normal',
+  },
+  800: {
+    fontFamily: '',
+    fontWeight: '800',
+    fontStyle: 'normal',
+  },
+  900: {
+    fontFamily: '',
+    fontWeight: '900',
+    fontStyle: 'normal',
+  },
+}
+
 export const _DEFAULT_BASE_THEME: Theme = {
   mode: 'light',
   palette: {
     primary: {
-      light: '#5B49FF',
-      main: '#1900FF',
-      dark: '#1400C8',
+      light: '#378DFF',
+      main: '#006FFF',
+      dark: '#0057C8',
       text: '#FFFFFF',
     },
     secondary: {
@@ -47,56 +160,43 @@ export const _DEFAULT_BASE_THEME: Theme = {
     disabled: 'rgba(123, 123, 123, 0.4)',
   },
   typography: {
-    weights: {
-      bold: {
-        fontFamily: '',
-        fontWeight: 'bold',
-      },
-      regular: {
-        fontFamily: '',
-        fontWeight: 'normal',
-      },
-      medium: {
-        fontFamily: '',
-        fontWeight: 'normal',
-      },
-    },
+    types: ThemeTypographyTypes,
     variants: {
       h1: {
-        fontWeight: 'bold',
         fontSize: 28,
+        ...ThemeTypographyTypes.bold,
       },
       h2: {
-        fontWeight: 'bold',
         fontSize: 25,
+        ...ThemeTypographyTypes.bold,
       },
       h3: {
-        fontWeight: 'bold',
         fontSize: 22,
+        ...ThemeTypographyTypes.bold,
       },
       h4: {
-        fontWeight: 'bold',
         fontSize: 20,
+        ...ThemeTypographyTypes.bold,
       },
       h5: {
-        fontWeight: 'bold',
         fontSize: 18,
+        ...ThemeTypographyTypes.bold,
       },
       h6: {
-        fontWeight: 'bold',
         fontSize: 16,
+        ...ThemeTypographyTypes.bold,
       },
       body1: {
-        fontWeight: 'normal',
         fontSize: 14,
+        ...ThemeTypographyTypes.regular,
       },
       body2: {
-        fontWeight: 'normal',
         fontSize: 12,
+        ...ThemeTypographyTypes.regular,
       },
       caption: {
-        fontWeight: 'normal',
         fontSize: 10.5,
+        ...ThemeTypographyTypes.regular,
       },
     },
   },
