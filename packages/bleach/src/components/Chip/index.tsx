@@ -43,7 +43,6 @@ const StyledChip = styled(Pressable)<Omit<ChipProps, 'sx'>>(
           : size === 'medium'
             ? theme.spacing.create(1)
             : theme.spacing.create(2),
-      opacity: disabled ? 0.9 : 1,
       ...theme.typography.variants.body1,
     }
   }
@@ -53,30 +52,33 @@ const useLabelStyles = createComponentStyles(
   (
     theme,
     {
+      checked,
       color = 'text.secondary',
       size = 'medium',
       disabled,
-    }: Pick<ChipProps, 'color' | 'size' | 'disabled'>
+    }: Pick<ChipProps, 'checked' | 'color' | 'size' | 'disabled'>
   ) => {
-    const labelSizes = { small: 14, medium: 16, large: 18 }
+    const labelSizes = { small: 11, medium: 14, large: 16 }
     const chipColor = getThemeProperty({ object: theme.palette, key: color, fallback: color })
 
     return {
       fontSize: labelSizes[size],
-      color: disabled ? theme.palette.disabled : chipColor,
+      color: checked ? theme.palette.primary.main : disabled ? theme.palette.disabled : chipColor,
     }
   }
 )
 
-export default function Chip({ slotProps, children, disabled, ...props }: ChipProps) {
+export default function Chip({ checked, slotProps, children, disabled, ...props }: ChipProps) {
   const labelStyles = useLabelStyles({
     color: props.color,
     size: props.size,
+    checked,
     disabled,
   })
 
   return (
     <StyledChip
+      checked={checked}
       disabled={disabled}
       android_ripple={{
         borderless: false,
@@ -87,11 +89,7 @@ export default function Chip({ slotProps, children, disabled, ...props }: ChipPr
       {Children.map(children, (child) => {
         if (typeof child === 'string' || typeof child === 'number') {
           return (
-            <Typography
-              variant="body2"
-              {...slotProps?.label}
-              style={[labelStyles, slotProps?.label?.style]}
-            >
+            <Typography {...slotProps?.label} style={[labelStyles, slotProps?.label?.style]}>
               {child}
             </Typography>
           )
