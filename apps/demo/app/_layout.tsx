@@ -10,6 +10,7 @@ SplashScreen.preventAutoHideAsync()
 export default function RootLayout() {
   const [loaded] = useFonts({
     PlusJakartaSans: require('../assets/fonts/Plus Jakarta Sans/PlusJakartaSans-Regular.ttf'),
+    'PlusJakartaSans-Medium': require('../assets/fonts/Plus Jakarta Sans/PlusJakartaSans-Medium.ttf'),
     'PlusJakartaSans-Bold': require('../assets/fonts/Plus Jakarta Sans/PlusJakartaSans-Bold.ttf'),
   })
 

@@ -8,15 +8,18 @@ import type { SxProps } from '../../theme/types'
 import { styled } from '../../theme/utilities'
 import { Pressable, type PressableProps, View } from 'react-native'
 import { useTheme } from '../../theme/hooks'
+import { useEffect, useState } from 'react'
 
 export interface SwitchProps extends PressableProps, SxProps<PressableProps> {
   checked?: boolean
+  defaultChecked?: boolean
+  rounded?: boolean
   onChange?: (checked: boolean) => void
 }
 
-const StyledTrack = styled(Pressable)<Omit<SwitchProps, 'sx'>>((theme) => {
+const StyledTrack = styled(Pressable)<Omit<SwitchProps, 'sx'>>((theme, { rounded = false }) => {
   return {
-    borderRadius: theme.radius.create(2),
+    borderRadius: theme.radius.create(rounded ? 4 : 2),
     backgroundColor:
       theme.mode === 'dark' ? 'rgba(100, 100, 100, 0.5)' : 'rgba(100, 100, 100, 0.2)',
     width: 16 * 2.5,
@@ -27,20 +30,25 @@ const StyledTrack = styled(Pressable)<Omit<SwitchProps, 'sx'>>((theme) => {
   }
 })
 
-const StyledThumb = styled(View)<Omit<SwitchProps, 'sx'>>((theme) => {
-  return {
-    borderRadius: theme.radius.create(1),
-    width: 16,
-    height: 16,
-    backgroundColor:
-      theme.mode === 'dark' ? theme.palette.backgrounds.default : theme.palette.backgrounds.paper,
+const StyledThumb = styled(View)<Omit<SwitchProps, 'sx'>>(
+  (theme, { disabled, rounded = false }) => {
+    return {
+      borderRadius: theme.radius.create(rounded ? 4 : 1),
+      width: 16,
+      height: 16,
+      backgroundColor: disabled
+        ? theme.palette.disabled
+        : theme.mode === 'dark'
+          ? theme.palette.backgrounds.default
+          : theme.palette.backgrounds.paper,
+    }
   }
-})
+)
 
 const AnimatedTrack = Animated.createAnimatedComponent(StyledTrack)
 const AnimatedThumb = Animated.createAnimatedComponent(StyledThumb)
 
-export default function Switch({ checked, onChange, ...props }: SwitchProps) {
+function ControlledSwitch({ checked, rounded, disabled, onChange, ...props }: SwitchProps) {
   const theme = useTheme()
   const colorOffset = useSharedValue(0)
   const translationOffset = useSharedValue(0)
@@ -52,7 +60,7 @@ export default function Switch({ checked, onChange, ...props }: SwitchProps) {
         [0, 16],
         [
           theme.mode === 'dark' ? 'rgba(100, 100, 100, 0.5)' : 'rgba(100, 100, 100, 0.2)',
-          theme.palette.primary.main,
+          disabled ? theme.palette.disabled : theme.palette.primary.main,
         ],
         'RGB',
         {
@@ -100,9 +108,44 @@ export default function Switch({ checked, onChange, ...props }: SwitchProps) {
     }
   }
 
+  useEffect(() => {
+    if (checked) {
+      checkSwitch()
+    }
+  }, [])
+
   return (
-    <AnimatedTrack {...props} style={animatedTrackStyles} onPress={toggleSwitch}>
-      <AnimatedThumb style={animatedThumbStyles} collapsable={false} />
+    <AnimatedTrack
+      {...props}
+      rounded={rounded}
+      disabled={disabled}
+      style={animatedTrackStyles}
+      onPress={toggleSwitch}
+    >
+      <AnimatedThumb
+        style={animatedThumbStyles}
+        rounded={rounded}
+        disabled={disabled}
+        collapsable={false}
+      />
     </AnimatedTrack>
   )
+}
+
+function UncontrolledSwitch({ defaultChecked, ...props }: Omit<SwitchProps, 'checked'>) {
+  const [checked, setChecked] = useState(defaultChecked)
+
+  function handleChange(checked: boolean) {
+    setChecked(checked)
+  }
+
+  return <ControlledSwitch checked={checked} onChange={handleChange} {...props} />
+}
+
+export default function Switch({ checked, defaultChecked, ...props }: SwitchProps) {
+  if (typeof checked === 'boolean') {
+    return <ControlledSwitch checked={checked} {...props} />
+  }
+
+  return <UncontrolledSwitch defaultChecked={checked} {...props} />
 }

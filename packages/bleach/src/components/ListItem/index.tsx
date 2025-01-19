@@ -9,6 +9,7 @@ export interface ListItemProps extends ViewProps, SxProps<ViewProps> {
 
 const StyledListItem = styled(View)<Omit<ListItemProps, 'sx'>>(
   (theme, { disablePadding, disableMinHeight }) => ({
+    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     gap: theme.spacing.create(2),

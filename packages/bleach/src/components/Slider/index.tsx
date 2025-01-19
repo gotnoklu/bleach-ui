@@ -11,6 +11,7 @@ import { View, type ViewProps } from 'react-native'
 import Typography from '../Typography'
 import { useEffect, useState, useCallback } from 'react'
 import Box from '../Box'
+import Show from '../Show'
 
 export interface SliderProps extends ViewProps, SxProps<ViewProps> {
   value?: number
@@ -48,20 +49,20 @@ const StyledTrack = styled(View)<Omit<SliderProps, 'sx'>>((theme, props) => {
 })
 
 const StyledThumb = styled(View)<Omit<SliderProps, 'sx'>>((theme, props) => {
-  const color = props.disabled ? theme.palette.disabled : theme.palette.primary.main
+  const color = props.disabled ? alpha(theme.palette.disabled, 1) : theme.palette.primary.dark
   return {
     width: THUMB_SIZE,
     height: THUMB_SIZE,
-    backgroundColor: alpha(color, props.disabled ? 0.5 : 1),
+    backgroundColor: color,
     borderRadius: theme.radius.create(10),
     position: 'absolute',
     top: -8,
     left: -THUMB_SIZE / 2,
-    elevation: 2,
-    shadowColor: alpha('#000', theme.mode === 'dark' ? 0.5 : 0.25),
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
+    // elevation: 2,
+    // shadowColor: alpha('#000', theme.mode === 'dark' ? 0.5 : 0.25),
+    // shadowOffset: { width: 0, height: 2 },
+    // shadowOpacity: 0.25,
+    // shadowRadius: 3.84,
   }
 })
 
@@ -160,11 +161,11 @@ export default function Slider({
             </Animated.View>
           </GestureDetector>
         </StyledContainer>
-        {showValue && (
+        <Show visible={showValue}>
           <Typography variant="caption" sx={() => ({ textAlign: 'center' })} {...slotProps?.value}>
             {displayValue}
           </Typography>
-        )}
+        </Show>
       </Box>
     </GestureHandlerRootView>
   )
