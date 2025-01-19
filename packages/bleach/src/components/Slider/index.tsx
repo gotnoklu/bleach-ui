@@ -1,4 +1,4 @@
-import Animated, { useAnimatedStyle, useSharedValue } from 'react-native-reanimated'
+import Animated, { useAnimatedStyle, useSharedValue, runOnJS } from 'react-native-reanimated'
 import { GestureHandlerRootView, Gesture, GestureDetector } from 'react-native-gesture-handler'
 import type { SxProps } from '../../theme/types'
 import { styled } from '../../theme/utilities'
@@ -85,19 +85,22 @@ export default function Slider({
   const panGesture = Gesture.Pan()
     .enabled(!disabled)
     .onStart(() => {
+      'worklet'
       startX.value = position.value
     })
     .onUpdate((event) => {
+      'worklet'
       let newPosition = startX.value + (event.translationX / 200) * 100
       newPosition = Math.max(0, Math.min(100, newPosition))
       position.value = newPosition
     })
     .onEnd(() => {
+      'worklet'
       const newValue = min + (position.value / 100) * (max - min)
       const steppedValue = Math.round(newValue / step) * step
       position.value = ((steppedValue - min) / (max - min)) * 100
       if (onChange) {
-        onChange(steppedValue)
+        runOnJS(onChange)(steppedValue)
       }
     })
 
