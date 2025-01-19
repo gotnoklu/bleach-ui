@@ -90,7 +90,6 @@ export type TypographyVariants = {
 }
 
 export type Typography = {
-  fontFamily?: string
   types: TypographyTypes
   variants: TypographyVariants
 }
