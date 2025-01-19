@@ -3821,6 +3821,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "bleach@workspace:packages/bleach"
   dependencies:
+    "@biomejs/biome": "npm:1.9.4"
     "@expo/vector-icons": "npm:^14.0.4"
     "@swc/cli": "npm:^0.6.0"
     "@swc/core": "npm:^1.10.7"
