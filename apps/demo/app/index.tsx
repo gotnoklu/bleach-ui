@@ -102,7 +102,7 @@ export default function HomeScreen() {
             <ListItem disableMinHeight disablePadding>
               <Chip>Default</Chip>
               <Chip>
-                With Close Icon <Icon name="x" />
+                With Close Icon <Icon name="x" size={18} />
               </Chip>
             </ListItem>
           </SubSection>
@@ -129,6 +129,9 @@ export default function HomeScreen() {
             <Typography variant="h6" color="text.secondary">
               States
             </Typography>
+            <ListItem disableMinHeight disablePadding>
+              <Chip checked>Checked</Chip>
+            </ListItem>
             <ListItem disableMinHeight disablePadding>
               <Chip disabled>Disabled</Chip>
             </ListItem>
