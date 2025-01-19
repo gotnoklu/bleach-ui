@@ -11,11 +11,15 @@ export interface TypographyProps extends TextProps, SxProps<TextProps> {
 }
 
 const StyledTypography = styled(Text)<TypographyProps>(
-  (theme, { variant = 'body1', color = 'text.primary', fontWeight = 'regular', gutterBottom }) => {
-    return merge(theme.typography.types[fontWeight], theme.typography.variants[variant], {
-      color: getThemeProperty({ object: theme.palette, key: color, fallback: color }),
-      marginBottom: gutterBottom ? theme.spacing.create(1) : 0,
-    })
+  (theme, { variant = 'body1', color = 'text.primary', fontWeight, gutterBottom }) => {
+    return merge(
+      theme.typography.variants[variant],
+      fontWeight ? theme.typography.types[fontWeight] : {},
+      {
+        color: getThemeProperty({ object: theme.palette, key: color, fallback: color }),
+        marginBottom: gutterBottom ? theme.spacing.create(1) : 0,
+      }
+    )
   }
 )
 

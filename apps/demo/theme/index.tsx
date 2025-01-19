@@ -4,6 +4,7 @@ const LightTheme = createTheme({
   typography: {
     types: {
       bold: { fontFamily: 'PlusJakartaSans-Bold' },
+      medium: { fontFamily: 'PlusJakartaSans-Medium' },
       regular: { fontFamily: 'PlusJakartaSans' },
     },
     variants: {
@@ -21,15 +22,15 @@ const LightTheme = createTheme({
       },
       h4: {
         fontSize: 20,
-        fontFamily: 'PlusJakartaSans-Bold',
+        fontFamily: 'PlusJakartaSans-Medium',
       },
       h5: {
         fontSize: 18,
-        fontFamily: 'PlusJakartaSans-Bold',
+        fontFamily: 'PlusJakartaSans-Medium',
       },
       h6: {
         fontSize: 16,
-        fontFamily: 'PlusJakartaSans-Bold',
+        fontFamily: 'PlusJakartaSans-Medium',
       },
       body1: {
         fontSize: 14,
