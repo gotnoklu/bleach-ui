@@ -1,5 +1,5 @@
 import type { PressableProps, StyleProp, TextStyle, View, ViewStyle } from 'react-native'
-import type { BaseTheme, Color, LoadedFonts, Merge, Palette, Sx, TextColor, Theme } from '../types'
+import type { BaseTheme, Color, Merge, Palette, Sx, TextColor, Theme } from '../types'
 import { useTheme } from '../hooks'
 import {
   type Component,
@@ -50,68 +50,8 @@ export function merge<TObjects extends Array<Record<PropertyKey, any> | undefine
   return merged
 }
 
-export function applyLoadedFonts<TTheme extends BaseTheme | Theme>(
-  theme: TTheme,
-  fonts?: LoadedFonts
-): TTheme {
-  if (fonts || theme.typography?.fontFamily) {
-    const fontWeights = Object.assign({}, theme.typography?.weights)
-    const fontVariants = Object.assign({}, theme.typography?.variants)
-
-    if (theme.typography?.weights) {
-      let key: keyof typeof fontWeights
-      let value
-      for (key in fontWeights) {
-        value = fontWeights[key]
-        if (!value?.fontFamily) {
-          if (fonts) {
-            if (typeof fonts === 'string') {
-              fontWeights[key] = merge(value, { fontFamily: fonts })
-            } else {
-              fontWeights[key] = merge(value, {
-                fontFamily:
-                  fonts[(value?.fontStyle as keyof typeof fonts) ?? 'regular'] ?? fonts.regular,
-              })
-            }
-          } else if (theme.typography?.fontFamily) {
-            fontWeights[key] = merge(value, { fontFamily: theme.typography.fontFamily })
-          }
-        }
-      }
-    }
-
-    if (theme.typography?.variants) {
-      let key: keyof typeof fontVariants
-      let value
-      for (key in fontVariants) {
-        value = fontVariants[key]
-        if (!value?.fontFamily) {
-          if (fonts) {
-            if (typeof fonts === 'string') {
-              fontVariants[key] = merge(value, { fontFamily: fonts })
-            } else {
-              fontVariants[key] = merge(value, {
-                fontFamily:
-                  fonts[(value?.fontStyle as keyof typeof fonts) ?? 'regular'] ?? fonts.regular,
-              })
-            }
-          } else if (theme.typography?.fontFamily) {
-            fontVariants[key] = merge(value, { fontFamily: theme.typography.fontFamily })
-          }
-        }
-      }
-    }
-
-    return merge(theme, {
-      typography: merge(theme.typography, { weights: fontWeights, variants: fontVariants }),
-    })
-  }
-
-  return theme
-}
-
 export function createTheme(theme: BaseTheme): Theme {
-  return merge(_DEFAULT_BASE_THEME, applyLoadedFonts(theme, theme.typography?.fontFamily)) as Theme
+  return merge(_DEFAULT_BASE_THEME, theme) as Theme
 }
 
 export function getThemeProperty(config: {
