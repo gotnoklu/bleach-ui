@@ -6,10 +6,11 @@ import Animated, {
 } from 'react-native-reanimated'
 import { GestureHandlerRootView, Gesture, GestureDetector } from 'react-native-gesture-handler'
 import type { SxProps } from '../../theme/types'
-import { styled } from '../../theme/utilities'
+import { styled, alpha } from '../../theme/utilities'
 import { View, type ViewProps } from 'react-native'
 import Typography from '../Typography'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
+import Box from '../Box'
 
 export interface SliderProps extends ViewProps, SxProps<ViewProps> {
   value?: number
@@ -19,50 +20,58 @@ export interface SliderProps extends ViewProps, SxProps<ViewProps> {
   onChange?: (value: number) => void
   showValue?: boolean
   disabled?: boolean
+  slotProps?: {
+    container?: ViewProps
+    track?: ViewProps
+    thumb?: ViewProps
+    fill?: ViewProps
+    value?: ViewProps
+  }
 }
+
+const THUMB_SIZE = 20
 
 const StyledContainer = styled(View)(() => ({
   minHeight: 32,
   justifyContent: 'center',
+  width: '100%',
 }))
 
 const StyledTrack = styled(View)<Omit<SliderProps, 'sx'>>((theme, props) => {
   return {
     width: '100%',
     height: 4,
-    backgroundColor:
-      theme.mode === 'dark' ? 'rgba(100, 100, 100, 0.5)' : 'rgba(100, 100, 100, 0.2)',
+    backgroundColor: alpha(theme.palette.disabled, props.disabled ? 0.3 : 0.5),
     borderRadius: theme.radius.create(1),
     position: 'relative',
-    opacity: props.disabled ? 0.5 : 1,
   }
 })
 
 const StyledThumb = styled(View)<Omit<SliderProps, 'sx'>>((theme, props) => {
+  const color = props.disabled ? theme.palette.disabled : theme.palette.primary.main
   return {
-    width: 20,
-    height: 20,
-    backgroundColor:
-      theme.mode === 'dark' ? theme.palette.backgrounds.default : theme.palette.backgrounds.paper,
+    width: THUMB_SIZE,
+    height: THUMB_SIZE,
+    backgroundColor: alpha(color, props.disabled ? 0.5 : 1),
     borderRadius: theme.radius.create(10),
     position: 'absolute',
     top: -8,
+    left: -THUMB_SIZE / 2,
     elevation: 2,
-    shadowColor: '#000',
+    shadowColor: alpha('#000', theme.mode === 'dark' ? 0.5 : 0.25),
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    opacity: props.disabled ? 0.5 : 1,
   }
 })
 
 const StyledFill = styled(View)<Omit<SliderProps, 'sx'>>((theme, props) => {
+  const color = props.disabled ? theme.palette.disabled : theme.palette.primary.main
   return {
     height: '100%',
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: alpha(color, props.disabled ? 0.5 : 1),
     borderRadius: theme.radius.create(1),
     position: 'absolute',
-    opacity: props.disabled ? 0.5 : 1,
   }
 })
 
@@ -78,10 +87,12 @@ export default function Slider({
   showValue = false,
   disabled = false,
   style,
+  slotProps,
   ...props
 }: SliderProps) {
   const position = useSharedValue(((value - min) / (max - min)) * 100)
   const startX = useSharedValue(0)
+  const trackWidth = useSharedValue(0)
   const [displayValue, setDisplayValue] = useState(value)
 
   useEffect(() => {
@@ -96,6 +107,10 @@ export default function Slider({
     }
   )
 
+  const onTrackLayout = useCallback((event: { nativeEvent: { layout: { width: number } } }) => {
+    trackWidth.value = event.nativeEvent.layout.width
+  }, [])
+
   const panGesture = Gesture.Pan()
     .enabled(!disabled)
     .onStart(() => {
@@ -104,7 +119,8 @@ export default function Slider({
     })
     .onUpdate((event) => {
       'worklet'
-      let newPosition = startX.value + (event.translationX / 200) * 100
+      const maxWidth = trackWidth.value - THUMB_SIZE
+      let newPosition = startX.value + (event.translationX / maxWidth) * 100
       newPosition = Math.max(0, Math.min(100, newPosition))
       position.value = newPosition
     })
@@ -119,8 +135,9 @@ export default function Slider({
     })
 
   const thumbStyle = useAnimatedStyle(() => {
+    const maxWidth = trackWidth.value - THUMB_SIZE
     return {
-      transform: [{ translateX: (position.value / 100) * 200 }],
+      transform: [{ translateX: (position.value / 100) * maxWidth + THUMB_SIZE / 2 }],
     }
   })
 
@@ -132,23 +149,23 @@ export default function Slider({
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <View style={[{ width: 200, marginVertical: 10 }, style]} {...props}>
-        <StyledContainer>
+      <Box sx={() => ({ width: '100%', marginVertical: 16 })} {...props}>
+        <StyledContainer {...slotProps?.container}>
           <GestureDetector gesture={panGesture}>
             <Animated.View style={{ flex: 1 }}>
-              <StyledTrack disabled={disabled}>
-                <AnimatedFill style={fillStyle} disabled={disabled} />
-                <AnimatedThumb style={thumbStyle} disabled={disabled} />
+              <StyledTrack disabled={disabled} {...slotProps?.track} onLayout={onTrackLayout}>
+                <AnimatedFill style={fillStyle} disabled={disabled} {...slotProps?.fill} />
+                <AnimatedThumb style={thumbStyle} disabled={disabled} {...slotProps?.thumb} />
               </StyledTrack>
             </Animated.View>
           </GestureDetector>
         </StyledContainer>
         {showValue && (
-          <Typography variant="caption" style={{ textAlign: 'center' }}>
+          <Typography variant="caption" sx={() => ({ textAlign: 'center' })} {...slotProps?.value}>
             {displayValue}
           </Typography>
         )}
-      </View>
+      </Box>
     </GestureHandlerRootView>
   )
 }
