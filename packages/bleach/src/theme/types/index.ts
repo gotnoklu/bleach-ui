@@ -64,47 +64,17 @@ export type Palette = {
   divider: string
 }
 
-export type FontWeight =
+export type TypographyType = Exclude<TextStyle['fontWeight'], undefined> | 'italic'
+
+export type FontType =
   | number
   | (Omit<TextStyle, 'fontWeight' | 'fontFamily'> & {
       fontFamily: string
-      fontWeight:
-        | 'bold'
-        | 'normal'
-        | '100'
-        | '200'
-        | '300'
-        | '400'
-        | '500'
-        | '600'
-        | '700'
-        | '800'
-        | '900'
+      fontWeight: Exclude<TextStyle['fontWeight'], undefined>
     })
 
-export type BaseTypography = {
-  weights: {
-    regular: FontWeight
-    medium: FontWeight
-    bold: FontWeight
-  }
-  variants: {
-    h1: TextStyle
-    h2: TextStyle
-    h3: TextStyle
-    h4: TextStyle
-    h5: TextStyle
-    h6: TextStyle
-    body1: TextStyle
-    body2: TextStyle
-    caption: TextStyle
-  }
-}
-
-export type TypographyWeights = {
-  regular: Exclude<FontWeight, number>
-  medium: Exclude<FontWeight, number>
-  bold: Exclude<FontWeight, number>
+export type TypographyTypes = {
+  [_ in TypographyType]: Exclude<FontType, number>
 }
 
 export type TypographyVariants = {
@@ -121,15 +91,13 @@ export type TypographyVariants = {
 
 export type Typography = {
   fontFamily?: string
-  weights: TypographyWeights
+  types: TypographyTypes
   variants: TypographyVariants
 }
 
 export type LocaleDirection = 'ltr' | 'rtl'
 
-export type LoadedFonts =
-  | string
-  | { bold?: string; medium?: string; italic?: string; regular: string }
+export type LoadedFonts = string | { [_ in TypographyType]?: string }
 
 export interface Theme {
   mode: ThemeMode
