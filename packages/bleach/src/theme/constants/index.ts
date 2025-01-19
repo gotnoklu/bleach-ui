@@ -157,7 +157,7 @@ export const _DEFAULT_BASE_THEME: Theme = {
     },
     divider: 'rgba(100, 100, 100, 0.2)',
     action: 'rgba(75, 75, 75, 0.4)',
-    disabled: 'rgba(123, 123, 123, 0.4)',
+    disabled: 'rgba(123, 123, 123, 0.2)',
   },
   typography: {
     types: ThemeTypographyTypes,
