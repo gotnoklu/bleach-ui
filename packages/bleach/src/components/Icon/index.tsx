@@ -18,7 +18,7 @@ export default function Icon({ name, size = 22.5, color = 'action', style, ...pr
     <Octicons
       name={name}
       size={size}
-      style={[{ marginBottom: -3 }, style]}
+      style={[style]}
       color={getThemeProperty({ object: theme.palette, key: color, fallback: color })}
       {...props}
     />

@@ -1,4 +1,4 @@
-import { Children, type ReactNode } from 'react'
+import { Children, type ReactNode, useState } from 'react'
 import { Pressable, type PressableProps } from 'react-native'
 import type { ButtonVariant } from './types'
 import Typography, { type TypographyProps } from '../Typography'
@@ -29,6 +29,7 @@ export interface ButtonProps extends Omit<PressableProps, 'style'>, SxProps<Pres
   style?: PressableStyle
   children: ReactNode
   rounded?: boolean
+  disabled?: boolean
 }
 
 const StyledButton = styled(Pressable)<ButtonProps>(
@@ -41,7 +42,7 @@ const StyledButton = styled(Pressable)<ButtonProps>(
     return selectStyles(
       {
         if: variant === 'contained',
-        styles: { backgroundColor: disabled ? 'transparent' : buttonColor },
+        styles: { backgroundColor: disabled ? theme.palette.disabled : buttonColor },
       },
       {
         if: variant === 'outlined',
@@ -70,6 +71,7 @@ const StyledButton = styled(Pressable)<ButtonProps>(
               : size === 'medium'
                 ? theme.spacing.create(3)
                 : theme.spacing.create(4),
+          opacity: disabled ? 0.5 : 1,
           ...theme.typography.variants.body1,
         },
       }
@@ -84,7 +86,8 @@ const useLabelStyles = createComponentStyles(
       variant = 'text',
       color = 'primary',
       size = 'medium',
-    }: Pick<ButtonProps, 'variant' | 'color' | 'size'>
+      disabled,
+    }: Pick<ButtonProps, 'variant' | 'color' | 'size' | 'disabled'>
   ) => {
     const labelSizes = { small: 14, medium: 16, large: 18 }
     const buttonColor = getThemeProperty({ object: theme.palette, key: color, fallback: color })
@@ -95,23 +98,18 @@ const useLabelStyles = createComponentStyles(
         styles: {
           color: getThemeProperty({
             object: theme.palette,
-            key: `${color}.text`,
+            key: disabled ? 'text.disabled' : `${color}.text`,
             fallback: color,
           }),
         },
       },
       {
-        if: variant === 'outlined',
-        styles: { color: buttonColor },
-      },
-      {
-        if: variant === 'text',
-        styles: { color: buttonColor },
+        if: variant === 'outlined' || variant === 'text',
+        styles: { color: disabled ? theme.palette.disabled : buttonColor },
       },
       {
         styles: {
           fontSize: labelSizes[size],
-          lineHeight: labelSizes[size],
         },
       }
     )
@@ -122,13 +120,20 @@ export default function Button({
   pressedColor = 'primary.dark',
   slotProps,
   children,
+  variant = 'text',
+  disabled,
   ...props
 }: ButtonProps) {
   const theme = useTheme()
+  const [isPressed, setIsPressed] = useState(false)
   const labelStyles = useLabelStyles({
-    variant: props.variant,
-    color: props.color,
+    variant,
+    color:
+      isPressed && !disabled && (variant === 'text' || variant === 'outlined')
+        ? 'primary.text'
+        : props.color,
     size: props.size,
+    disabled,
   })
   const pressablePressedColor = getThemeProperty({
     object: theme.palette,
@@ -138,14 +143,18 @@ export default function Button({
 
   return (
     <StyledButton
+      variant={variant}
+      disabled={disabled}
       android_ripple={{
         color: pressablePressedColor,
         borderless: false,
         foreground: true,
       }}
+      onPressIn={() => !disabled && setIsPressed(true)}
+      onPressOut={() => !disabled && setIsPressed(false)}
       {...props}
       style={(state) => ({
-        backgroundColor: state.pressed ? pressablePressedColor : undefined,
+        backgroundColor: !disabled && state.pressed ? pressablePressedColor : undefined,
         ...(typeof props.style === 'function'
           ? props.style(state)
           : Array.isArray(props.style)
