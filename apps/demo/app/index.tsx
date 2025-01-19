@@ -234,9 +234,9 @@ export default function HomeScreen() {
                   Standard
                 </Typography>
                 <Tabs value={basicTab} onChange={setBasicTab} variant="standard">
-                  <Tabs.Tab label="Tab 1" value="tab1" />
-                  <Tabs.Tab label="Tab 2" value="tab2" />
-                  <Tabs.Tab label="Tab 3" value="tab3" />
+                  <Tabs.Tab label="Overview" value="tab1" />
+                  <Tabs.Tab label="Details" value="tab2" />
+                  <Tabs.Tab label="Settings" value="tab3" />
                 </Tabs>
               </Box>
               <Box>
@@ -244,12 +244,12 @@ export default function HomeScreen() {
                   Scrollable
                 </Typography>
                 <Tabs value={fullWidthTab} onChange={setFullWidthTab} variant="scrollable">
-                  <Tabs.Tab label="Tab 1" value="tab1" />
-                  <Tabs.Tab label="Tab 2" value="tab2" />
-                  <Tabs.Tab label="Tab 3" value="tab3" />
-                  <Tabs.Tab label="Tab 4" value="tab4" />
-                  <Tabs.Tab label="Tab 5" value="tab5" />
-                  <Tabs.Tab label="Tab 6" value="tab6" />
+                  <Tabs.Tab label="Profile" value="tab1" />
+                  <Tabs.Tab label="Posts" value="tab2" />
+                  <Tabs.Tab label="Photos" value="tab3" />
+                  <Tabs.Tab label="Following" value="tab4" />
+                  <Tabs.Tab label="Followers" value="tab5" />
+                  <Tabs.Tab label="Likes" value="tab6" />
                 </Tabs>
               </Box>
             </Box>
