@@ -9,7 +9,8 @@ SplashScreen.preventAutoHideAsync()
 
 export default function RootLayout() {
   const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    PlusJakartaSans: require('../assets/fonts/Plus Jakarta Sans/PlusJakartaSans-Regular.ttf'),
+    'PlusJakartaSans-Bold': require('../assets/fonts/Plus Jakarta Sans/PlusJakartaSans-Bold.ttf'),
   })
 
   useEffect(() => {
@@ -22,5 +23,5 @@ export default function RootLayout() {
     return null
   }
 
-  return <MainLayout fonts="SpaceMono" />
+  return <MainLayout />
 }
