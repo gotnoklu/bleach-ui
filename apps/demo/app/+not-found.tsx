@@ -1,21 +1,21 @@
-import { Link, Stack } from 'expo-router';
-import { StyleSheet } from 'react-native';
-
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import Box from 'bleach/dist/components/Box'
+import Typography from 'bleach/dist/components/Typography'
+import { Link, Stack } from 'expo-router'
+import { Fragment } from 'react'
+import { StyleSheet } from 'react-native'
 
 export default function NotFoundScreen() {
   return (
-    <>
+    <Fragment>
       <Stack.Screen options={{ title: 'Oops!' }} />
-      <ThemedView style={styles.container}>
-        <ThemedText type="title">This screen doesn't exist.</ThemedText>
+      <Box style={styles.container}>
+        <Typography variant="h3">This screen doesn't exist.</Typography>
         <Link href="/" style={styles.link}>
-          <ThemedText type="link">Go to home screen!</ThemedText>
+          <Typography color="primary">Go to home screen!</Typography>
         </Link>
-      </ThemedView>
-    </>
-  );
+      </Box>
+    </Fragment>
+  )
 }
 
 const styles = StyleSheet.create({
@@ -29,4 +29,4 @@ const styles = StyleSheet.create({
     marginTop: 15,
     paddingVertical: 15,
   },
-});
+})

@@ -9,8 +9,8 @@ export default function ScreenStack() {
       <Stack.Screen
         name="index"
         options={{
-          title: 'Welcome',
-          headerTitle: 'Welcome',
+          title: 'Home',
+          headerTitle: 'Home',
           headerTitleStyle: {
             color: theme.palette.text.primary,
             ...(theme.typography.types.medium as { fontFamily: string }),
