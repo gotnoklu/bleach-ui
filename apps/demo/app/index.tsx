@@ -6,6 +6,7 @@ import BackgroundView from 'bleach/dist/components/BackgroundView'
 import Switch from 'bleach/dist/components/Switch'
 import ListItem from 'bleach/dist/components/ListItem'
 import Divider from 'bleach/dist/components/Divider'
+import Slider from 'bleach/dist/components/Slider'
 import { Alert, ScrollView } from 'react-native'
 import { useState } from 'react'
 import { styled } from 'bleach'
@@ -15,7 +16,7 @@ const SubSection = styled(Box)<BoxProps>((theme) => ({ gap: theme.spacing.create
 
 export default function HomeScreen() {
   const [isChecked1, setIsChecked1] = useState(false)
-  const [_isChecked2, _setIsChecked2] = useState(true)
+  const [sliderValue1, setSliderValue1] = useState(50)
   const [loading, setLoading] = useState(false)
 
   const handleLoadingPress = () => {
@@ -84,6 +85,34 @@ export default function HomeScreen() {
                 Action
               </Button>
             </ListItem>
+          </SubSection>
+        </Section>
+
+        <Divider />
+
+        {/* Sliders Section */}
+        <Section>
+          <Typography variant="h2">Sliders</Typography>
+          <SubSection>
+            <Typography variant="h6" color="text.secondary">
+              Basic Sliders
+            </Typography>
+            <Box sx={() => ({ gap: 12 })}>
+              <Box>
+                <Slider value={sliderValue1} onChange={setSliderValue1} showValue />
+              </Box>
+              <Box>
+                <Slider min={0} max={50} step={5} showValue />
+              </Box>
+            </Box>
+          </SubSection>
+          <SubSection>
+            <Typography variant="h6" color="text.secondary">
+              States
+            </Typography>
+            <Box>
+              <Slider value={30} disabled />
+            </Box>
           </SubSection>
         </Section>
 
