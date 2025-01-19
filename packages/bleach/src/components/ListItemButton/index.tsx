@@ -9,6 +9,7 @@ export interface ListItemButtonProps extends PressableProps, SxProps<PressablePr
 
 const StyledListItemButton = styled(Pressable)<Omit<ListItemButtonProps, 'sx'>>(
   (theme, { disablePadding, disableMinHeight }) => ({
+    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     gap: theme.spacing.create(2),
