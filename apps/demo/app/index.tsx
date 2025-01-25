@@ -11,7 +11,6 @@ import Tabs from 'bleach/dist/components/Tabs'
 import Icon from 'bleach/dist/components/Icon'
 import { styled } from 'bleach/dist/theme/utilities'
 import Chip from 'bleach/dist/components/Chip'
-import Icon from 'bleach/dist/components/Icon'
 import { Alert, ScrollView } from 'react-native'
 import { useState } from 'react'
 
