@@ -28,7 +28,7 @@ const StyledAvatar = styled(View)<Omit<AvatarProps, 'sx'>>(
     const bgColor = getThemeProperty({
       object: theme.palette,
       key: backgroundColor,
-      fallback: theme.palette.action,
+      fallback: backgroundColor,
     })
 
     return selectStyles(
@@ -78,7 +78,9 @@ export default function Avatar({
     if (typeof children === 'string') {
       return (
         <Typography variant="body2" color={color} {...slotProps?.text}>
-          {children.charAt(0).toUpperCase()}
+          {children.includes(' ')
+            ? children.split(' ')[0][0] + children.split(' ')[1][0]
+            : children.charAt(0).toUpperCase()}
         </Typography>
       )
     }

@@ -387,9 +387,9 @@ export default function HomeScreen() {
               Variants
             </Typography>
             <ListItem disableMinHeight disablePadding>
-              <Avatar>JD</Avatar>
-              <Avatar variant="rounded">RN</Avatar>
-              <Avatar variant="square">UI</Avatar>
+              <Avatar>Jeremy Doe</Avatar>
+              <Avatar variant="rounded">Random Brand</Avatar>
+              <Avatar variant="square">Nathaniel Stevens</Avatar>
             </ListItem>
           </SubSection>
           <SubSection>
