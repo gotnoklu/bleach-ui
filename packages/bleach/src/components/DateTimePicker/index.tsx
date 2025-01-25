@@ -1,4 +1,4 @@
-import { useState, useCallback, type ReactNode } from 'react'
+import { useState, useCallback, useRef, useEffect, type ReactNode } from 'react'
 import {
   Modal,
   View,
@@ -142,6 +142,20 @@ export default function DateTimePicker({
   const [currentMonth, setCurrentMonth] = useState(selectedDate.getMonth())
   const [currentYear, setCurrentYear] = useState(selectedDate.getFullYear())
   const slideAnim = useState(new Animated.Value(0))[0]
+  const scrollViewRef = useRef<ScrollView>(null)
+
+  useEffect(() => {
+    if (scrollViewRef.current && calendarView === 'years') {
+      const startYear = currentYear - 100
+      const selectedYearIndex = selectedDate.getFullYear() - startYear
+      const rowIndex = Math.floor(selectedYearIndex / 3)
+      const scrollPosition = rowIndex * 40 - 120
+
+      setTimeout(() => {
+        scrollViewRef.current?.scrollTo({ y: Math.max(0, scrollPosition), animated: false })
+      }, 0)
+    }
+  }, [calendarView, currentYear, selectedDate])
 
   const formatDate = useCallback(
     (date: Date): string => {
@@ -213,8 +227,8 @@ export default function DateTimePicker({
 
   const renderYears = () => {
     const years = []
-    const startYear = currentYear - 100
-    const endYear = currentYear + 100
+    const startYear = currentYear - 10
+    const endYear = currentYear + 10
 
     for (let year = startYear; year <= endYear; year++) {
       const isSelected = year === selectedDate.getFullYear()
@@ -264,12 +278,10 @@ export default function DateTimePicker({
     }
 
     return (
-      <ScrollView
-        style={{ maxHeight: 300 }}
-        showsVerticalScrollIndicator={false}
-        contentOffset={{ x: 0, y: Math.floor((selectedDate.getFullYear() - startYear) / 3) * 40 }}
-      >
-        <StyledYearGrid>{years}</StyledYearGrid>
+      <ScrollView style={{ maxHeight: 300 }} showsVerticalScrollIndicator={false}>
+        <Box style={{ paddingVertical: 8 }}>
+          <StyledYearGrid>{years}</StyledYearGrid>
+        </Box>
       </ScrollView>
     )
   }
