@@ -61,11 +61,6 @@ const StyledPicker = styled(View)((theme: Theme) => ({
   elevation: 8,
 }))
 
-const StyledHeader = styled(View)((theme: Theme) => ({
-  backgroundColor: theme.palette.primary.main,
-  padding: theme.spacing.create(3),
-}))
-
 const StyledContent = styled(View)((theme: Theme) => ({
   padding: theme.spacing.create(2),
 }))
@@ -548,16 +543,6 @@ export default function DateTimePicker({
     </>
   )
 
-  const getHeaderText = () => {
-    if (currentView === 'date') {
-      return new Date(currentYear, currentMonth).toLocaleString('default', {
-        month: 'long',
-        year: 'numeric',
-      })
-    }
-    return formatDate(selectedDate)
-  }
-
   return (
     <StyledDateTimePicker fullWidth={fullWidth} {...props}>
       <TextField
@@ -595,12 +580,6 @@ export default function DateTimePicker({
         >
           <Pressable onPress={(e) => e.stopPropagation()}>
             <StyledPicker>
-              <StyledHeader>
-                <Typography variant="h6" color="primary.text">
-                  {getHeaderText()}
-                </Typography>
-              </StyledHeader>
-
               <Animated.View
                 style={{
                   flexDirection: 'row',
@@ -621,20 +600,33 @@ export default function DateTimePicker({
                           }}
                         >
                           {calendarView === 'days' && (
-                            <>
-                              <Button
-                                variant="text"
+                            <Box
+                              row
+                              style={{
+                                width: '100%',
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
+                              }}
+                            >
+                              <Pressable
                                 onPress={() => setCalendarView('years')}
-                                style={{ minWidth: 120 }}
+                                style={{ minWidth: 120, paddingLeft: theme.spacing.create(1) }}
                               >
-                                <Typography variant="h6">
+                                <Typography variant="h6" style={{ textAlign: 'left' }}>
                                   {new Date(currentYear, currentMonth).toLocaleString('default', {
                                     month: 'long',
                                     year: 'numeric',
                                   })}
                                 </Typography>
-                              </Button>
-                              <Box row style={{ gap: 8 }}>
+                              </Pressable>
+                              <Box
+                                row
+                                style={{
+                                  gap: 8,
+                                  paddingRight: theme.spacing.create(2),
+                                  height: '100%',
+                                }}
+                              >
                                 <Button
                                   variant="text"
                                   onPress={() => {
@@ -660,7 +652,7 @@ export default function DateTimePicker({
                                   <Icon name="chevron-right" size={24} color="text.secondary" />
                                 </Button>
                               </Box>
-                            </>
+                            </Box>
                           )}
                           {calendarView === 'years' && (
                             <Typography variant="h6" style={{ width: '100%', textAlign: 'center' }}>
