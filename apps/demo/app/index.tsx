@@ -9,6 +9,7 @@ import Divider from 'bleach/dist/components/Divider'
 import Slider from 'bleach/dist/components/Slider'
 import Tabs from 'bleach/dist/components/Tabs'
 import Icon from 'bleach/dist/components/Icon'
+import Avatar from 'bleach/dist/components/Avatar'
 import { styled } from 'bleach/dist/theme/utilities'
 import Chip from 'bleach/dist/components/Chip'
 import { Alert, ScrollView } from 'react-native'
@@ -375,6 +376,77 @@ export default function HomeScreen() {
             </Box>
           </SubSection>
         </Section>
+
+        <Divider />
+
+        {/* Avatar Section */}
+        <Section>
+          <Typography variant="h5">Avatars</Typography>
+          <SubSection>
+            <Typography variant="h6" color="text.secondary">
+              Variants
+            </Typography>
+            <ListItem disableMinHeight disablePadding>
+              <Avatar>JD</Avatar>
+              <Avatar variant="rounded">RN</Avatar>
+              <Avatar variant="square">UI</Avatar>
+            </ListItem>
+          </SubSection>
+          <SubSection>
+            <Typography variant="h6" color="text.secondary">
+              Sizes
+            </Typography>
+            <ListItem disableMinHeight disablePadding>
+              <Avatar size="small">S</Avatar>
+              <Avatar size="medium">M</Avatar>
+              <Avatar size="large">L</Avatar>
+            </ListItem>
+          </SubSection>
+          <SubSection>
+            <Typography variant="h6" color="text.secondary">
+              Colors
+            </Typography>
+            <ListItem disableMinHeight disablePadding>
+              <Avatar backgroundColor="primary.main" color="primary.contrastText">
+                P
+              </Avatar>
+              <Avatar backgroundColor="secondary.main" color="secondary.contrastText">
+                S
+              </Avatar>
+              <Avatar backgroundColor="error.main" color="error.contrastText">
+                E
+              </Avatar>
+            </ListItem>
+          </SubSection>
+          <SubSection>
+            <Typography variant="h6" color="text.secondary">
+              Images
+            </Typography>
+            <ListItem disableMinHeight disablePadding>
+              <Avatar src="https://i.pravatar.cc/300?img=1" alt="User 1" />
+              <Avatar variant="rounded" src="https://i.pravatar.cc/300?img=2" alt="User 2" />
+              <Avatar variant="square" src="https://i.pravatar.cc/300?img=3" alt="User 3" />
+            </ListItem>
+          </SubSection>
+          <SubSection>
+            <Typography variant="h6" color="text.secondary">
+              Custom Content
+            </Typography>
+            <ListItem disableMinHeight disablePadding>
+              <Avatar backgroundColor="primary.light">
+                <Icon name="person" size={20} color="primary.main" />
+              </Avatar>
+              <Avatar backgroundColor="secondary.light">
+                <Icon name="gear" size={20} color="secondary.main" />
+              </Avatar>
+              <Avatar backgroundColor="error.light">
+                <Icon name="bell" size={20} color="error.main" />
+              </Avatar>
+            </ListItem>
+          </SubSection>
+        </Section>
+
+        <Divider />
       </BackgroundView>
     </ScrollView>
   )
