@@ -407,14 +407,14 @@ export default function HomeScreen() {
               Colors
             </Typography>
             <ListItem disableMinHeight disablePadding>
-              <Avatar backgroundColor="primary.main" color="primary.contrastText">
-                P
+              <Avatar backgroundColor="primary.main" color="primary.text">
+                Primary
               </Avatar>
-              <Avatar backgroundColor="secondary.main" color="secondary.contrastText">
-                S
+              <Avatar backgroundColor="secondary" color="secondary.text">
+                Secondary
               </Avatar>
-              <Avatar backgroundColor="error.main" color="error.contrastText">
-                E
+              <Avatar backgroundColor="error.main" color="error.text">
+                Error
               </Avatar>
             </ListItem>
           </SubSection>
@@ -434,13 +434,13 @@ export default function HomeScreen() {
             </Typography>
             <ListItem disableMinHeight disablePadding>
               <Avatar backgroundColor="primary.light">
-                <Icon name="person" size={20} color="primary.main" />
+                <Icon name="person" size={20} color="primary.text" />
               </Avatar>
-              <Avatar backgroundColor="secondary.light">
-                <Icon name="gear" size={20} color="secondary.main" />
+              <Avatar backgroundColor="secondary">
+                <Icon name="gear" size={20} color="secondary.text" />
               </Avatar>
-              <Avatar backgroundColor="error.light">
-                <Icon name="bell" size={20} color="error.main" />
+              <Avatar backgroundColor="error">
+                <Icon name="bell" size={20} color="error.text" />
               </Avatar>
             </ListItem>
           </SubSection>

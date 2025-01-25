@@ -1,6 +1,12 @@
 import { createTheme, type Theme, type ThemeMode } from 'bleach'
 
 const LightTheme = createTheme({
+  palette: {
+    secondary: {
+      main: '#00D0FF',
+      text: '#000000',
+    },
+  },
   typography: {
     types: {
       bold: { fontFamily: 'PlusJakartaSans-Bold' },
