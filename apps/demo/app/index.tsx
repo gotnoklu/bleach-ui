@@ -495,7 +495,7 @@ export default function HomeScreen() {
                   color="success"
                   variant="contained"
                 >
-                  <Avatar size="medium" src="https://i.pravatar.cc/300?img=3" />
+                  <Avatar size="medium" variant="rounded" src="https://i.pravatar.cc/300?img=3" />
                 </Badge>
                 <Typography variant="body2" color="text.secondary">
                   Online status
@@ -567,9 +567,9 @@ export default function HomeScreen() {
                 </Typography>
               </BadgeItem>
               <BadgeItem>
-                <Badge content="1" color="primary" variant="outlined" rounded>
+                <Badge content="1" color="primary" rounded>
                   <Button variant="contained" size="small">
-                    Cart <Icon name="package" size={16} />
+                    Cart <Icon name="package" size={16} color="primary.text" />
                   </Button>
                 </Badge>
                 <Typography variant="body2" color="text.secondary">
@@ -600,7 +600,7 @@ export default function HomeScreen() {
                   variant="contained"
                   anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                 >
-                  <Avatar size="large" src="https://i.pravatar.cc/300?img=4">
+                  <Avatar size="large" variant="rounded" src="https://i.pravatar.cc/300?img=4">
                     JD
                   </Avatar>
                 </Badge>
@@ -611,12 +611,11 @@ export default function HomeScreen() {
               <BadgeItem>
                 <Badge
                   content="AWAY"
-                  color="warning"
-                  variant="outlined"
+                  color="error"
                   rounded
                   anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                 >
-                  <Avatar size="large" src="https://i.pravatar.cc/300?img=5">
+                  <Avatar size="large" variant="rounded" src="https://i.pravatar.cc/300?img=5">
                     MK
                   </Avatar>
                 </Badge>
@@ -631,7 +630,7 @@ export default function HomeScreen() {
                   variant="contained"
                   anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                 >
-                  <Avatar size="large" src="https://i.pravatar.cc/300?img=6">
+                  <Avatar size="large" variant="rounded" src="https://i.pravatar.cc/300?img=6">
                     VK
                   </Avatar>
                 </Badge>
@@ -648,9 +647,9 @@ export default function HomeScreen() {
             </Typography>
             <ListItem disableMinHeight disablePadding>
               <BadgeItem>
-                <Badge content="1st" color="warning" variant="contained" rounded>
-                  <Avatar size="large" backgroundColor="warning.light" color="warning.text">
-                    <Icon name="star" size={24} />
+                <Badge content="1st" color="secondary" variant="contained" rounded>
+                  <Avatar size="large" backgroundColor="primary.light" color="primary.text">
+                    <Icon name="star" size={24} color="primary.text" />
                   </Avatar>
                 </Badge>
                 <Typography variant="body2" color="text.secondary">
@@ -664,8 +663,8 @@ export default function HomeScreen() {
                   variant="contained"
                   anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
                 >
-                  <Avatar size="large" backgroundColor="primary.light" color="primary.text">
-                    <Icon name="gift" size={24} />
+                  <Avatar size="large" backgroundColor="primary.main" color="primary.text">
+                    <Icon name="gift" size={24} color="primary.text" />
                   </Avatar>
                 </Badge>
                 <Typography variant="body2" color="text.secondary">
@@ -676,12 +675,12 @@ export default function HomeScreen() {
                 <Badge
                   content="PRO"
                   color="secondary"
-                  variant="outlined"
+                  variant="contained"
                   rounded
                   anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                 >
                   <Avatar size="large" backgroundColor="secondary.light" color="secondary.text">
-                    <Icon name="rocket" size={24} />
+                    <Icon name="rocket" size={24} color="secondary.text" />
                   </Avatar>
                 </Badge>
                 <Typography variant="body2" color="text.secondary">
