@@ -1,6 +1,7 @@
-import { Pressable, type PressableProps } from 'react-native'
+import { Pressable, type View, type PressableProps } from 'react-native'
 import { styled } from '../../theme/utilities'
 import type { SxProps } from '../../theme/types'
+import { type ForwardedRef, forwardRef } from 'react'
 
 export interface ListItemButtonProps extends PressableProps, SxProps<PressableProps> {
   disablePadding?: boolean
@@ -19,6 +20,15 @@ const StyledListItemButton = styled(Pressable)<Omit<ListItemButtonProps, 'sx'>>(
   })
 )
 
-export default function ListItemButton({ children, ...props }: ListItemButtonProps) {
-  return <StyledListItemButton {...props}>{children}</StyledListItemButton>
-}
+const ListItemButton = forwardRef(function ListItemButton(
+  { children, ...props }: ListItemButtonProps,
+  ref: ForwardedRef<View | null>
+) {
+  return (
+    <StyledListItemButton ref={ref} {...props}>
+      {children}
+    </StyledListItemButton>
+  )
+})
+
+export default ListItemButton

@@ -1,4 +1,4 @@
-import { Children, type ReactNode } from 'react'
+import { Children, type Component, type ForwardedRef, forwardRef, type ReactNode } from 'react'
 import { Pressable, type PressableProps } from 'react-native'
 import Typography, { type TypographyProps } from '../Typography'
 import type { Palette, SxProps, TextColor } from '../../theme/types'
@@ -34,7 +34,7 @@ export interface ButtonProps extends Omit<PressableProps, 'style'>, SxProps<Pres
   disabled?: boolean
 }
 
-const StyledButton = styled(Pressable)<ButtonProps>(
+const StyledButton = styled(Pressable)<Omit<ButtonProps, 'sx'>>(
   (
     theme,
     { variant = 'text', color = 'primary', size = 'medium', fullWidth, disabled, rounded }
@@ -118,14 +118,17 @@ const useLabelStyles = createComponentStyles(
   }
 )
 
-export default function Button({
-  pressedColor = 'primary.dark',
-  slotProps,
-  children,
-  variant = 'text',
-  disabled,
-  ...props
-}: ButtonProps) {
+const Button = forwardRef(function Button(
+  {
+    pressedColor = 'primary.dark',
+    slotProps,
+    children,
+    variant = 'text',
+    disabled,
+    ...props
+  }: ButtonProps,
+  ref: ForwardedRef<Component<ButtonProps> | null>
+) {
   const theme = useTheme()
 
   const labelStyles = useLabelStyles({
@@ -143,6 +146,7 @@ export default function Button({
 
   return (
     <StyledButton
+      ref={ref}
       variant={variant}
       disabled={disabled}
       android_ripple={{
@@ -179,4 +183,6 @@ export default function Button({
       })}
     </StyledButton>
   )
-}
+})
+
+export default Button
