@@ -1,5 +1,4 @@
-import { useMemo } from 'react'
-import { ScrollView, StyleSheet } from 'react-native'
+import { ScrollView } from 'react-native'
 import Typography from 'bleach/dist/components/Typography'
 import Box from 'bleach/dist/components/Box'
 import BackgroundView from 'bleach/dist/components/BackgroundView'
@@ -14,6 +13,7 @@ import { TabsShowcase } from '@/components/showcase/tabs'
 import { AvatarShowcase } from '@/components/showcase/avatar'
 import type { Theme } from 'bleach/dist/theme/types'
 import DateTimePickerShowcase from '@/components/showcase/datetime-picker'
+import { Fragment } from 'react'
 
 const SHOWCASE_COMPONENTS = [
   ButtonShowcase,
@@ -28,38 +28,29 @@ const SHOWCASE_COMPONENTS = [
 ] as const
 
 const ShowcaseSection = ({ Component }: { Component: React.ComponentType }) => (
-  <>
+  <Fragment>
     <Component />
     <Divider />
-  </>
+  </Fragment>
 )
 
 export default function HomeScreen() {
-  const styles = useMemo(
-    () =>
-      StyleSheet.create({
-        scrollView: {
-          flex: 1,
-        },
-        contentContainer: {
-          paddingBottom: 40,
-        },
-      }),
-    []
-  )
-
-  const backgroundViewStyle = useMemo(
-    () => (theme: Theme) => ({
-      paddingHorizontal: theme.spacing.create(2),
-      paddingVertical: theme.spacing.create(4),
-      gap: theme.spacing.create(5),
-    }),
-    []
-  )
-
   return (
-    <ScrollView style={styles.scrollView} contentContainerStyle={styles.contentContainer}>
-      <BackgroundView sx={backgroundViewStyle}>
+    <ScrollView
+      style={{
+        flex: 1,
+      }}
+      contentContainerStyle={{
+        paddingBottom: 40,
+      }}
+    >
+      <BackgroundView
+        sx={(theme: Theme) => ({
+          paddingHorizontal: theme.spacing.create(2),
+          paddingVertical: theme.spacing.create(4),
+          gap: theme.spacing.create(5),
+        })}
+      >
         <Box>
           <Typography variant="h1" fontWeight="medium" gutterBottom>
             Bleach UI
