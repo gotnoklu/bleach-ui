@@ -13,6 +13,7 @@ import { SwitchShowcase } from '@/components/showcase/switch'
 import { TabsShowcase } from '@/components/showcase/tabs'
 import { AvatarShowcase } from '@/components/showcase/avatar'
 import type { Theme } from 'bleach/dist/theme/types'
+import DateTimePickerShowcase from '@/components/showcase/datetime-picker'
 
 const SHOWCASE_COMPONENTS = [
   ButtonShowcase,
@@ -23,6 +24,7 @@ const SHOWCASE_COMPONENTS = [
   TabsShowcase,
   AvatarShowcase,
   BadgeShowcase,
+  DateTimePickerShowcase,
 ] as const
 
 const ShowcaseSection = ({ Component }: { Component: React.ComponentType }) => (
