@@ -11,11 +11,12 @@ import { CheckboxShowcase } from '@/components/showcase/checkbox'
 import { SwitchShowcase } from '@/components/showcase/switch'
 import { TabsShowcase } from '@/components/showcase/tabs'
 import { AvatarShowcase } from '@/components/showcase/avatar'
-import type { Theme } from 'bleach/dist/theme/types'
 import DateTimePickerShowcase from '@/components/showcase/datetime-picker'
 import { Fragment } from 'react'
+import { PopupShowcase } from '../components/showcase/popup'
 
 const SHOWCASE_COMPONENTS = [
+  PopupShowcase,
   ButtonShowcase,
   ChipShowcase,
   SliderShowcase,
@@ -45,7 +46,7 @@ export default function HomeScreen() {
       }}
     >
       <BackgroundView
-        sx={(theme: Theme) => ({
+        sx={(theme) => ({
           paddingHorizontal: theme.spacing.create(2),
           paddingVertical: theme.spacing.create(4),
           gap: theme.spacing.create(5),
