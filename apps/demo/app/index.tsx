@@ -14,16 +14,18 @@ import { AvatarShowcase } from '@/components/showcase/avatar'
 import DateTimePickerShowcase from '@/components/showcase/datetime-picker'
 import { Fragment } from 'react'
 import { PopupShowcase } from '../components/showcase/popup'
+import { IconButtonShowcase } from '../components/showcase/icon-button'
 
 const SHOWCASE_COMPONENTS = [
-  PopupShowcase,
   ButtonShowcase,
+  IconButtonShowcase,
   ChipShowcase,
   SliderShowcase,
   CheckboxShowcase,
   SwitchShowcase,
   TabsShowcase,
   AvatarShowcase,
+  PopupShowcase,
   BadgeShowcase,
   DateTimePickerShowcase,
 ] as const
