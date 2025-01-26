@@ -115,19 +115,19 @@ function BaseDropdown<Options extends Array<Record<PropertyKey, any>> = []>({
   displayTopOptions,
   ...props
 }: BaseDropdownProps<Options>) {
-  const [selectState, setSelectState] = useState({
+  const [dropdownState, setDropdownState] = useState({
     isOpen: false,
     topOffset: 0,
     leftOffset: 0,
     width: 0,
   })
   const [filtered, setFiltered] = useState<Array<Record<PropertyKey, any>> | null>(null)
-  const selectEl = useRef<View | null>(null)
+  const dropdownEl = useRef<View | null>(null)
   const optionsBoxEl = useRef<View | null>(null)
   const animationHeight = useSharedValue(0)
   const dimensions = useWindowDimensions()
 
-  const selectAnimationStyles = useAnimatedStyle(() => {
+  const dropdownAnimationStyles = useAnimatedStyle(() => {
     return {
       maxHeight: withTiming(animationHeight.value, { duration: 300 }),
     }
@@ -142,23 +142,23 @@ function BaseDropdown<Options extends Array<Record<PropertyKey, any>> = []>({
     return result
   }, [options])
 
-  function closeSelect() {
+  function closeDropdown() {
     animationHeight.value = 0
     Keyboard.dismiss()
     setFiltered(null)
     setTimeout(() => {
-      setSelectState((prev) => ({ ...prev, isOpen: false }))
+      setDropdownState((prev) => ({ ...prev, isOpen: false }))
     }, 250)
   }
 
-  function openSelect() {
+  function openDropdown() {
     let optionsBoxHeight = 0
 
     optionsBoxEl.current?.measureInWindow((_left, _top, _width, height) => {
       optionsBoxHeight = height
     })
 
-    selectEl.current?.measureInWindow((left, top, width, height) => {
+    dropdownEl.current?.measureInWindow((left, top, width, height) => {
       let topOffset = 0
 
       if (top > dimensions.height - optionsBoxHeight) {
@@ -168,21 +168,21 @@ function BaseDropdown<Options extends Array<Record<PropertyKey, any>> = []>({
       }
 
       animationHeight.value = maxOptionsPaperHeight
-      setSelectState((prev) => ({ ...prev, isOpen: true, topOffset, leftOffset: left, width }))
+      setDropdownState((prev) => ({ ...prev, isOpen: true, topOffset, leftOffset: left, width }))
     })
   }
 
-  function toggleSelect() {
-    if (selectState.isOpen) {
-      return closeSelect()
+  function toggleDropdown() {
+    if (dropdownState.isOpen) {
+      return closeDropdown()
     }
 
-    return openSelect()
+    return openDropdown()
   }
 
   function selectOption(option: Options[number]) {
     if (typeof onChange === 'function') onChange(option)
-    closeSelect()
+    closeDropdown()
   }
 
   function getSelectedOption() {
@@ -226,9 +226,9 @@ function BaseDropdown<Options extends Array<Record<PropertyKey, any>> = []>({
   const DropdownEl = (
     <Fragment>
       <StyledDropdown
-        ref={selectEl}
-        isOpen={selectState.isOpen}
-        onPress={toggleSelect}
+        ref={dropdownEl}
+        isOpen={dropdownState.isOpen}
+        onPress={toggleDropdown}
         variant={variant}
         fullWidth={fullWidth}
         {...props}
@@ -243,30 +243,33 @@ function BaseDropdown<Options extends Array<Record<PropertyKey, any>> = []>({
         <Show visible={!displayOnlyIcon}>
           {slots?.rightAdornments ?? (
             <Icon
-              name={selectState.isOpen ? 'chevron-up' : 'chevron-down'}
+              name={dropdownState.isOpen ? 'chevron-up' : 'chevron-down'}
               size={16}
-              color={selectState.isOpen ? 'primary.main' : 'action'}
+              color={dropdownState.isOpen ? 'primary.main' : 'action'}
             />
           )}
         </Show>
       </StyledDropdown>
       <Modal
-        visible={selectState.isOpen}
+        visible={dropdownState.isOpen}
         transparent={true}
         animationType="none"
-        onRequestClose={closeSelect}
-        onDismiss={closeSelect}
+        onRequestClose={closeDropdown}
+        onDismiss={closeDropdown}
       >
-        <Pressable style={[StyleSheet.absoluteFill, { overflow: 'hidden' }]} onPress={closeSelect}>
+        <Pressable
+          style={[StyleSheet.absoluteFill, { overflow: 'hidden' }]}
+          onPress={closeDropdown}
+        >
           <AnimatedPaper
             ref={optionsBoxEl}
             {...slotProps?.paper}
             style={[
-              selectAnimationStyles,
+              dropdownAnimationStyles,
               {
-                top: selectState.topOffset,
-                left: selectState.leftOffset,
-                width: selectState.width,
+                top: dropdownState.topOffset,
+                left: dropdownState.leftOffset,
+                width: dropdownState.width,
               },
               slotProps?.paper?.style,
             ]}
