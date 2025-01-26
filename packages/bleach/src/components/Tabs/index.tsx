@@ -50,10 +50,10 @@ interface StyledTabsContainerProps extends ViewProps {
   children?: ReactNode
 }
 
-const StyledTabsContainer = styled(View)<StyledTabsContainerProps>(() => ({
+const StyledTabsContainer = styled(View)<StyledTabsContainerProps>((theme) => ({
   flexDirection: 'row',
   borderBottomWidth: 1,
-  borderBottomColor: 'divider',
+  borderBottomColor: theme.palette.divider,
   position: 'relative',
 }))
 
@@ -91,44 +91,43 @@ const StyledIndicator = styled(View)<StyledIndicatorProps>((theme: Theme) => ({
 
 const AnimatedIndicator = Animated.createAnimatedComponent(StyledIndicator)
 
-const Tab = forwardRef<View, TabProps & { variant?: TabsProps['variant'] }>(
-  ({ label, value, icon, disabled, isSelected, onPress, variant, ...props }, ref) => {
-    const [pressed, setPressed] = useState(false)
+const Tab = forwardRef<View, TabProps & { variant?: TabsProps['variant'] }>(function Tab(
+  { label, value, icon, disabled, isSelected, onPress, variant, ...props },
+  ref
+) {
+  const [pressed, setPressed] = useState(false)
 
-    const iconElement =
-      icon && React.isValidElement(icon)
-        ? React.cloneElement(icon, {
-            color: isSelected ? 'primary.main' : 'text.primary',
-            ...(icon.props as any),
-          })
-        : icon
+  const iconElement =
+    icon && React.isValidElement(icon)
+      ? React.cloneElement(icon, {
+          color: isSelected ? 'primary.main' : 'text.primary',
+          ...(icon.props as any),
+        })
+      : icon
 
-    return (
-      <StyledTab
-        ref={ref}
-        disabled={disabled}
-        isSelected={isSelected}
-        pressed={pressed}
-        variant={variant}
-        onPressIn={() => setPressed(true)}
-        onPressOut={() => setPressed(false)}
-        onPress={disabled ? undefined : onPress}
-        {...props}
+  return (
+    <StyledTab
+      ref={ref}
+      disabled={disabled}
+      isSelected={isSelected}
+      pressed={pressed}
+      variant={variant}
+      onPressIn={() => setPressed(true)}
+      onPressOut={() => setPressed(false)}
+      onPress={disabled ? undefined : onPress}
+      {...props}
+    >
+      {iconElement}
+      <Typography
+        variant="body2"
+        fontWeight="medium"
+        color={isSelected ? 'primary.main' : 'text.primary'}
       >
-        {iconElement}
-        <Typography
-          variant="body2"
-          fontWeight="medium"
-          color={isSelected ? 'primary.main' : 'text.primary'}
-        >
-          {label}
-        </Typography>
-      </StyledTab>
-    )
-  }
-)
-
-Tab.displayName = 'Tab'
+        {label}
+      </Typography>
+    </StyledTab>
+  )
+})
 
 const Tabs = function Tabs({
   value,
