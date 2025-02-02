@@ -1,7 +1,7 @@
 import { styled } from 'bleach/dist/theme/utilities'
 import Box, { type BoxProps } from 'bleach/dist/components/Box'
 import Typography from 'bleach/dist/components/Typography'
-import Popup from 'bleach/dist/components/Popup'
+import Popup, { PopupTrigger, PopupContent } from 'bleach/dist/components/Popup'
 import Paper from 'bleach/dist/components/Paper'
 import Icon from 'bleach/dist/components/Icon'
 import ListItemButton from 'bleach/dist/components/ListItemButton'
@@ -25,19 +25,31 @@ export const PopupShowcase = () => {
           Positions
         </Typography>
         <Box alignItems="center" gap={2} row>
-          <Popup popper={PopupPaper} position="top-left">
-            <Button style={{ flex: 1 }}>Top-Left</Button>
+          <Popup position="top-left">
+            <PopupTrigger>
+              <Button style={{ flex: 1 }}>Top-Left</Button>
+            </PopupTrigger>
+            <PopupContent>{PopupPaper}</PopupContent>
           </Popup>
-          <Popup popper={PopupPaper} position="top-right">
-            <Button style={{ flex: 1 }}>Top-Right</Button>
+          <Popup position="top-right">
+            <PopupTrigger>
+              <Button style={{ flex: 1 }}>Top-Right</Button>
+            </PopupTrigger>
+            <PopupContent>{PopupPaper}</PopupContent>
           </Popup>
         </Box>
         <Box alignItems="center" gap={2} row>
-          <Popup popper={PopupPaper} position="bottom-right">
-            <Button style={{ flex: 1 }}>Bottom-Right</Button>
+          <Popup position="bottom-right">
+            <PopupTrigger>
+              <Button style={{ flex: 1 }}>Bottom-Right</Button>
+            </PopupTrigger>
+            <PopupContent>{PopupPaper}</PopupContent>
           </Popup>
-          <Popup popper={PopupPaper} position="bottom-left">
-            <Button style={{ flex: 1 }}>Bottom-Left</Button>
+          <Popup position="bottom-left">
+            <PopupTrigger>
+              <Button style={{ flex: 1 }}>Bottom-Left</Button>
+            </PopupTrigger>
+            <PopupContent>{PopupPaper}</PopupContent>
           </Popup>
         </Box>
       </SubSection>
@@ -45,17 +57,23 @@ export const PopupShowcase = () => {
         <Typography variant="h6" color="text.secondary">
           Variants
         </Typography>
-        <Popup popper={PopupPaper}>
-          <ListItemButton sx={({ palette }) => ({ backgroundColor: palette.backgrounds.paper })}>
-            <Typography style={{ flex: 1 }}>Press For Default Popup</Typography>
-            <Icon name="list-unordered" />
-          </ListItemButton>
+        <Popup>
+          <PopupTrigger>
+            <ListItemButton sx={({ palette }) => ({ backgroundColor: palette.backgrounds.paper })}>
+              <Typography style={{ flex: 1 }}>Press For Default Popup</Typography>
+              <Icon name="list-unordered" />
+            </ListItemButton>
+          </PopupTrigger>
+          <PopupContent>{PopupPaper}</PopupContent>
         </Popup>
-        <Popup popper={PopupPaper} elevate>
-          <ListItemButton sx={({ palette }) => ({ backgroundColor: palette.backgrounds.paper })}>
-            <Typography style={{ flex: 1 }}>Press For Elevated Popup</Typography>
-            <Icon name="list-unordered" />
-          </ListItemButton>
+        <Popup elevate>
+          <PopupTrigger>
+            <ListItemButton sx={({ palette }) => ({ backgroundColor: palette.backgrounds.paper })}>
+              <Typography style={{ flex: 1 }}>Press For Elevated Popup</Typography>
+              <Icon name="list-unordered" />
+            </ListItemButton>
+          </PopupTrigger>
+          <PopupContent>{PopupPaper}</PopupContent>
         </Popup>
       </SubSection>
     </Section>
