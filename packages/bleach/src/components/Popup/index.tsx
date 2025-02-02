@@ -115,7 +115,6 @@ export default function Popup({
   }
 
   function calculateContentLayout(view: View | null) {
-    console.log(view)
     view?.measure((_left, _top, _width, height) => {
       const styles = {} as { top: number; left: number; right: number; bottom: number }
 
