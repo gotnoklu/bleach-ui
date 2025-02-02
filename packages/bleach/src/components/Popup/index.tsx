@@ -40,12 +40,10 @@ function getPopupChildren(
   children: Array<ReactNode>,
   refs: { trigger: MutableRefObject<View | null> }
 ) {
-  const result = {
-    trigger: null as ReactElement<
-      PropsWithRef<PopupTriggerProps & { ref: MutableRefObject<View | null> }>
-    > | null,
-    content: null as ReactNode,
-  }
+  const result = [null, null] as [
+    ReactElement<PropsWithRef<PopupTriggerProps & { ref: MutableRefObject<View | null> }>> | null,
+    ReactNode,
+  ]
   let index = 0
   let child: ReactNode
 
@@ -53,22 +51,19 @@ function getPopupChildren(
     child = children[index]
     if (isValidElement(child)) {
       if (child.type === PopupTrigger) {
-        result.trigger = cloneElement(
+        result[0] = cloneElement(
           child as ReactElement<
             PropsWithRef<PopupTriggerProps & { ref: MutableRefObject<View | null> }>
           >,
           { ref: refs.trigger }
         )
       } else if (child.type === PopupContent) {
-        result.content = child
+        result[1] = child
       }
     }
   }
 
-  return [result.trigger, result.content] as [
-    ReactElement<PropsWithRef<PopupTriggerProps & { ref: MutableRefObject<View | null> }>> | null,
-    ReactNode,
-  ]
+  return result
 }
 
 const StyledPopup = styled(Modal)<
