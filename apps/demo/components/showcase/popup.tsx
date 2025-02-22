@@ -24,30 +24,78 @@ export const PopupShowcase = () => {
         <Typography variant="h6" color="text.secondary">
           Positions
         </Typography>
-        <Box alignItems="center" gap={2} row>
+        <Box gap={2} direction="row">
+          <Popup position="left">
+            <PopupTrigger>
+              <Button variant="outlined">Left</Button>
+            </PopupTrigger>
+            <PopupContent>{PopupPaper}</PopupContent>
+          </Popup>
+          <Popup position="right">
+            <PopupTrigger>
+              <Button variant="outlined">Right</Button>
+            </PopupTrigger>
+            <PopupContent>{PopupPaper}</PopupContent>
+          </Popup>
+        </Box>
+        <Box gap={2} justifyContent="center" direction="row">
+          <Popup position="left-center">
+            <PopupTrigger>
+              <Button variant="outlined">Left-Center</Button>
+            </PopupTrigger>
+            <PopupContent>{PopupPaper}</PopupContent>
+          </Popup>
+          <Popup position="right-center">
+            <PopupTrigger>
+              <Button variant="outlined">Right-Center</Button>
+            </PopupTrigger>
+            <PopupContent>{PopupPaper}</PopupContent>
+          </Popup>
+        </Box>
+        <Box gap={2} alignItems="center" justifyContent="center" direction="row">
+          <Popup position="center">
+            <PopupTrigger>
+              <Button variant="outlined">Center</Button>
+            </PopupTrigger>
+            <PopupContent>
+              <Paper sx={({ spacing }) => ({ padding: spacing.create(2) })}>
+                <Typography>I will appear from the center of the button</Typography>
+              </Paper>
+            </PopupContent>
+          </Popup>
+        </Box>
+        <Box gap={2} direction="row">
           <Popup position="top-left">
             <PopupTrigger>
-              <Button style={{ flex: 1 }}>Top-Left</Button>
+              <Button variant="outlined" style={{ flex: 1 }}>
+                Top-Left
+              </Button>
             </PopupTrigger>
             <PopupContent>{PopupPaper}</PopupContent>
           </Popup>
           <Popup position="top-right">
             <PopupTrigger>
-              <Button style={{ flex: 1 }}>Top-Right</Button>
+              <Button variant="outlined" style={{ flex: 1 }}>
+                Top-Right
+              </Button>
             </PopupTrigger>
             <PopupContent>{PopupPaper}</PopupContent>
           </Popup>
         </Box>
-        <Box alignItems="center" gap={2} row>
+        <Box gap={2} direction="row">
           <Popup position="bottom-right">
             <PopupTrigger>
-              <Button style={{ flex: 1 }}>Bottom-Right</Button>
+              <Button variant="outlined" style={{ flex: 1 }}>
+                Bottom-Right
+              </Button>
             </PopupTrigger>
             <PopupContent>{PopupPaper}</PopupContent>
           </Popup>
           <Popup position="bottom-left">
             <PopupTrigger>
-              <Button style={{ flex: 1 }}>Bottom-Left</Button>
+              <Button variant="outlined" style={{ flex: 1 }}>
+                Bottom-Left
+              </Button>
             </PopupTrigger>
             <PopupContent>{PopupPaper}</PopupContent>
           </Popup>
@@ -74,6 +122,54 @@ export const PopupShowcase = () => {
             </ListItemButton>
           </PopupTrigger>
           <PopupContent>{PopupPaper}</PopupContent>
+        </Popup>
+        <Popup closeOnElevatedTriggerEvent="onPress" elevate>
+          <PopupTrigger>
+            <Button variant="contained">Toggle Nested Menu</Button>
+          </PopupTrigger>
+          <PopupContent>
+            <Paper>
+              <ListItemButton size="small" divider>
+                <Typography>Select</Typography>
+              </ListItemButton>
+              <ListItemButton size="small" divider>
+                <Typography color="error">Delete</Typography>
+              </ListItemButton>
+              <Popup position="right">
+                <PopupTrigger>
+                  <ListItemButton size="small">
+                    <Typography>More Actions</Typography>
+                    <Icon name="chevron-right" />
+                  </ListItemButton>
+                </PopupTrigger>
+                <PopupContent>
+                  <Paper>
+                    <ListItemButton size="small" divider>
+                      <Typography>Nested 1</Typography>
+                    </ListItemButton>
+                    <Popup position="left">
+                      <PopupTrigger>
+                        <ListItemButton size="small">
+                          <Icon name="chevron-left" />
+                          <Typography>Nested 2</Typography>
+                        </ListItemButton>
+                      </PopupTrigger>
+                      <PopupContent>
+                        <Paper>
+                          <ListItemButton size="small" divider>
+                            <Typography>Inner 1</Typography>
+                          </ListItemButton>
+                          <ListItemButton size="small">
+                            <Typography>Inner 2</Typography>
+                          </ListItemButton>
+                        </Paper>
+                      </PopupContent>
+                    </Popup>
+                  </Paper>
+                </PopupContent>
+              </Popup>
+            </Paper>
+          </PopupContent>
         </Popup>
       </SubSection>
     </Section>

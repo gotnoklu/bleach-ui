@@ -22,14 +22,14 @@ const PopupTrigger = forwardRef(function PopupTrigger(
 
   if (isValidElement(children)) {
     return cloneElement(children as Exclude<typeof children, ReactElement>, {
+      [triggerOnEvent]: onShow,
       ...props,
       ref,
-      [triggerOnEvent]: onShow,
     })
   }
 
   return (
-    <Pressable {...{ ...props, [triggerOnEvent]: onShow }} ref={ref}>
+    <Pressable {...{ [triggerOnEvent]: onShow, ...props }} ref={ref}>
       {children}
     </Pressable>
   )

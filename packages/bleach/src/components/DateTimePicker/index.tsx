@@ -16,6 +16,7 @@ import Icon from '../Icon'
 import Box from '../Box'
 import Button from '../Button'
 import TextField, { type TextFieldProps } from '../TextField'
+import IconButton from '../IconButton'
 
 export type DateTimePickerVariant = 'outlined' | 'filled'
 export type DateTimePickerView = 'date' | 'time' | 'datetime'
@@ -78,14 +79,6 @@ const StyledCell = styled(View)((theme: Theme) => ({
   alignItems: 'center',
   justifyContent: 'center',
   height: 44,
-}))
-
-const StyledButton = styled(Pressable)((_theme: Theme) => ({
-  width: 40,
-  height: 40,
-  borderRadius: 20,
-  alignItems: 'center',
-  justifyContent: 'center',
 }))
 
 const StyledYearGrid = styled(View)((theme: Theme) => ({
@@ -231,32 +224,21 @@ export default function DateTimePicker({
     const endYear = currentYear + 10
 
     for (let year = startYear; year <= endYear; year++) {
-      const isSelected = year === selectedDate.getFullYear()
-      const isCurrent = year === currentYear
+      const isSelected = year === currentYear
+      const isCurrent = year === selectedDate.getFullYear()
       const isDisabled =
         (minDate && new Date(year, 11, 31) < minDate) || (maxDate && new Date(year, 0, 1) > maxDate)
 
       years.push(
         <StyledYearCell key={year}>
           <Button
-            variant={isSelected ? 'contained' : 'text'}
+            variant={isSelected ? 'contained' : isCurrent ? 'outlined' : 'text'}
             onPress={() => {
-              if (!isDisabled) {
-                setCurrentYear(year)
-                setCalendarView('months')
-              }
+              setCurrentYear(year)
+              setCalendarView('months')
             }}
             disabled={isDisabled}
-            style={{
-              width: '100%',
-              height: 40,
-              backgroundColor: isSelected
-                ? theme.palette.primary.main
-                : isCurrent
-                  ? theme.palette.primary.light
-                  : 'transparent',
-              opacity: isDisabled ? 0.5 : 1,
-            }}
+            fullWidth
           >
             <Typography
               variant="body2"
@@ -304,33 +286,27 @@ export default function DateTimePicker({
     ]
 
     monthNames.forEach((month, index) => {
-      const isSelected =
-        index === selectedDate.getMonth() && currentYear === selectedDate.getFullYear()
-      const isCurrent = index === currentMonth
+      const isSelected = index === currentMonth
+      const isCurrent = index === selectedDate.getMonth()
+
       months.push(
         <StyledMonthCell key={month}>
           <Button
-            variant={isSelected ? 'contained' : 'text'}
+            variant={isSelected ? 'contained' : isCurrent ? 'outlined' : 'text'}
             onPress={() => {
               setCurrentMonth(index)
               setCalendarView('days')
             }}
-            style={{
-              width: '100%',
-              height: 36,
-              backgroundColor: isSelected
-                ? theme.palette.secondary.main
-                : isCurrent
-                  ? theme.palette.primary.main
-                  : 'transparent',
+            slotProps={{
+              label: {
+                variant: 'body2',
+                color: !isSelected ? (isCurrent ? 'primary.main' : 'text.primary') : undefined,
+                sx: ({ typography }) => ({ fontSize: typography.variants.body2.fontSize }),
+              },
             }}
+            fullWidth
           >
-            <Typography
-              variant="body2"
-              color={isSelected ? 'primary.text' : isCurrent ? 'primary.text' : 'text.primary'}
-            >
-              {month.substring(0, 3)}
-            </Typography>
+            {month.substring(0, 3)}
           </Button>
         </StyledMonthCell>
       )
@@ -379,33 +355,23 @@ export default function DateTimePicker({
 
       days.push(
         <StyledCell key={i}>
-          <StyledButton
-            onPress={() => !isDisabled && handleDateSelect(currentDate)}
-            disabled={isDisabled}
-            style={{
-              backgroundColor: isSelected
-                ? theme.palette.primary.main
-                : isToday
-                  ? theme.palette.primary.light
-                  : 'transparent',
-              opacity: isDisabled ? 0.5 : 1,
+          <Button
+            size="small"
+            variant={isSelected ? 'contained' : isToday ? 'outlined' : 'text'}
+            slotProps={{
+              label: {
+                variant: 'body2',
+                color: !isSelected ? (isToday ? 'primary.main' : 'text.primary') : undefined,
+                sx: ({ typography }) => ({ fontSize: typography.variants.body2.fontSize }),
+              },
             }}
+            onPress={() => handleDateSelect(currentDate)}
+            disabled={isDisabled}
+            style={{ minWidth: 40, paddingHorizontal: 0 }}
+            rounded
           >
-            <Typography
-              variant="body2"
-              color={
-                isSelected
-                  ? 'primary.text'
-                  : isDisabled
-                    ? 'disabled'
-                    : isToday
-                      ? 'primary.main'
-                      : 'text.primary'
-              }
-            >
-              {i}
-            </Typography>
-          </StyledButton>
+            {i}
+          </Button>
         </StyledCell>
       )
     }
@@ -480,7 +446,7 @@ export default function DateTimePicker({
     }
 
     return (
-      <Box row style={{ gap: 16 }}>
+      <Box direction="row" style={{ gap: 16 }}>
         <Box style={{ flex: 1 }}>
           <Typography
             variant="body2"
@@ -518,24 +484,24 @@ export default function DateTimePicker({
   const renderTimeView = () => (
     <>
       <Box
-        row
+        direction="row"
         style={{
           justifyContent: 'space-between',
           alignItems: 'center',
           marginBottom: 24,
         }}
       >
-        <Button variant="text" onPress={animateToDate}>
+        <IconButton variant="text" onPress={animateToDate}>
           <Icon name="arrow-left" size={24} color="text.secondary" />
-        </Button>
-        <Typography variant="h6">Select time</Typography>
+        </IconButton>
+        <Typography variant="h6">Select Time</Typography>
         <Box style={{ width: 40 }} />
       </Box>
 
       {renderTimePicker()}
 
       <Box
-        row
+        direction="row"
         style={{
           justifyContent: 'flex-end',
           gap: 8,
@@ -579,7 +545,6 @@ export default function DateTimePicker({
           />
         }
       />
-
       <Modal visible={isOpen} transparent animationType="fade" onRequestClose={handleClose}>
         <Pressable
           style={{
@@ -604,7 +569,7 @@ export default function DateTimePicker({
                     {currentView === 'date' && (
                       <>
                         <Box
-                          row
+                          direction="row"
                           style={{
                             justifyContent: 'space-between',
                             alignItems: 'center',
@@ -613,16 +578,20 @@ export default function DateTimePicker({
                         >
                           {calendarView === 'days' && (
                             <Box
-                              row
+                              direction="row"
+                              alignItems="center"
+                              justifyContent="space-between"
                               style={{
                                 width: '100%',
                                 alignItems: 'center',
-                                justifyContent: 'space-between',
                               }}
                             >
-                              <Pressable
+                              <Button
                                 onPress={() => setCalendarView('years')}
-                                style={{ minWidth: 120, paddingLeft: theme.spacing.create(1) }}
+                                style={{
+                                  minWidth: 120,
+                                  paddingHorizontal: theme.spacing.create(1),
+                                }}
                               >
                                 <Typography variant="h6" style={{ textAlign: 'left' }}>
                                   {new Date(currentYear, currentMonth).toLocaleString('default', {
@@ -630,28 +599,26 @@ export default function DateTimePicker({
                                     year: 'numeric',
                                   })}
                                 </Typography>
-                              </Pressable>
+                                <Icon name="triangle-down" color="text.primary" size={20.5} />
+                              </Button>
                               <Box
-                                row
+                                direction="row"
                                 style={{
                                   gap: 8,
-                                  paddingRight: theme.spacing.create(2),
                                   height: '100%',
                                 }}
                               >
-                                <Button
-                                  variant="text"
+                                <IconButton
                                   onPress={() => {
                                     setCurrentMonth((prev) => (prev === 0 ? 11 : prev - 1))
                                     if (currentMonth === 0) {
                                       setCurrentYear((prev) => prev - 1)
                                     }
                                   }}
-                                  style={{ width: 40, height: 40, borderRadius: 20 }}
                                 >
-                                  <Icon name="chevron-left" size={24} color="text.secondary" />
-                                </Button>
-                                <Button
+                                  <Icon name="chevron-left" size={24} />
+                                </IconButton>
+                                <IconButton
                                   variant="text"
                                   onPress={() => {
                                     setCurrentMonth((prev) => (prev === 11 ? 0 : prev + 1))
@@ -659,28 +626,28 @@ export default function DateTimePicker({
                                       setCurrentYear((prev) => prev + 1)
                                     }
                                   }}
-                                  style={{ width: 40, height: 40, borderRadius: 20 }}
                                 >
-                                  <Icon name="chevron-right" size={24} color="text.secondary" />
-                                </Button>
+                                  <Icon name="chevron-right" size={24} />
+                                </IconButton>
                               </Box>
                             </Box>
                           )}
                           {calendarView === 'years' && (
                             <Typography variant="h6" style={{ width: '100%', textAlign: 'center' }}>
-                              Select year
+                              Select Year
                             </Typography>
                           )}
                           {calendarView === 'months' && (
-                            <Button
-                              variant="text"
-                              onPress={() => setCalendarView('years')}
-                              style={{ width: '100%' }}
-                            >
-                              <Typography variant="h6" style={{ textAlign: 'center' }}>
-                                {currentYear}
+                            <Box flex={1} alignItems="center">
+                              <Typography variant="h6" style={{ flex: 1 }}>
+                                Select Month
                               </Typography>
-                            </Button>
+                              <Button variant="text" onPress={() => setCalendarView('years')}>
+                                <Typography variant="h6" style={{ textAlign: 'center' }}>
+                                  {currentYear}
+                                </Typography>
+                              </Button>
+                            </Box>
                           )}
                         </Box>
 
@@ -689,17 +656,7 @@ export default function DateTimePicker({
                         {calendarView === 'months' && renderMonths()}
 
                         {view === 'datetime' && calendarView === 'days' && (
-                          <Box
-                            row
-                            style={{
-                              justifyContent: 'flex-end',
-                              gap: 8,
-                              marginTop: 16,
-                              borderTopWidth: 1,
-                              borderTopColor: theme.palette.divider,
-                              paddingTop: 16,
-                            }}
-                          >
+                          <Box direction="row" justifyContent="flex-end" gap={1} marginTop={4}>
                             <Button variant="text" onPress={handleClose}>
                               Cancel
                             </Button>

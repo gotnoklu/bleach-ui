@@ -5,6 +5,7 @@ import {
   type ReactNode,
   cloneElement,
   isValidElement,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -29,8 +30,20 @@ import PopupContent from './PopupContent'
 export interface PopupProps
   extends Omit<ModalProps, 'children'>,
     SxProps<Omit<ModalProps, 'children'>> {
-  position?: 'top' | 'bottom' | 'top-left' | 'bottom-left' | 'top-right' | 'bottom-right' | 'center'
+  position?:
+    | 'top'
+    | 'bottom'
+    | 'left'
+    | 'right'
+    | 'left-center'
+    | 'right-center'
+    | 'top-left'
+    | 'bottom-left'
+    | 'top-right'
+    | 'bottom-right'
+    | 'center'
   elevate?: boolean
+  closeOnElevatedTriggerEvent?: 'onPress' | 'onPressIn' | 'onPressOut' | 'onLongPress'
   children: Array<ReactNode>
 }
 
@@ -73,11 +86,13 @@ const StyledPopup = styled(Modal)<
 export default function Popup({
   position = 'bottom',
   elevate = false,
+  closeOnElevatedTriggerEvent,
   children,
   ...props
 }: PopupProps) {
   const elevatedContentRef = useRef<View | null>(null)
   const triggerRef = useRef<View | null>(null)
+  const contentRef = useRef<View | null>(null)
   const dimensions = useWindowDimensions()
   const scale = useSharedValue(0.5)
   const triggerOffsets = useRef({ width: 0, height: 0, top: 0, left: 0 })
@@ -109,50 +124,71 @@ export default function Popup({
     })
   }
 
-  function calculateContentLayout(view: View | null) {
-    view?.measure((_left, _top, _width, height) => {
-      const styles = {} as { top: number; left: number; right: number; bottom: number }
+  useLayoutEffect(() => {
+    if (state.shown) {
+      contentRef.current?.measure((_left, _top, width, height) => {
+        const styles = {} as { top: number; left: number; right: number; bottom: number }
 
-      if (position.startsWith('top')) {
-        if (triggerOffsets.current.top <= height + 8) {
-          styles.top = triggerOffsets.current.top + triggerOffsets.current.height + 8
-        } else {
-          styles.bottom = dimensions.height - triggerOffsets.current.top + 8
+        if (position.startsWith('top')) {
+          if (triggerOffsets.current.top <= height + 8) {
+            styles.top = triggerOffsets.current.top + triggerOffsets.current.height + 8
+          } else {
+            styles.bottom = dimensions.height - triggerOffsets.current.top + 8
+          }
+
+          if (position.endsWith('-right')) {
+            styles.right =
+              dimensions.width - triggerOffsets.current.width - triggerOffsets.current.left
+          } else if (position === 'top' || position.endsWith('left')) {
+            styles.left = triggerOffsets.current.left
+          }
+        } else if (position.startsWith('bottom')) {
+          if (
+            triggerOffsets.current.top + triggerOffsets.current.height + 8 + height >=
+            dimensions.height
+          ) {
+            styles.bottom = dimensions.height - triggerOffsets.current.top + 8
+          } else {
+            styles.top = triggerOffsets.current.top + triggerOffsets.current.height + 8
+          }
+
+          if (position.endsWith('-right')) {
+            styles.right =
+              dimensions.width - triggerOffsets.current.width - triggerOffsets.current.left
+          } else if (position === 'bottom' || position.endsWith('left')) {
+            styles.left = triggerOffsets.current.left
+          }
+        } else if (position.startsWith('right')) {
+          if (position.endsWith('-center')) {
+            styles.top = triggerOffsets.current.top + triggerOffsets.current.height / 2 - height
+          } else {
+            styles.top = triggerOffsets.current.top
+          }
+
+          styles.left = triggerOffsets.current.left + triggerOffsets.current.width + 8
+        } else if (position === 'left') {
+          if (position.endsWith('-center')) {
+            styles.top = triggerOffsets.current.top + triggerOffsets.current.height / 2 - height
+          } else {
+            styles.top = triggerOffsets.current.top
+          }
+
+          styles.right = dimensions.width - triggerOffsets.current.left + 8
+        } else if (position === 'center') {
+          styles.top = triggerOffsets.current.top + triggerOffsets.current.height / 2 - height
+          styles.left = triggerOffsets.current.left + triggerOffsets.current.width / 2 - width
         }
 
-        if (position.endsWith('right')) {
-          styles.right =
-            dimensions.width - triggerOffsets.current.width - triggerOffsets.current.left
-        } else if (position === 'top' || position.endsWith('left')) {
-          styles.left = triggerOffsets.current.left
-        }
-      } else if (position.startsWith('bottom')) {
-        if (
-          triggerOffsets.current.top + triggerOffsets.current.height + 8 + height >=
-          dimensions.height
-        ) {
-          styles.bottom = dimensions.height - triggerOffsets.current.top + 8
-        } else {
-          styles.top = triggerOffsets.current.top + triggerOffsets.current.height + 8
-        }
-
-        if (position.endsWith('right')) {
-          styles.right =
-            dimensions.width - triggerOffsets.current.width - triggerOffsets.current.left
-        } else if (position === 'bottom' || position.endsWith('left')) {
-          styles.left = triggerOffsets.current.left
-        }
-      }
-
-      scale.value = 1
-      setState((prev) => ({
-        ...prev,
-        shown: true,
-        content: styles,
-        elevation: triggerOffsets.current,
-      }))
-    })
-  }
+        scale.value = 1
+        setState((prev) => ({
+          ...prev,
+          shown: true,
+          content: styles,
+          elevation: triggerOffsets.current,
+        }))
+      })
+    }
+  }, [state.shown])
 
   function hideContent() {
     scale.value = 0.5
@@ -194,12 +230,15 @@ export default function Popup({
                       flex: 0,
                       ...state.elevation,
                     },
+                    ...(closeOnElevatedTriggerEvent
+                      ? { [closeOnElevatedTriggerEvent]: hideContent }
+                      : {}),
                   }
                 )
               : trigger}
           </Show>
           <Animated.View
-            ref={calculateContentLayout}
+            ref={contentRef}
             style={[
               animationStyles,
               {

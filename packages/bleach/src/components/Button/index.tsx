@@ -3,14 +3,7 @@ import { Pressable, type PressableProps } from 'react-native'
 import Typography, { type TypographyProps } from '../Typography'
 import type { Palette, SxProps, TextColor } from '../../theme/types'
 import { useTheme } from '../../theme/hooks'
-import {
-  alpha,
-  createComponentStyles,
-  getThemeProperty,
-  merge,
-  selectStyles,
-  styled,
-} from '../../theme/utilities'
+import { alpha, getThemeProperty, merge, selectStyles, styled } from '../../theme/utilities'
 
 export type ButtonVariant = 'contained' | 'outlined' | 'text'
 
@@ -44,16 +37,23 @@ const StyledButton = styled(Pressable)<Omit<ButtonProps, 'sx'>>(
     return selectStyles(
       {
         if: variant === 'contained',
-        styles: { backgroundColor: disabled ? theme.palette.disabled : buttonColor },
+        styles: {
+          backgroundColor: disabled ? theme.palette.disabled : buttonColor,
+          opacity: disabled ? 0.3 : 1,
+        },
       },
       {
         if: variant === 'outlined',
-        styles: { borderColor: disabled ? theme.palette.disabled : buttonColor, borderWidth: 1 },
+        styles: {
+          borderColor: disabled ? theme.palette.disabled : buttonColor,
+          borderWidth: 1,
+        },
       },
       {
         if: variant === 'text',
         styles: { backgroundColor: 'transparent' },
       },
+
       {
         styles: {
           overflow: 'hidden',
@@ -73,7 +73,6 @@ const StyledButton = styled(Pressable)<Omit<ButtonProps, 'sx'>>(
               : size === 'medium'
                 ? theme.spacing.create(3)
                 : theme.spacing.create(4),
-          opacity: disabled ? 0.5 : 1,
           ...theme.typography.variants.body1,
         },
       }
@@ -81,42 +80,35 @@ const StyledButton = styled(Pressable)<Omit<ButtonProps, 'sx'>>(
   }
 )
 
-const useLabelStyles = createComponentStyles(
-  (
-    theme,
-    {
-      variant = 'text',
-      color = 'primary',
-      size = 'medium',
-      disabled,
-    }: Pick<ButtonProps, 'variant' | 'color' | 'size' | 'disabled'>
-  ) => {
-    const labelSizes = { small: 14, medium: 16, large: 18 }
-    const buttonColor = getThemeProperty({ object: theme.palette, key: color, fallback: color })
+const StyledLabel = styled(Typography)<
+  Omit<TypographyProps, 'color'> &
+    Pick<ButtonProps, 'color' | 'size' | 'disabled'> & { buttonVariant?: ButtonProps['variant'] }
+>((theme, { buttonVariant = 'text', color = 'primary', size = 'medium', disabled }) => {
+  const labelSizes = { small: 14, medium: 16, large: 18 }
+  const buttonColor = getThemeProperty({ object: theme.palette, key: color, fallback: color })
 
-    return selectStyles(
-      {
-        if: variant === 'contained',
-        styles: {
-          color: getThemeProperty({
-            object: theme.palette,
-            key: disabled ? 'text.disabled' : `${color}.text`,
-            fallback: color,
-          }),
-        },
+  return selectStyles(
+    {
+      if: buttonVariant === 'contained',
+      styles: {
+        color: getThemeProperty({
+          object: theme.palette,
+          key: disabled ? 'text.disabled' : `${color}.text`,
+          fallback: color,
+        }),
       },
-      {
-        if: variant === 'outlined' || variant === 'text',
-        styles: { color: disabled ? theme.palette.disabled : buttonColor },
+    },
+    {
+      if: buttonVariant === 'outlined' || buttonVariant === 'text',
+      styles: { color: disabled ? theme.palette.disabled : buttonColor },
+    },
+    {
+      styles: {
+        fontSize: labelSizes[size],
       },
-      {
-        styles: {
-          fontSize: labelSizes[size],
-        },
-      }
-    )
-  }
-)
+    }
+  )
+})
 
 const Button = forwardRef(function Button(
   {
@@ -130,13 +122,6 @@ const Button = forwardRef(function Button(
   ref: ForwardedRef<Component<ButtonProps> | null>
 ) {
   const theme = useTheme()
-
-  const labelStyles = useLabelStyles({
-    variant,
-    color: props.color,
-    size: props.size,
-    disabled,
-  })
 
   const pressablePressedColor = getThemeProperty({
     object: theme.palette,
@@ -173,9 +158,15 @@ const Button = forwardRef(function Button(
       {Children.map(children, (child) => {
         if (typeof child === 'string' || typeof child === 'number') {
           return (
-            <Typography {...slotProps?.label} style={[labelStyles, slotProps?.label?.style]}>
+            <StyledLabel
+              buttonVariant={variant}
+              color={props.color}
+              size={props.size}
+              disabled={disabled}
+              {...slotProps?.label}
+            >
               {child}
-            </Typography>
+            </StyledLabel>
           )
         }
 
