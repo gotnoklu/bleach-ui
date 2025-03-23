@@ -21,6 +21,7 @@ export interface ButtonProps extends Omit<PressableProps, 'style'>, SxProps<Pres
     label?: TypographyProps
   }
   fullWidth?: boolean
+  fullFlex?: boolean
   style?: PressableStyle
   children: ReactNode
   rounded?: boolean
@@ -30,7 +31,7 @@ export interface ButtonProps extends Omit<PressableProps, 'style'>, SxProps<Pres
 const StyledButton = styled(Pressable)<Omit<ButtonProps, 'sx'>>(
   (
     theme,
-    { variant = 'text', color = 'primary', size = 'medium', fullWidth, disabled, rounded }
+    { variant = 'text', color = 'primary', size = 'medium', fullWidth, fullFlex, disabled, rounded }
   ) => {
     const buttonSizes = { small: 32, medium: 40, large: 48 }
     const buttonColor = getThemeProperty({ object: theme.palette, key: color, fallback: color })
@@ -60,6 +61,7 @@ const StyledButton = styled(Pressable)<Omit<ButtonProps, 'sx'>>(
           alignItems: 'center',
           justifyContent: 'center',
           width: fullWidth ? '100%' : 'auto',
+          flex: fullFlex ? 1 : undefined,
           minWidth: 64,
           display: 'flex',
           flexDirection: 'row',
