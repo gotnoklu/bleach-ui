@@ -6,7 +6,7 @@
   "scripts": {
     "build:bleach": "yarn workspace bleach build"
   },
-  "packageManager": "yarn@4.6.0",
+  "packageManager": "yarn@4.7.0",
   "devDependencies": {
     "@biomejs/biome": "1.9.4"
   }
