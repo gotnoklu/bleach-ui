@@ -1,18 +1,18 @@
-import type { PressableProps, StyleProp, TextStyle, View, ViewStyle } from 'react-native'
-import type { BaseTheme, Color, Merge, Palette, Sx, TextColor, Theme } from '../types'
-import { useTheme } from '../hooks'
 import {
   type Component,
   type ComponentProps,
   type ComponentType,
-  createElement,
-  forwardRef,
   type ForwardRefExoticComponent,
   type PropsWithChildren,
   type PropsWithoutRef,
   type RefAttributes,
+  createElement,
+  forwardRef,
 } from 'react'
+import type { PressableProps, StyleProp, TextStyle, View, ViewStyle } from 'react-native'
 import { _DEFAULT_BASE_THEME } from '../constants'
+import { useTheme } from '../hooks'
+import type { BaseTheme, Color, Merge, Palette, Sx, TextColor, Theme } from '../types'
 
 function isObject<TValue>(value: TValue): value is Record<PropertyKey, any> {
   return Object.prototype.toString.call(value) === '[object Object]'
@@ -89,7 +89,13 @@ export function styled<
     | ComponentType<PropsWithChildren<{ style?: StyleProp<ViewStyle> }>>
     | ComponentType<PropsWithChildren<{ style?: StyleProp<TextStyle> }>>
     | ForwardRefExoticComponent<PressableProps & RefAttributes<View>>,
->(el: TElement) {
+>(
+  el: TElement,
+  config?: {
+    omitProps?: Array<string> | ((prop: string) => boolean)
+    allowOnlyProps?: Array<string> | ((prop: string) => boolean)
+  }
+) {
   return function createStyledComponent<
     TProps extends ComponentProps<TElement> | Record<string, any>,
   >(
@@ -102,26 +108,74 @@ export function styled<
       ref
     ) {
       const theme = useTheme()
-      let finalStyles = style
-      let finalSx: Sx<TElement> | StyleProp<any> | undefined = sx
-      if (typeof styles === 'function') finalStyles = styles(theme, props as TProps)
-      if (typeof sx === 'function') finalSx = sx(theme)
+      const componentStyles = typeof styles === 'function' ? styles(theme, props as TProps) : styles
+      const componentSx = typeof sx === 'function' ? sx(theme) : sx
+      let componentProps = Object.assign({}, props)
+
+      // Create component with only allowed props when supplied
+      if (Array.isArray(config?.allowOnlyProps) && config.allowOnlyProps.length > 0) {
+        const allowedProps = {} as typeof componentProps
+        const propsToAllow = config.allowOnlyProps
+        let index = 0
+        let prop
+        for (index; index < propsToAllow.length; index++) {
+          prop = propsToAllow[index] as keyof typeof componentProps
+          if (prop in componentProps) {
+            allowedProps[prop] = componentProps[prop]
+          }
+        }
+        componentProps = allowedProps
+      } else if (typeof config?.allowOnlyProps === 'function') {
+        const allowedProps = {} as typeof componentProps
+        let prop: keyof typeof componentProps
+        for (prop in componentProps) {
+          if (config.allowOnlyProps(prop)) {
+            allowedProps[prop] = componentProps[prop]
+          }
+        }
+        componentProps = allowedProps
+      } else {
+        // Create component without omitted props when supplied
+        if (Array.isArray(config?.omitProps) && config.omitProps.length > 0) {
+          const propsToOmit = config.omitProps
+          let index = 0
+          let prop
+          for (index; index < propsToOmit.length; index++) {
+            prop = propsToOmit[index]
+            if (prop in componentProps) {
+              Reflect.deleteProperty(componentProps, prop)
+            }
+          }
+        } else if (typeof config?.omitProps === 'function') {
+          let prop
+          for (prop in componentProps) {
+            if (config.omitProps(prop)) {
+              Reflect.deleteProperty(componentProps, prop)
+            }
+          }
+        }
+      }
+
       if (typeof style === 'function') {
         return createElement(
           el as any,
           {
             style: (...args: any[]) => {
-              return merge(finalStyles, finalSx, style(...args))
+              return merge(componentStyles, componentSx, style(...args))
             },
             ref,
-            ...props,
+            ...componentProps,
           } as any
         )
       }
 
+      if ((props as any)?.paddingY) {
+        console.log([componentStyles, componentSx, style], componentProps)
+      }
+
       return createElement(
         el as any,
-        { style: [finalStyles, finalSx, style], ref, ...props } as any
+        { style: [componentStyles, componentSx, style], ref, ...componentProps } as any
       )
     }) as ForwardRefExoticComponent<
       PropsWithoutRef<
