@@ -447,7 +447,7 @@ export default function DateTimePicker({
 
     return (
       <Box direction="row" style={{ gap: 16 }}>
-        <Box style={{ flex: 1 }}>
+        <Box flex={1}>
           <Typography
             variant="body2"
             color="text.secondary"
@@ -462,7 +462,7 @@ export default function DateTimePicker({
             {hours}
           </StyledTimeColumn>
         </Box>
-        <Box style={{ flex: 1 }}>
+        <Box flex={1}>
           <Typography
             variant="body2"
             color="text.secondary"
@@ -570,21 +570,16 @@ export default function DateTimePicker({
                       <>
                         <Box
                           direction="row"
-                          style={{
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                            marginBottom: 16,
-                          }}
+                          justifyContent="space-between"
+                          alignItems="center"
+                          marginBottom={2}
                         >
                           {calendarView === 'days' && (
                             <Box
                               direction="row"
                               alignItems="center"
                               justifyContent="space-between"
-                              style={{
-                                width: '100%',
-                                alignItems: 'center',
-                              }}
+                              width="100%"
                             >
                               <Button
                                 onPress={() => setCalendarView('years')}
@@ -639,7 +634,7 @@ export default function DateTimePicker({
                           )}
                           {calendarView === 'months' && (
                             <Box flex={1} alignItems="center">
-                              <Typography variant="h6" style={{ flex: 1 }}>
+                              <Typography variant="h6" fullFlex>
                                 Select Month
                               </Typography>
                               <Button variant="text" onPress={() => setCalendarView('years')}>

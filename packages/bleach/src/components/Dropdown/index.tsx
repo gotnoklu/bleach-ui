@@ -236,7 +236,7 @@ function BaseDropdown<Options extends Array<Record<PropertyKey, any>> = []>({
         <Show visible={!displayOnlyIcon}>{slots?.leftAdornments}</Show>
         {selectedOption.icon}
         <Show visible={!displayOnlyIcon}>
-          <Typography variant="body2" fontWeight="medium" style={{ flex: 1 }}>
+          <Typography variant="body2" fontWeight="medium" fullFlex>
             {selectedOption.label}
           </Typography>
         </Show>

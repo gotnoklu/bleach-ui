@@ -1,11 +1,11 @@
 import type { ReactNode } from 'react'
+import { useState } from 'react'
 import { View } from 'react-native'
-import type { ViewProps, LayoutChangeEvent } from 'react-native'
-import Typography from '../Typography'
-import type { TypographyProps } from '../Typography'
+import type { LayoutChangeEvent, ViewProps } from 'react-native'
 import type { Palette, SxProps, TextColor } from '../../theme/types'
 import { getThemeProperty, selectStyles, styled } from '../../theme/utilities'
-import { useState } from 'react'
+import Typography from '../Typography'
+import type { TypographyProps } from '../Typography'
 
 export type BadgeVariant = 'contained' | 'outlined'
 export type BadgeAnchorOrigin = {
