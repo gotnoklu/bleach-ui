@@ -1,8 +1,8 @@
-import { ScrollView } from 'react-native'
+import { ProgressBarShowcase } from '@/components/showcase/progress-bar'
 import BackgroundView from 'bleach/dist/components/BackgroundView'
-import DateTimePickerShowcase from '@/components/showcase/datetime-picker'
+import { ScrollView } from 'react-native'
 
-export default function HomeScreen() {
+export default function ProgressBarScreen() {
   return (
     <ScrollView
       style={{
@@ -19,7 +19,7 @@ export default function HomeScreen() {
           gap: theme.spacing.create(5),
         })}
       >
-        <DateTimePickerShowcase />
+        <ProgressBarShowcase />
       </BackgroundView>
     </ScrollView>
   )
