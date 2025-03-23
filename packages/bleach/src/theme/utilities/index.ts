@@ -169,10 +169,6 @@ export function styled<
         )
       }
 
-      if ((props as any)?.paddingY) {
-        console.log([componentStyles, componentSx, style], componentProps)
-      }
-
       return createElement(
         el as any,
         { style: [componentStyles, componentSx, style], ref, ...componentProps } as any
