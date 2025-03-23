@@ -1,11 +1,11 @@
-import { styled } from 'bleach/dist/theme/utilities'
 import Box, { type BoxProps } from 'bleach/dist/components/Box'
-import Typography from 'bleach/dist/components/Typography'
-import Popup, { PopupTrigger, PopupContent } from 'bleach/dist/components/Popup'
-import Paper from 'bleach/dist/components/Paper'
+import Button from 'bleach/dist/components/Button'
 import Icon from 'bleach/dist/components/Icon'
 import ListItemButton from 'bleach/dist/components/ListItemButton'
-import Button from 'bleach/dist/components/Button'
+import Paper from 'bleach/dist/components/Paper'
+import Popup, { PopupTrigger, PopupContent } from 'bleach/dist/components/Popup'
+import Typography from 'bleach/dist/components/Typography'
+import { styled } from 'bleach/dist/theme/utilities'
 
 const Section = styled(Box)<BoxProps>((theme) => ({ gap: theme.spacing.create(4) }))
 const SubSection = styled(Box)<BoxProps>((theme) => ({ gap: theme.spacing.create(2) }))
@@ -24,7 +24,7 @@ export const PopupShowcase = () => {
         <Typography variant="h6" color="text.secondary">
           Positions
         </Typography>
-        <Box gap={2} direction="row">
+        <Box gap={2} direction="row" justifyContent="center">
           <Popup position="left">
             <PopupTrigger>
               <Button variant="outlined">Left</Button>
@@ -34,6 +34,78 @@ export const PopupShowcase = () => {
           <Popup position="right">
             <PopupTrigger>
               <Button variant="outlined">Right</Button>
+            </PopupTrigger>
+            <PopupContent>{PopupPaper}</PopupContent>
+          </Popup>
+        </Box>
+        <Box gap={2} direction="row" justifyContent="center">
+          <Popup position="left-top">
+            <PopupTrigger>
+              <Button variant="outlined">Left-Top</Button>
+            </PopupTrigger>
+            <PopupContent>{PopupPaper}</PopupContent>
+          </Popup>
+          <Popup position="right-top">
+            <PopupTrigger>
+              <Button variant="outlined">Right-Top</Button>
+            </PopupTrigger>
+            <PopupContent>{PopupPaper}</PopupContent>
+          </Popup>
+        </Box>
+        <Box gap={2} direction="row" justifyContent="center">
+          <Popup position="left-top" offsetMargin={-8}>
+            <PopupTrigger>
+              <Button variant="outlined">Left-Top-Inset</Button>
+            </PopupTrigger>
+            <PopupContent>
+              <Box
+                width={16}
+                height={16}
+                borderRadius="50%"
+                backgroundColor="success.main"
+                style={{ borderColor: 'white', borderWidth: 4 }}
+              />
+            </PopupContent>
+          </Popup>
+          <Popup position="right-top" offsetMargin={{ x: -8, y: -8 }}>
+            <PopupTrigger>
+              <Button variant="outlined">Right-Top-Inset</Button>
+            </PopupTrigger>
+            <PopupContent>
+              <Box
+                width={16}
+                height={16}
+                borderRadius="50%"
+                backgroundColor="success.main"
+                style={{ borderColor: 'white', borderWidth: 4 }}
+              />
+            </PopupContent>
+          </Popup>
+        </Box>
+        <Box gap={2} direction="row" justifyContent="center">
+          <Popup position="left-center">
+            <PopupTrigger>
+              <Button variant="outlined">Left-Center</Button>
+            </PopupTrigger>
+            <PopupContent>{PopupPaper}</PopupContent>
+          </Popup>
+          <Popup position="right-center">
+            <PopupTrigger>
+              <Button variant="outlined">Right-Center</Button>
+            </PopupTrigger>
+            <PopupContent>{PopupPaper}</PopupContent>
+          </Popup>
+        </Box>
+        <Box gap={2} direction="row" justifyContent="center">
+          <Popup position="left-bottom">
+            <PopupTrigger>
+              <Button variant="outlined">Left-Bottom</Button>
+            </PopupTrigger>
+            <PopupContent>{PopupPaper}</PopupContent>
+          </Popup>
+          <Popup position="right-bottom">
+            <PopupTrigger>
+              <Button variant="outlined">Right-Bottom</Button>
             </PopupTrigger>
             <PopupContent>{PopupPaper}</PopupContent>
           </Popup>
@@ -64,10 +136,28 @@ export const PopupShowcase = () => {
             </PopupContent>
           </Popup>
         </Box>
-        <Box gap={2} direction="row">
-          <Popup position="top-left">
+        <Box gap={2} direction="row" justifyContent="center">
+          <Popup position="top">
             <PopupTrigger>
-              <Button variant="outlined" style={{ flex: 1 }}>
+              <Button variant="outlined" fullFlex>
+                Top
+              </Button>
+            </PopupTrigger>
+            <PopupContent>{PopupPaper}</PopupContent>
+          </Popup>
+          <Popup position="bottom">
+            <PopupTrigger>
+              <Button variant="outlined" fullFlex>
+                Bottom
+              </Button>
+            </PopupTrigger>
+            <PopupContent>{PopupPaper}</PopupContent>
+          </Popup>
+        </Box>
+        <Box gap={2} direction="row">
+          <Popup position="top">
+            <PopupTrigger>
+              <Button variant="outlined" fullFlex>
                 Top-Left
               </Button>
             </PopupTrigger>
@@ -75,7 +165,7 @@ export const PopupShowcase = () => {
           </Popup>
           <Popup position="top-right">
             <PopupTrigger>
-              <Button variant="outlined" style={{ flex: 1 }}>
+              <Button variant="outlined" fullFlex>
                 Top-Right
               </Button>
             </PopupTrigger>
@@ -83,18 +173,36 @@ export const PopupShowcase = () => {
           </Popup>
         </Box>
         <Box gap={2} direction="row">
-          <Popup position="bottom-right">
+          <Popup position="top-center">
             <PopupTrigger>
-              <Button variant="outlined" style={{ flex: 1 }}>
-                Bottom-Right
+              <Button variant="outlined" fullFlex>
+                Top-Center
               </Button>
             </PopupTrigger>
             <PopupContent>{PopupPaper}</PopupContent>
           </Popup>
-          <Popup position="bottom-left">
+          <Popup position="bottom-center">
             <PopupTrigger>
-              <Button variant="outlined" style={{ flex: 1 }}>
+              <Button variant="outlined" fullFlex>
+                Bottom-Center
+              </Button>
+            </PopupTrigger>
+            <PopupContent>{PopupPaper}</PopupContent>
+          </Popup>
+        </Box>
+        <Box gap={2} direction="row">
+          <Popup position="bottom">
+            <PopupTrigger>
+              <Button variant="outlined" fullFlex>
                 Bottom-Left
+              </Button>
+            </PopupTrigger>
+            <PopupContent>{PopupPaper}</PopupContent>
+          </Popup>
+          <Popup position="bottom-right">
+            <PopupTrigger>
+              <Button variant="outlined" fullFlex>
+                Bottom-Right
               </Button>
             </PopupTrigger>
             <PopupContent>{PopupPaper}</PopupContent>
@@ -108,7 +216,7 @@ export const PopupShowcase = () => {
         <Popup>
           <PopupTrigger>
             <ListItemButton sx={({ palette }) => ({ backgroundColor: palette.backgrounds.paper })}>
-              <Typography style={{ flex: 1 }}>Press For Default Popup</Typography>
+              <Typography fullFlex>Press For Default Popup</Typography>
               <Icon name="list-unordered" />
             </ListItemButton>
           </PopupTrigger>
@@ -117,7 +225,7 @@ export const PopupShowcase = () => {
         <Popup elevate>
           <PopupTrigger>
             <ListItemButton sx={({ palette }) => ({ backgroundColor: palette.backgrounds.paper })}>
-              <Typography style={{ flex: 1 }}>Press For Elevated Popup</Typography>
+              <Typography fullFlex>Press For Elevated Popup</Typography>
               <Icon name="list-unordered" />
             </ListItemButton>
           </PopupTrigger>

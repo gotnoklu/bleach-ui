@@ -58,11 +58,11 @@ export const CheckboxShowcase = () => {
         </ListItem>
         <ListItem disableMinHeight disablePadding>
           <Checkbox checked disabled />
-          <Typography style={{ flex: 1 }}>Disabled checked</Typography>
+          <Typography fullFlex>Disabled checked</Typography>
         </ListItem>
         <ListItem disableMinHeight disablePadding>
           <Checkbox disabled />
-          <Typography style={{ flex: 1 }}>Disabled unchecked</Typography>
+          <Typography fullFlex>Disabled unchecked</Typography>
         </ListItem>
       </SubSection>
     </Section>
