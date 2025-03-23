@@ -5,12 +5,14 @@ import {
   type ReactNode,
   cloneElement,
   isValidElement,
+  useEffect,
   useLayoutEffect,
   useMemo,
   useRef,
   useState,
 } from 'react'
 import {
+  Animated,
   Modal,
   type ModalProps,
   Pressable,
@@ -19,30 +21,35 @@ import {
   type ViewProps,
   useWindowDimensions,
 } from 'react-native'
-import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated'
 import type { SxProps } from '../../theme/types'
 import { styled } from '../../theme/utilities'
 import Show from '../Show'
-import { PopupProvider } from './context'
-import PopupTrigger, { type PopupTriggerProps } from './PopupTrigger'
 import PopupContent from './PopupContent'
+import PopupTrigger, { type PopupTriggerProps } from './PopupTrigger'
+import { PopupProvider } from './context'
 
 export interface PopupProps
   extends Omit<ModalProps, 'children'>,
     SxProps<Omit<ModalProps, 'children'>> {
   position?:
     | 'top'
-    | 'bottom'
-    | 'left'
-    | 'right'
-    | 'left-center'
-    | 'right-center'
-    | 'top-left'
-    | 'bottom-left'
+    | 'top-center'
     | 'top-right'
+    | 'left'
+    | 'left-top'
+    | 'left-bottom'
+    | 'left-center'
+    | 'right'
+    | 'right-top'
+    | 'right-bottom'
+    | 'right-center'
+    | 'bottom'
+    | 'bottom-center'
     | 'bottom-right'
     | 'center'
+  offsetMargin?: number | { x: number } | { y: number } | { x: number; y: number }
   elevate?: boolean
+  automatic?: boolean
   closeOnElevatedTriggerEvent?: 'onPress' | 'onPressIn' | 'onPressOut' | 'onLongPress'
   children: Array<ReactNode>
 }
@@ -86,6 +93,8 @@ const StyledPopup = styled(Modal)<
 export default function Popup({
   position = 'bottom',
   elevate = false,
+  automatic = false,
+  offsetMargin = 8,
   closeOnElevatedTriggerEvent,
   children,
   ...props
@@ -94,106 +103,136 @@ export default function Popup({
   const triggerRef = useRef<View | null>(null)
   const contentRef = useRef<View | null>(null)
   const dimensions = useWindowDimensions()
-  const scale = useSharedValue(0.5)
-  const triggerOffsets = useRef({ width: 0, height: 0, top: 0, left: 0 })
-
+  const scale = useRef(new Animated.Value(1)).current
+  const opacity = useRef(new Animated.Value(0)).current
   const [state, setState] = useState({
     shown: false,
-    content: {} as { top: number; left: number; right: number; bottom: number },
-    elevation: { width: 0, height: 0, top: 0, left: 0 },
-  })
-
-  const animationStyles = useAnimatedStyle(() => {
-    return {
-      transform: [
-        {
-          scale: withSpring(scale.value, {
-            duration: 100,
-            stiffness: 200,
-            dampingRatio: 0.7,
-          }),
-        },
-      ],
-    }
+    targetRect: { width: 0, height: 0, x: 0, y: 0 },
+    contentOffsets: { left: 0, top: 0 },
+    contentOffsetsSet: false,
   })
 
   function showContent() {
-    triggerRef.current?.measureInWindow((left, top, width, height) => {
-      triggerOffsets.current = { left, top, width, height }
-      setState((prev) => ({ ...prev, shown: true }))
+    triggerRef.current?.measureInWindow((x, y, width, height) => {
+      setState((prev) => ({ ...prev, shown: true, targetRect: { x, y, width, height } }))
+    })
+  }
+
+  function hideContent() {
+    Animated.spring(scale, {
+      speed: 30,
+      bounciness: 100,
+      toValue: 0,
+      useNativeDriver: true,
+    }).start(({ finished }) => {
+      if (finished) {
+        setState((prev) => ({
+          ...prev,
+          shown: false,
+          contentOffsetsSet: false,
+          targetRect: { width: 0, height: 0, x: 0, y: 0 },
+          contentOffsets: { left: 0, top: 0 },
+        }))
+      }
     })
   }
 
   useLayoutEffect(() => {
     if (state.shown) {
-      contentRef.current?.measure((_left, _top, width, height) => {
-        const styles = {} as { top: number; left: number; right: number; bottom: number }
+      contentRef.current?.measureInWindow((_left, _top, width, height) => {
+        const xyOffsets = { left: 0, top: 0 }
+        const marginX =
+          typeof offsetMargin === 'number'
+            ? offsetMargin
+            : typeof offsetMargin === 'object' && 'x' in offsetMargin
+              ? offsetMargin.x
+              : 0
+        const marginY =
+          typeof offsetMargin === 'number'
+            ? offsetMargin
+            : typeof offsetMargin === 'object' && 'y' in offsetMargin
+              ? offsetMargin.y
+              : 0
 
-        if (position.startsWith('top')) {
-          if (triggerOffsets.current.top <= height + 8) {
-            styles.top = triggerOffsets.current.top + triggerOffsets.current.height + 8
-          } else {
-            styles.bottom = dimensions.height - triggerOffsets.current.top + 8
-          }
-
+        if (position.startsWith('top') || position.startsWith('bottom')) {
           if (position.endsWith('-right')) {
-            styles.right =
-              dimensions.width - triggerOffsets.current.width - triggerOffsets.current.left
-          } else if (position === 'top' || position.endsWith('left')) {
-            styles.left = triggerOffsets.current.left
-          }
-        } else if (position.startsWith('bottom')) {
-          if (
-            triggerOffsets.current.top + triggerOffsets.current.height + 8 + height >=
-            dimensions.height
-          ) {
-            styles.bottom = dimensions.height - triggerOffsets.current.top + 8
+            xyOffsets.left = state.targetRect.x + state.targetRect.width - width
+          } else if (position.endsWith('-center')) {
+            xyOffsets.left = state.targetRect.x + state.targetRect.width / 2 - width / 2
           } else {
-            styles.top = triggerOffsets.current.top + triggerOffsets.current.height + 8
+            xyOffsets.left = state.targetRect.x
           }
 
-          if (position.endsWith('-right')) {
-            styles.right =
-              dimensions.width - triggerOffsets.current.width - triggerOffsets.current.left
-          } else if (position === 'bottom' || position.endsWith('left')) {
-            styles.left = triggerOffsets.current.left
+          if (position.startsWith('top')) {
+            xyOffsets.top = state.targetRect.y - height - marginY
+          } else if (position.startsWith('bottom')) {
+            if (
+              state.targetRect.y + state.targetRect.height + marginY + height >=
+              dimensions.height
+            ) {
+              xyOffsets.top = dimensions.height - state.targetRect.y + marginY
+            } else {
+              xyOffsets.top = state.targetRect.y + state.targetRect.height + marginY
+            }
           }
-        } else if (position.startsWith('right')) {
-          if (position.endsWith('-center')) {
-            styles.top = triggerOffsets.current.top + triggerOffsets.current.height / 2 - height
+        } else if (position.startsWith('left') || position.startsWith('right')) {
+          if (position.endsWith('-top')) {
+            xyOffsets.top = state.targetRect.y - height - marginY
+          } else if (position.endsWith('-bottom')) {
+            xyOffsets.top = state.targetRect.y + height + marginY
+          } else if (position.endsWith('-center')) {
+            xyOffsets.top = state.targetRect.y + state.targetRect.height / 2 - height / 2
           } else {
-            styles.top = triggerOffsets.current.top
+            xyOffsets.top = state.targetRect.y
           }
 
-          styles.left = triggerOffsets.current.left + triggerOffsets.current.width + 8
-        } else if (position === 'left') {
-          if (position.endsWith('-center')) {
-            styles.top = triggerOffsets.current.top + triggerOffsets.current.height / 2 - height
-          } else {
-            styles.top = triggerOffsets.current.top
+          if (position.startsWith('left')) {
+            xyOffsets.left = state.targetRect.x - width - marginX
+          } else if (position.startsWith('right')) {
+            xyOffsets.left = state.targetRect.x + state.targetRect.width + marginX
           }
-
-          styles.right = dimensions.width - triggerOffsets.current.left + 8
         } else if (position === 'center') {
-          styles.top = triggerOffsets.current.top + triggerOffsets.current.height / 2 - height
-          styles.left = triggerOffsets.current.left + triggerOffsets.current.width / 2 - width
+          xyOffsets.top = state.targetRect.y + state.targetRect.height / 2 - height / 2
+          xyOffsets.left = state.targetRect.x + state.targetRect.width / 2 - width / 2
         }
 
-        scale.value = 1
-        setState((prev) => ({
-          ...prev,
-          shown: true,
-          content: styles,
-          elevation: triggerOffsets.current,
-        }))
+        setState((prev) => ({ ...prev, contentOffsetsSet: true, contentOffsets: xyOffsets }))
+        scale.setValue(0)
+        opacity.setValue(1)
+        console.warn({
+          offsetX: xyOffsets.left,
+          offsetY: xyOffsets.top,
+          targetX: state.targetRect.x,
+          contentWidth: width,
+          contentHeight: height,
+        })
       })
     }
   }, [state.shown])
 
-  function hideContent() {
-    scale.value = 0.5
-    setState((prev) => ({ ...prev, shown: false }))
-  }
+  useLayoutEffect(() => {
+    if (state.contentOffsetsSet) {
+      Animated.spring(scale, {
+        speed: 30,
+        bounciness: 100,
+        toValue: 1,
+        useNativeDriver: true,
+      }).start()
+    } else {
+      scale.setValue(1)
+      opacity.setValue(0)
+    }
+  }, [state.contentOffsetsSet])
+
+  useEffect(() => {
+    if (automatic) {
+      showContent()
+    }
+
+    return () => {
+      hideContent()
+    }
+  }, [automatic])
 
   const [trigger, content] = useMemo(() => {
     return getPopupChildren(children, { trigger: triggerRef })
@@ -226,10 +265,7 @@ export default function Popup({
                   trigger as ReactElement<ViewProps & { ref: MutableRefObject<View | null> }>,
                   {
                     ref: elevatedContentRef,
-                    style: {
-                      flex: 0,
-                      ...state.elevation,
-                    },
+                    style: { flex: 0 },
                     ...(closeOnElevatedTriggerEvent
                       ? { [closeOnElevatedTriggerEvent]: hideContent }
                       : {}),
@@ -240,11 +276,9 @@ export default function Popup({
           <Animated.View
             ref={contentRef}
             style={[
-              animationStyles,
-              {
-                position: 'absolute',
-                ...state.content,
-              },
+              { opacity },
+              { transform: [{ scale }] },
+              { position: 'absolute', ...state.contentOffsets },
             ]}
           >
             {content}
