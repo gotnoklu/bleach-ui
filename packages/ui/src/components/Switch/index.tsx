@@ -1,16 +1,10 @@
-import Animated, {
-  interpolateColor,
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-} from 'react-native-reanimated'
-import type { SxProps } from '../../theme/types'
-import { styled } from '../../theme/utilities'
-import { Pressable, type PressableProps, View } from 'react-native'
-import { useTheme } from '../../theme/hooks'
 import { useEffect, useState } from 'react'
+import { Pressable, type PressableProps, View } from 'react-native'
+import Animated, { interpolateColor, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
+import { useTheme } from '../../theme/hooks'
+import { styled } from '../../theme/utilities'
 
-export interface SwitchProps extends PressableProps, SxProps<PressableProps> {
+export interface SwitchProps extends PressableProps {
   checked?: boolean
   defaultChecked?: boolean
   rounded?: boolean
@@ -19,31 +13,28 @@ export interface SwitchProps extends PressableProps, SxProps<PressableProps> {
 
 const StyledTrack = styled(Pressable)<Omit<SwitchProps, 'sx'>>((theme, { rounded = false }) => {
   return {
-    borderRadius: theme.radius.create(rounded ? 4 : 2),
-    backgroundColor:
-      theme.mode === 'dark' ? 'rgba(100, 100, 100, 0.5)' : 'rgba(100, 100, 100, 0.2)',
+    borderRadius: theme.radius(rounded ? 4 : 2),
+    backgroundColor: theme.mode === 'dark' ? 'rgba(100, 100, 100, 0.5)' : 'rgba(100, 100, 100, 0.2)',
     width: 16 * 2.5,
     minHeight: 16,
-    padding: theme.spacing.create(0.5),
+    padding: theme.spacing(0.5),
     flexDirection: 'row',
     alignItems: 'center',
   }
 })
 
-const StyledThumb = styled(View)<Omit<SwitchProps, 'sx'>>(
-  (theme, { disabled, rounded = false }) => {
-    return {
-      borderRadius: theme.radius.create(rounded ? 4 : 1),
-      width: 16,
-      height: 16,
-      backgroundColor: disabled
-        ? theme.palette.disabled
-        : theme.mode === 'dark'
-          ? theme.palette.backgrounds.default
-          : theme.palette.backgrounds.paper,
-    }
+const StyledThumb = styled(View)<Omit<SwitchProps, 'sx'>>((theme, { disabled, rounded = false }) => {
+  return {
+    borderRadius: theme.radius(rounded ? 4 : 1),
+    width: 16,
+    height: 16,
+    backgroundColor: disabled
+      ? theme.palette.disabled
+      : theme.mode === 'dark'
+        ? theme.palette.backgrounds.default
+        : theme.palette.backgrounds.paper,
   }
-)
+})
 
 const AnimatedTrack = Animated.createAnimatedComponent(StyledTrack)
 const AnimatedThumb = Animated.createAnimatedComponent(StyledThumb)
@@ -115,19 +106,8 @@ function ControlledSwitch({ checked, rounded, disabled, onChange, ...props }: Sw
   }, [])
 
   return (
-    <AnimatedTrack
-      {...props}
-      rounded={rounded}
-      disabled={disabled}
-      style={animatedTrackStyles}
-      onPress={toggleSwitch}
-    >
-      <AnimatedThumb
-        style={animatedThumbStyles}
-        rounded={rounded}
-        disabled={disabled}
-        collapsable={false}
-      />
+    <AnimatedTrack {...props} rounded={rounded} disabled={disabled} style={animatedTrackStyles} onPress={toggleSwitch}>
+      <AnimatedThumb style={animatedThumbStyles} rounded={rounded} disabled={disabled} collapsable={false} />
     </AnimatedTrack>
   )
 }
@@ -142,7 +122,7 @@ function UncontrolledSwitch({ defaultChecked = false, ...props }: Omit<SwitchPro
   return <ControlledSwitch checked={checked} onChange={handleChange} {...props} />
 }
 
-export default function Switch({ checked, defaultChecked, ...props }: SwitchProps) {
+export function Switch({ checked, defaultChecked, ...props }: SwitchProps) {
   if (typeof checked === 'boolean') {
     return <ControlledSwitch checked={checked} {...props} />
   }

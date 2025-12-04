@@ -15,17 +15,16 @@
   "module": "./dist/index.js",
   "packageManager": "yarn@4.6.0",
   "scripts": {
-    "dev": "yarn build && chokidar \"./**/*.{ts,tsx,swcrc,json}\" -i \"./dist/**/*.{ts,json}\" -c \"yarn build\"",
-    "build": "yarn lint && swc -d dist --sync --workers 2 --copy-files --delete-dir-on-start --strip-leading-paths --include-dotfiles src && tsc --declaration --emitDeclarationOnly",
-    "lint": "biome lint && tsc --noEmit --skipLibCheck",
-    "lint:fix": "biome lint --fix",
-    "format": "biome format --write",
+    "watch": "yarn build && chokidar \"./**/*.{ts,tsx,swcrc,json}\" -i \"./dist/**/*.{ts,json}\" -c \"yarn build\"",
+    "build": "yarn lint && rslib build && tsc --declaration --emitDeclarationOnly",
+    "lint": "cd ../../ && yarn lint packages/ui && cd packages/ui && tsc --noEmit --skipLibCheck",
+    "lint:fix": "cd ../../ && yarn lint --fix",
+    "format": "cd ../../ && yarn format --write",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.3.8",
-    "@swc/cli": "^0.6.0",
-    "@swc/core": "^1.10.7",
+    "@rsbuild/plugin-react": "^1.4.2",
+    "@rslib/core": "^0.18.3",
     "@types/react": "^18",
     "chokidar-cli": "^3.0.0",
     "react": "^18",
@@ -52,6 +51,6 @@
     "./package.json": "./package.json"
   },
   "dependencies": {
-    "@expo/vector-icons": "^14.0.4"
+    "@tabler/icons-react-native": "^3.35.0"
   }
 }

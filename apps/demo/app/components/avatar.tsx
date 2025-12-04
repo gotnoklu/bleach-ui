@@ -1,6 +1,6 @@
-import { AvatarShowcase } from '@/components/showcase/avatar'
 import BackgroundView from '@bleach/ui/dist/components/BackgroundView'
 import { ScrollView } from 'react-native'
+import { AvatarShowcase } from '@/components/showcase/avatar'
 
 export default function AvatarScreen() {
   return (
@@ -14,9 +14,9 @@ export default function AvatarScreen() {
     >
       <BackgroundView
         sx={(theme) => ({
-          paddingHorizontal: theme.spacing.create(2),
-          paddingVertical: theme.spacing.create(4),
-          gap: theme.spacing.create(5),
+          paddingHorizontal: theme.spacing(2),
+          paddingVertical: theme.spacing(4),
+          gap: theme.spacing(5),
         })}
       >
         <AvatarShowcase />

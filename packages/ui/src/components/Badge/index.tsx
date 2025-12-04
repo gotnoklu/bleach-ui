@@ -1,11 +1,11 @@
 import type { ReactNode } from 'react'
 import { useState } from 'react'
-import { View } from 'react-native'
 import type { LayoutChangeEvent, ViewProps } from 'react-native'
-import type { Palette, SxProps, TextColor } from '../../theme/types'
+import { View } from 'react-native'
+import type { Palette, TextPaletteColors } from '../../theme/types'
 import { getThemeProperty, selectStyles, styled } from '../../theme/utilities'
-import Typography from '../Typography'
-import type { TypographyProps } from '../Typography'
+import type { TextProps } from '../text'
+import { Text } from '../text'
 
 export type BadgeVariant = 'contained' | 'outlined'
 export type BadgeAnchorOrigin = {
@@ -13,12 +13,12 @@ export type BadgeAnchorOrigin = {
   horizontal: 'left' | 'right'
 }
 
-export interface BadgeProps extends Omit<ViewProps, 'style'>, SxProps<ViewProps> {
+export interface BadgeProps extends Omit<ViewProps, 'style'> {
   variant?: BadgeVariant
-  color?: keyof Palette | keyof TextColor | (string & {})
+  color?: keyof Palette | keyof TextPaletteColors | (string & {})
   size?: 'small' | 'medium' | 'large'
   slotProps?: {
-    label?: TypographyProps
+    label?: TextProps
   }
   style?: ViewProps['style']
   children: ReactNode
@@ -41,17 +41,17 @@ const StyledBadge = styled(View)<BadgeProps>(
     const badgeSize = badgeSizes[size]
     const badgeColor = getThemeProperty({ object: theme.palette, key: color, fallback: color })
     const isTextContent = typeof content === 'string' || typeof content === 'number'
-    const horizontalPadding = isTextContent ? theme.spacing.create(1) : 0
-    const verticalPadding = isTextContent ? theme.spacing.create(0.5) : 0
+    const horizontalPadding = isTextContent ? theme.spacing(1) : 0
+    const verticalPadding = isTextContent ? theme.spacing(0.5) : 0
     const height = badgeSize + verticalPadding * 2
 
     return selectStyles(
       {
-        if: variant === 'contained',
+        when: variant === 'contained',
         styles: { backgroundColor: badgeColor },
       },
       {
-        if: variant === 'outlined',
+        when: variant === 'outlined',
         styles: {
           borderColor: badgeColor,
           borderWidth: 1,
@@ -65,7 +65,7 @@ const StyledBadge = styled(View)<BadgeProps>(
           justifyContent: 'center',
           minWidth: isTextContent ? badgeSize * 1.5 : badgeSize,
           height,
-          borderRadius: rounded ? height / 2 : theme.radius.create(2),
+          borderRadius: rounded ? height / 2 : theme.radius(2),
           paddingHorizontal: horizontalPadding,
           paddingVertical: verticalPadding,
           zIndex: 1,
@@ -75,7 +75,7 @@ const StyledBadge = styled(View)<BadgeProps>(
   }
 )
 
-export default function Badge({
+export function Badge({
   children,
   content,
   variant = 'contained',
@@ -87,8 +87,7 @@ export default function Badge({
   ...props
 }: BadgeProps) {
   const [badgeLayout, setBadgeLayout] = useState({ width: 0, height: 0 })
-  const badgeContent =
-    typeof content === 'number' && max !== undefined && content > max ? `${max}+` : content
+  const badgeContent = typeof content === 'number' && max !== undefined && content > max ? `${max}+` : content
 
   const shouldShow = !invisible && (showZero || badgeContent !== 0)
 
@@ -114,12 +113,10 @@ export default function Badge({
 
     style.transform = [
       {
-        translateX:
-          anchorOrigin.horizontal === 'right' ? badgeLayout.width / 2 : -badgeLayout.width / 2,
+        translateX: anchorOrigin.horizontal === 'right' ? badgeLayout.width / 2 : -badgeLayout.width / 2,
       },
       {
-        translateY:
-          anchorOrigin.vertical === 'top' ? -badgeLayout.height / 2 : badgeLayout.height / 2,
+        translateY: anchorOrigin.vertical === 'top' ? -badgeLayout.height / 2 : badgeLayout.height / 2,
       },
     ]
 
@@ -130,25 +127,15 @@ export default function Badge({
     <BadgeContainer>
       {children}
       {shouldShow && (
-        <StyledBadge
-          variant={variant}
-          {...props}
-          content={content}
-          onLayout={handleLayout}
-          style={getBadgeStyle()}
-        >
+        <StyledBadge variant={variant} {...props} content={content} onLayout={handleLayout} style={getBadgeStyle()}>
           {typeof badgeContent === 'string' || typeof badgeContent === 'number' ? (
-            <Typography
+            <Text
               variant="caption"
-              color={
-                variant === 'contained'
-                  ? `${props.color || 'primary'}.text`
-                  : props.color || 'primary'
-              }
+              color={variant === 'contained' ? `${props.color || 'primary'}.text` : props.color || 'primary'}
               {...slotProps?.label}
             >
               {badgeContent}
-            </Typography>
+            </Text>
           ) : (
             badgeContent
           )}

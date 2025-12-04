@@ -1,24 +1,24 @@
-import { Image, type ImageProps, View, type ViewProps } from 'react-native'
-import { styled, selectStyles, getThemeProperty } from '../../theme/utilities'
-import type { Palette, SxProps, TextColor } from '../../theme/types'
-import Typography, { type TypographyProps } from '../Typography'
 import type { ReactNode } from 'react'
+import { Image, type ImageProps, View, type ViewProps } from 'react-native'
+import type { Palette, TextPaletteColors } from '../../theme/types'
+import { getThemeProperty, selectStyles, styled } from '../../theme/utilities'
+import Text, { type TextProps } from '../text'
 
 export type AvatarVariant = 'circular' | 'rounded' | 'square'
 export type AvatarSize = 'small' | 'medium' | 'large'
 
-export interface AvatarProps extends ViewProps, SxProps<ViewProps> {
+export interface AvatarProps extends ViewProps {
   variant?: AvatarVariant
   size?: AvatarSize
   src?: string
   alt?: string
-  color?: keyof Palette | keyof TextColor | (string & {})
+  color?: keyof Palette | keyof TextPaletteColors | (string & {})
   backgroundColor?: keyof Palette | (string & {})
   children?: ReactNode
   slotProps?: {
     container?: ViewProps
     image?: Omit<ImageProps, 'source'>
-    text?: TypographyProps
+    text?: TextProps
   }
 }
 
@@ -36,15 +36,15 @@ const StyledAvatar = styled(View)<
 
   return selectStyles(
     {
-      if: variant === 'circular',
+      when: variant === 'circular',
       styles: { borderRadius: avatarSizes[size] / 2 },
     },
     {
-      if: variant === 'rounded',
-      styles: { borderRadius: theme.radius.create(1) },
+      when: variant === 'rounded',
+      styles: { borderRadius: theme.radius(1) },
     },
     {
-      if: variant === 'square',
+      when: variant === 'square',
       styles: { borderRadius: 0 },
     },
     {
@@ -64,7 +64,7 @@ const AvatarImage = ({ source, ...props }: ImageProps) => (
   <Image source={source} style={{ width: '100%', height: '100%' }} {...props} />
 )
 
-export default function Avatar({
+export function Avatar({
   src,
   alt,
   color = 'text.primary',
@@ -80,11 +80,11 @@ export default function Avatar({
 
     if (typeof children === 'string') {
       return (
-        <Typography variant="body2" color={color} {...slotProps?.text}>
+        <Text variant="body2" color={color} {...slotProps?.text}>
           {children.includes(' ')
             ? children.split(' ')[0][0] + children.split(' ')[1][0]
             : children.charAt(0).toUpperCase()}
-        </Typography>
+        </Text>
       )
     }
 

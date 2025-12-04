@@ -1,13 +1,13 @@
-import { styled } from '@bleach/ui/dist/theme/utilities'
 import Box, { type BoxProps } from '@bleach/ui/dist/components/Box'
-import Typography from '@bleach/ui/dist/components/Typography'
-import ListItem from '@bleach/ui/dist/components/ListItem'
 import Button from '@bleach/ui/dist/components/Button'
-import { Alert } from 'react-native'
+import ListItem from '@bleach/ui/dist/components/ListItem'
+import Typography from '@bleach/ui/dist/components/Typography'
+import { styled } from '@bleach/ui/dist/theme/utilities'
 import { useState } from 'react'
+import { Alert } from 'react-native'
 
-const Section = styled(Box)<BoxProps>((theme) => ({ gap: theme.spacing.create(4) }))
-const SubSection = styled(Box)<BoxProps>((theme) => ({ gap: theme.spacing.create(2) }))
+const Section = styled(Box)<BoxProps>((theme) => ({ gap: theme.spacing(4) }))
+const SubSection = styled(Box)<BoxProps>((theme) => ({ gap: theme.spacing(2) }))
 
 export const ButtonShowcase = () => {
   const [loading, setLoading] = useState(false)

@@ -1,10 +1,10 @@
 import {
+  cloneElement,
+  isValidElement,
   type MutableRefObject,
   type PropsWithRef,
   type ReactElement,
   type ReactNode,
-  cloneElement,
-  isValidElement,
   useEffect,
   useLayoutEffect,
   useMemo,
@@ -17,20 +17,17 @@ import {
   type ModalProps,
   Pressable,
   StyleSheet,
+  useWindowDimensions,
   type View,
   type ViewProps,
-  useWindowDimensions,
 } from 'react-native'
-import type { SxProps } from '../../theme/types'
 import { styled } from '../../theme/utilities'
-import Show from '../Show'
+import Show from '../show'
+import { PopupProvider } from './context'
 import PopupContent from './PopupContent'
 import PopupTrigger, { type PopupTriggerProps } from './PopupTrigger'
-import { PopupProvider } from './context'
 
-export interface PopupProps
-  extends Omit<ModalProps, 'children'>,
-    SxProps<Omit<ModalProps, 'children'>> {
+export interface PopupProps extends Omit<ModalProps, 'children'> {
   position?:
     | 'top'
     | 'top-center'
@@ -56,10 +53,7 @@ export interface PopupProps
 
 export { PopupTrigger, PopupContent }
 
-function getPopupChildren(
-  children: Array<ReactNode>,
-  refs: { trigger: MutableRefObject<View | null> }
-) {
+function getPopupChildren(children: Array<ReactNode>, refs: { trigger: MutableRefObject<View | null> }) {
   const result = [null, null] as [
     ReactElement<PropsWithRef<PopupTriggerProps & { ref: MutableRefObject<View | null> }>> | null,
     ReactNode,
@@ -72,9 +66,7 @@ function getPopupChildren(
     if (isValidElement(child)) {
       if (child.type === PopupTrigger) {
         result[0] = cloneElement(
-          child as ReactElement<
-            PropsWithRef<PopupTriggerProps & { ref: MutableRefObject<View | null> }>
-          >,
+          child as ReactElement<PropsWithRef<PopupTriggerProps & { ref: MutableRefObject<View | null> }>>,
           { ref: refs.trigger }
         )
       } else if (child.type === PopupContent) {
@@ -86,11 +78,9 @@ function getPopupChildren(
   return result
 }
 
-const StyledPopup = styled(Modal)<
-  Omit<PopupProps, 'sx' | 'children' | 'popper'> & { children: ReactNode }
->({})
+const StyledPopup = styled(Modal)<Omit<PopupProps, 'sx' | 'children' | 'popper'> & { children: ReactNode }>({})
 
-export default function Popup({
+export function Popup({
   position = 'bottom',
   elevate = false,
   automatic = false,
@@ -166,10 +156,7 @@ export default function Popup({
           if (position.startsWith('top')) {
             xyOffsets.top = state.targetRect.y - height - marginY
           } else if (position.startsWith('bottom')) {
-            if (
-              state.targetRect.y + state.targetRect.height + marginY + height >=
-              dimensions.height
-            ) {
+            if (state.targetRect.y + state.targetRect.height + marginY + height >= dimensions.height) {
               xyOffsets.top = dimensions.height - state.targetRect.y + marginY
             } else {
               xyOffsets.top = state.targetRect.y + state.targetRect.height + marginY
@@ -259,27 +246,18 @@ export default function Popup({
           ]}
           onPress={hideContent}
         >
-          <Show visible={elevate}>
+          <Show when={elevate}>
             {isValidElement(trigger)
-              ? cloneElement(
-                  trigger as ReactElement<ViewProps & { ref: MutableRefObject<View | null> }>,
-                  {
-                    ref: elevatedContentRef,
-                    style: { flex: 0 },
-                    ...(closeOnElevatedTriggerEvent
-                      ? { [closeOnElevatedTriggerEvent]: hideContent }
-                      : {}),
-                  }
-                )
+              ? cloneElement(trigger as ReactElement<ViewProps & { ref: MutableRefObject<View | null> }>, {
+                  ref: elevatedContentRef,
+                  style: { flex: 0 },
+                  ...(closeOnElevatedTriggerEvent ? { [closeOnElevatedTriggerEvent]: hideContent } : {}),
+                })
               : trigger}
           </Show>
           <Animated.View
             ref={contentRef}
-            style={[
-              { opacity },
-              { transform: [{ scale }] },
-              { position: 'absolute', ...state.contentOffsets },
-            ]}
+            style={[{ opacity }, { transform: [{ scale }] }, { position: 'absolute', ...state.contentOffsets }]}
           >
             {content}
           </Animated.View>

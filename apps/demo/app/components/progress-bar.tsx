@@ -1,6 +1,6 @@
-import { ProgressBarShowcase } from '@/components/showcase/progress-bar'
 import BackgroundView from '@bleach/ui/dist/components/BackgroundView'
 import { ScrollView } from 'react-native'
+import { ProgressBarShowcase } from '@/components/showcase/progress-bar'
 
 export default function ProgressBarScreen() {
   return (
@@ -14,9 +14,9 @@ export default function ProgressBarScreen() {
     >
       <BackgroundView
         sx={(theme) => ({
-          paddingHorizontal: theme.spacing.create(2),
-          paddingVertical: theme.spacing.create(4),
-          gap: theme.spacing.create(5),
+          paddingHorizontal: theme.spacing(2),
+          paddingVertical: theme.spacing(4),
+          gap: theme.spacing(5),
         })}
       >
         <ProgressBarShowcase />

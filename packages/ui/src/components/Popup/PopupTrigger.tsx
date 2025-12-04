@@ -1,12 +1,5 @@
-import {
-  type ForwardedRef,
-  type ReactElement,
-  type ReactNode,
-  cloneElement,
-  forwardRef,
-  isValidElement,
-} from 'react'
-import { Pressable, type ViewProps, type View } from 'react-native'
+import { cloneElement, type ForwardedRef, forwardRef, isValidElement, type ReactElement, type ReactNode } from 'react'
+import { Pressable, type View, type ViewProps } from 'react-native'
 import { usePopupContext } from './context'
 
 export interface PopupTriggerProps extends ViewProps {
@@ -35,4 +28,4 @@ const PopupTrigger = forwardRef(function PopupTrigger(
   )
 })
 
-export default PopupTrigger
+export PopupTrigger

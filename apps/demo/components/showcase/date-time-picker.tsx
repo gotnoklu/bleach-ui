@@ -1,11 +1,11 @@
-import { useState } from 'react'
-import { styled } from '@bleach/ui/dist/theme/utilities'
 import Box, { type BoxProps } from '@bleach/ui/dist/components/Box'
-import Typography from '@bleach/ui/dist/components/Typography'
 import DateTimePicker from '@bleach/ui/dist/components/DateTimePicker'
+import Typography from '@bleach/ui/dist/components/Typography'
+import { styled } from '@bleach/ui/dist/theme/utilities'
+import { useState } from 'react'
 
-const Section = styled(Box)<BoxProps>((theme) => ({ gap: theme.spacing.create(4) }))
-const SubSection = styled(Box)<BoxProps>((theme) => ({ gap: theme.spacing.create(2) }))
+const Section = styled(Box)<BoxProps>((theme) => ({ gap: theme.spacing(4) }))
+const SubSection = styled(Box)<BoxProps>((theme) => ({ gap: theme.spacing(2) }))
 
 export default function DateTimePickerShowcase() {
   const [date, setDate] = useState<Date | undefined>(undefined)
@@ -65,13 +65,7 @@ export default function DateTimePickerShowcase() {
         </Typography>
         <Box style={{ gap: 8 }}>
           <DateTimePicker label="Outlined (Default)" value={date} onChange={setDate} fullWidth />
-          <DateTimePicker
-            variant="filled"
-            label="Filled"
-            value={date}
-            onChange={setDate}
-            fullWidth
-          />
+          <DateTimePicker variant="filled" label="Filled" value={date} onChange={setDate} fullWidth />
         </Box>
       </SubSection>
 

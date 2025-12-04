@@ -1,12 +1,12 @@
 import Avatar from '@bleach/ui/dist/components/Avatar'
 import Box from '@bleach/ui/dist/components/Box'
+import Button from '@bleach/ui/dist/components/Button'
 import Icon from '@bleach/ui/dist/components/Icon'
 import Paper from '@bleach/ui/dist/components/Paper'
+import Separator from '@bleach/ui/dist/components/Separator'
 import TextField from '@bleach/ui/dist/components/TextField'
 import Typography from '@bleach/ui/dist/components/Typography'
-import Divider from '@bleach/ui/dist/components/Divider'
 import { ScrollView } from 'react-native'
-import Button from '@bleach/ui/dist/components/Button'
 
 export default function Forms() {
   return (
@@ -25,7 +25,7 @@ export default function Forms() {
         <Box paddingY={1} paddingX={2}>
           <Typography fontWeight="medium">Login Form</Typography>
         </Box>
-        <Divider />
+        <Separator />
         <Box gap={6} paddingX={2} paddingY={3}>
           <Box gap={2} alignItems="center" style={{ alignSelf: 'center' }}>
             <Avatar size="large">
@@ -55,7 +55,7 @@ export default function Forms() {
           </Box>
           <Button variant="contained">Login</Button>
         </Box>
-        <Divider />
+        <Separator />
         <Box gap={2} paddingY={3} paddingX={2}>
           <Typography color="text.secondary">Are you new here?</Typography>
           <Button variant="outlined">Sign up</Button>
@@ -65,7 +65,7 @@ export default function Forms() {
         <Box paddingY={1} paddingX={2}>
           <Typography fontWeight="medium">Signup Form</Typography>
         </Box>
-        <Divider />
+        <Separator />
         <Box gap={6} paddingX={2} paddingY={3}>
           <Box gap={2} alignItems="center" style={{ alignSelf: 'center' }}>
             <Avatar size="large">
@@ -101,7 +101,7 @@ export default function Forms() {
           </Box>
           <Button variant="contained">Sign up</Button>
         </Box>
-        <Divider />
+        <Separator />
         <Box gap={2} paddingY={3} paddingX={2}>
           <Typography color="text.secondary">Already have an account?</Typography>
           <Button variant="outlined">Log in</Button>

@@ -1,24 +1,22 @@
 import { Children, type Component, type ForwardedRef, forwardRef, type ReactNode } from 'react'
 import { Pressable, type PressableProps } from 'react-native'
-import Typography, { type TypographyProps } from '../Typography'
-import type { Palette, SxProps, TextColor } from '../../theme/types'
 import { useTheme } from '../../theme/hooks'
-import { alpha, getThemeProperty, merge, selectStyles, styled } from '../../theme/utilities'
+import type { Palette, TextPaletteColors } from '../../theme/types'
+import { alpha, getThemeProperty, selectStyles, styled } from '../../theme/utilities'
+import { merge } from '../../utilities'
+import { Text, type TextProps } from '../text'
 
 export type ButtonVariant = 'contained' | 'outlined' | 'text'
 
-type PressableStyle = Exclude<
-  PressableProps['style'],
-  (number & Record<PropertyKey, any>) | Array<any> | false | ''
->
+type PressableStyle = Exclude<PressableProps['style'], (number & Record<PropertyKey, any>) | Array<any> | false | ''>
 
-export interface ButtonProps extends Omit<PressableProps, 'style'>, SxProps<PressableProps> {
+export interface ButtonProps extends Omit<PressableProps, 'style'> {
   variant?: ButtonVariant
-  color?: keyof Palette | keyof TextColor | (string & {})
-  pressedColor?: keyof Palette | keyof TextColor | (string & {})
+  color?: keyof Palette | keyof TextPaletteColors | (string & {})
+  pressedColor?: keyof Palette | keyof TextPaletteColors | (string & {})
   size?: 'small' | 'medium' | 'large'
   slotProps?: {
-    label?: TypographyProps
+    label?: TextProps
   }
   fullWidth?: boolean
   fullFlex?: boolean
@@ -29,29 +27,26 @@ export interface ButtonProps extends Omit<PressableProps, 'style'>, SxProps<Pres
 }
 
 const StyledButton = styled(Pressable)<Omit<ButtonProps, 'sx'>>(
-  (
-    theme,
-    { variant = 'text', color = 'primary', size = 'medium', fullWidth, fullFlex, disabled, rounded }
-  ) => {
+  (theme, { variant = 'text', color = 'primary', size = 'medium', fullWidth, fullFlex, disabled, rounded }) => {
     const buttonSizes = { small: 32, medium: 40, large: 48 }
     const buttonColor = getThemeProperty({ object: theme.palette, key: color, fallback: color })
     return selectStyles(
       {
-        if: variant === 'contained',
+        when: variant === 'contained',
         styles: {
           backgroundColor: disabled ? theme.palette.disabled : buttonColor,
           opacity: disabled ? 0.3 : 1,
         },
       },
       {
-        if: variant === 'outlined',
+        when: variant === 'outlined',
         styles: {
           borderColor: disabled ? theme.palette.disabled : buttonColor,
           borderWidth: 1,
         },
       },
       {
-        if: variant === 'text',
+        when: variant === 'text',
         styles: { backgroundColor: 'transparent' },
       },
 
@@ -67,14 +62,10 @@ const StyledButton = styled(Pressable)<Omit<ButtonProps, 'sx'>>(
           flexDirection: 'row',
           height: buttonSizes[size],
           maxHeight: buttonSizes[size],
-          borderRadius: theme.radius.create(rounded ? 100 : 2),
-          gap: theme.spacing.create(1),
+          borderRadius: theme.radius(rounded ? 100 : 2),
+          gap: theme.spacing(1),
           paddingHorizontal:
-            size === 'small'
-              ? theme.spacing.create(1.5)
-              : size === 'medium'
-                ? theme.spacing.create(3)
-                : theme.spacing.create(4),
+            size === 'small' ? theme.spacing(1.5) : size === 'medium' ? theme.spacing(3) : theme.spacing(4),
           ...theme.typography.variants.body1,
         },
       }
@@ -82,8 +73,8 @@ const StyledButton = styled(Pressable)<Omit<ButtonProps, 'sx'>>(
   }
 )
 
-const StyledLabel = styled(Typography)<
-  Omit<TypographyProps, 'color'> &
+const StyledLabel = styled(Text)<
+  Omit<TextProps, 'color'> &
     Pick<ButtonProps, 'color' | 'size' | 'disabled'> & { buttonVariant?: ButtonProps['variant'] }
 >((theme, { buttonVariant = 'text', color = 'primary', size = 'medium', disabled }) => {
   const labelSizes = { small: 14, medium: 16, large: 18 }
@@ -91,7 +82,7 @@ const StyledLabel = styled(Typography)<
 
   return selectStyles(
     {
-      if: buttonVariant === 'contained',
+      when: buttonVariant === 'contained',
       styles: {
         color: getThemeProperty({
           object: theme.palette,
@@ -101,7 +92,7 @@ const StyledLabel = styled(Typography)<
       },
     },
     {
-      if: buttonVariant === 'outlined' || buttonVariant === 'text',
+      when: buttonVariant === 'outlined' || buttonVariant === 'text',
       styles: { color: disabled ? theme.palette.disabled : buttonColor },
     },
     {
@@ -112,15 +103,8 @@ const StyledLabel = styled(Typography)<
   )
 })
 
-const Button = forwardRef(function Button(
-  {
-    pressedColor = 'primary.dark',
-    slotProps,
-    children,
-    variant = 'text',
-    disabled,
-    ...props
-  }: ButtonProps,
+export const Button = forwardRef(function Button(
+  { pressedColor = 'primary.dark', slotProps, children, variant = 'text', disabled, ...props }: ButtonProps,
   ref: ForwardedRef<Component<ButtonProps> | null>
 ) {
   const theme = useTheme()
@@ -177,5 +161,3 @@ const Button = forwardRef(function Button(
     </StyledButton>
   )
 })
-
-export default Button

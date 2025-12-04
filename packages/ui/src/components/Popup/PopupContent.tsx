@@ -4,6 +4,6 @@ export interface PopupContentProps {
   children: ReactNode
 }
 
-export default function PopupContent({ children }: PopupContentProps) {
+export function PopupContent({ children }: PopupContentProps) {
   return children
 }

@@ -81,9 +81,9 @@ export default function HomeScreen() {
     >
       <BackgroundView
         sx={(theme) => ({
-          paddingHorizontal: theme.spacing.create(2),
-          paddingVertical: theme.spacing.create(4),
-          gap: theme.spacing.create(5),
+          paddingHorizontal: theme.spacing(2),
+          paddingVertical: theme.spacing(4),
+          gap: theme.spacing(5),
         })}
       >
         <Box>
@@ -101,9 +101,7 @@ export default function HomeScreen() {
           <Box gap={1}>
             {EXAMPLES.map(({ icon, description, label, link }) => (
               <Link key={label} href={link} asChild>
-                <ListItemButton
-                  sx={({ palette }) => ({ borderWidth: 1, borderColor: palette.divider })}
-                >
+                <ListItemButton sx={({ palette }) => ({ borderWidth: 1, borderColor: palette.border })}>
                   {icon}
                   <Box flex={1}>
                     <Typography color="text.secondary" fontWeight="medium">
@@ -139,9 +137,7 @@ export default function HomeScreen() {
                 </Box>
                 {items.map(({ label, link }) => (
                   <Link key={label} href={link} asChild>
-                    <ListItemButton
-                      sx={({ palette }) => ({ borderWidth: 1, borderColor: palette.divider })}
-                    >
+                    <ListItemButton sx={({ palette }) => ({ borderWidth: 1, borderColor: palette.border })}>
                       <Typography fullFlex>{label}</Typography>
                       <Icon name="chevron-right" color="primary" />
                     </ListItemButton>

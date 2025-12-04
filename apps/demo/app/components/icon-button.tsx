@@ -1,6 +1,6 @@
-import { IconButtonShowcase } from '@/components/showcase/icon-button'
 import BackgroundView from '@bleach/ui/dist/components/BackgroundView'
 import { ScrollView } from 'react-native'
+import { IconButtonShowcase } from '@/components/showcase/icon-button'
 
 export default function IconButtonScreen() {
   return (
@@ -14,9 +14,9 @@ export default function IconButtonScreen() {
     >
       <BackgroundView
         sx={(theme) => ({
-          paddingHorizontal: theme.spacing.create(2),
-          paddingVertical: theme.spacing.create(4),
-          gap: theme.spacing.create(5),
+          paddingHorizontal: theme.spacing(2),
+          paddingVertical: theme.spacing(4),
+          gap: theme.spacing(5),
         })}
       >
         <IconButtonShowcase />

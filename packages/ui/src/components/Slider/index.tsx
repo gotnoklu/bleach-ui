@@ -1,19 +1,13 @@
-import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-  runOnJS,
-  useAnimatedReaction,
-} from 'react-native-reanimated'
-import { GestureHandlerRootView, Gesture, GestureDetector } from 'react-native-gesture-handler'
-import type { SxProps } from '../../theme/types'
-import { styled, alpha } from '../../theme/utilities'
+import { useCallback, useEffect, useState } from 'react'
 import { View, type ViewProps } from 'react-native'
-import Typography from '../Typography'
-import { useEffect, useState, useCallback } from 'react'
-import Box from '../Box'
-import Show from '../Show'
+import { Gesture, GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler'
+import Animated, { runOnJS, useAnimatedReaction, useAnimatedStyle, useSharedValue } from 'react-native-reanimated'
+import { alpha, styled } from '../../theme/utilities'
+import { Box } from '../box'
+import { Show } from '../show'
+import { Text } from '../text'
 
-export interface SliderProps extends ViewProps, SxProps<ViewProps> {
+export interface SliderProps extends ViewProps {
   value?: number
   min?: number
   max?: number
@@ -43,7 +37,7 @@ const StyledTrack = styled(View)<Omit<SliderProps, 'sx'>>((theme, props) => {
     width: '100%',
     height: 4,
     backgroundColor: alpha(theme.palette.disabled, props.disabled ? 0.3 : 0.5),
-    borderRadius: theme.radius.create(1),
+    borderRadius: theme.radius(1),
     position: 'relative',
   }
 })
@@ -54,7 +48,7 @@ const StyledThumb = styled(View)<Omit<SliderProps, 'sx'>>((theme, props) => {
     width: THUMB_SIZE,
     height: THUMB_SIZE,
     backgroundColor: color,
-    borderRadius: theme.radius.create(10),
+    borderRadius: theme.radius(10),
     position: 'absolute',
     top: -8,
     left: -THUMB_SIZE / 2,
@@ -67,7 +61,7 @@ const StyledFill = styled(View)<Omit<SliderProps, 'sx'>>((theme, props) => {
   return {
     height: '100%',
     backgroundColor: alpha(color, props.disabled ? 0.5 : 1),
-    borderRadius: theme.radius.create(1),
+    borderRadius: theme.radius(1),
     position: 'absolute',
   }
 })
@@ -75,7 +69,7 @@ const StyledFill = styled(View)<Omit<SliderProps, 'sx'>>((theme, props) => {
 const AnimatedThumb = Animated.createAnimatedComponent(StyledThumb)
 const AnimatedFill = Animated.createAnimatedComponent(StyledFill)
 
-export default function Slider({
+export function Slider({
   value = 0,
   min = 0,
   max = 100,
@@ -146,7 +140,7 @@ export default function Slider({
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <Box sx={() => ({ width: '100%', marginVertical: 16 })} {...props}>
+      <Box style={{ width: '100%', marginVertical: 16 }} {...props}>
         <StyledContainer {...slotProps?.container}>
           <GestureDetector gesture={panGesture}>
             <Animated.View style={{ flex: 1 }}>
@@ -157,10 +151,10 @@ export default function Slider({
             </Animated.View>
           </GestureDetector>
         </StyledContainer>
-        <Show visible={showValue}>
-          <Typography variant="caption" sx={() => ({ textAlign: 'center' })} {...slotProps?.value}>
+        <Show when={showValue}>
+          <Text variant="caption" style={{ textAlign: 'center' }} {...slotProps?.value}>
             {displayValue}
-          </Typography>
+          </Text>
         </Show>
       </Box>
     </GestureHandlerRootView>

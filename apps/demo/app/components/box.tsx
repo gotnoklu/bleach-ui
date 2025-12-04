@@ -1,6 +1,6 @@
-import { BoxShowcase } from '@/components/showcase/box'
 import BackgroundView from '@bleach/ui/dist/components/BackgroundView'
 import { ScrollView } from 'react-native'
+import { BoxShowcase } from '@/components/showcase/box'
 
 export default function BoxScreen() {
   return (
@@ -14,9 +14,9 @@ export default function BoxScreen() {
     >
       <BackgroundView
         sx={(theme) => ({
-          paddingHorizontal: theme.spacing.create(2),
-          paddingVertical: theme.spacing.create(4),
-          gap: theme.spacing.create(5),
+          paddingHorizontal: theme.spacing(2),
+          paddingVertical: theme.spacing(4),
+          gap: theme.spacing(5),
         })}
       >
         <BoxShowcase />

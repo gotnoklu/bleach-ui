@@ -1,4 +1,4 @@
-import { Fragment, useMemo, useRef, useState, isValidElement, type ReactNode } from 'react'
+import { Fragment, isValidElement, type ReactNode, useMemo, useRef, useState } from 'react'
 import {
   FlatList,
   Keyboard,
@@ -10,16 +10,15 @@ import {
   View,
   type ViewProps,
 } from 'react-native'
-import Typography, { type TypographyProps } from '../Typography'
-import Icon from '../Icon'
-import Paper, { type PaperProps } from '../Paper'
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
-import Show from '../Show'
-import TextField from '../TextField'
-import ListItemButton from '../ListItemButton'
 import { selectStyles, styled } from '../../theme/utilities'
-import Divider from '../Divider'
-import type { SxProps } from '../../theme/types'
+import { Card, type CardProps } from '../card'
+import { IconCheck, IconChevronDown, IconChevronUp, IconSearch } from '../icon'
+import { Input } from '../input'
+import { ListItemButton } from '../list-item-button'
+import { Separator } from '../separator'
+import { Show } from '../show'
+import { Text, type TextProps } from '../text'
 
 export type SelectVariant = 'base' | 'outlined'
 
@@ -33,23 +32,22 @@ type BaseProps<Options extends Array<Record<PropertyKey, any>> = []> = {
   options: Options
   fullWidth?: boolean
   slots?: { leftAdornments?: ReactNode; rightAdornments?: ReactNode }
-  slotProps?: { paper?: PaperProps }
+  slotProps?: { paper?: CardProps }
   enableSearch?: boolean
   displayOnlyIcon?: boolean
-  maxOptionsPaperHeight?: number
+  maxOptionsCardHeight?: number
   onChange?: (option: Options[number]) => void
   displayTopOptions?: (options: Options) => Options
 }
 
 type BaseDropdownProps<Options extends Array<Record<PropertyKey, any>> = []> =
   | (ViewProps &
-      SxProps<ViewProps> &
       Omit<BaseProps<Options>, 'slotProps'> & {
         label?: ReactNode
         description?: ReactNode
-        slotProps?: { paper?: PaperProps; label?: TypographyProps; description?: TypographyProps }
+        slotProps?: { paper?: CardProps; label?: TextProps; description?: TextProps }
       })
-  | (PressableProps & SxProps<PressableProps> & BaseProps<Options>)
+  | (PressableProps & BaseProps<Options>)
 
 const StyledDropdown = styled(Pressable)<
   PressableProps &
@@ -61,25 +59,21 @@ const StyledDropdown = styled(Pressable)<
     {
       styles: {
         minHeight: 44,
-        borderRadius: theme.radius.create(2),
-        paddingHorizontal: theme.spacing.create(2),
-        gap: theme.spacing.create(1.5),
+        borderRadius: theme.radius(2),
+        paddingHorizontal: theme.spacing(2),
+        gap: theme.spacing(1.5),
         flexDirection: 'row',
         alignItems: 'center',
-        minWidth: fullWidth
-          ? '100%'
-          : displayOnlyIcon
-            ? 20 + theme.spacing.create(1) * 4 + 20
-            : 150,
+        minWidth: fullWidth ? '100%' : displayOnlyIcon ? 20 + theme.spacing(1) * 4 + 20 : 150,
         maxWidth: fullWidth ? '100%' : 'auto',
       },
     },
     {
-      if: variant === 'outlined',
+      when: variant === 'outlined',
       styles: {
         borderStyle: 'solid',
         borderWidth: 1,
-        borderColor: isOpen ? theme.palette.primary.main : theme.palette.divider,
+        borderColor: isOpen ? theme.palette.primary.main : theme.palette.border,
       },
     }
   )
@@ -87,11 +81,11 @@ const StyledDropdown = styled(Pressable)<
 
 const StyledRootView = styled(View)<ViewProps>((theme) => {
   return {
-    gap: theme.spacing.create(1),
+    gap: theme.spacing(1),
   }
 })
 
-const AnimatedPaper = Animated.createAnimatedComponent(Paper)
+const AnimatedCard = Animated.createAnimatedComponent(Card)
 
 function BaseDropdown<Options extends Array<Record<PropertyKey, any>> = []>({
   // @ts-ignore
@@ -106,7 +100,7 @@ function BaseDropdown<Options extends Array<Record<PropertyKey, any>> = []>({
   valueKey = 'value',
   iconKey = 'icon',
   displayOnlyIcon = false,
-  maxOptionsPaperHeight = 300,
+  maxOptionsCardHeight = 300,
   fullWidth = false,
   slots,
   slotProps,
@@ -167,7 +161,7 @@ function BaseDropdown<Options extends Array<Record<PropertyKey, any>> = []>({
         topOffset = top + height + 8
       }
 
-      animationHeight.value = maxOptionsPaperHeight
+      animationHeight.value = maxOptionsCardHeight
       setDropdownState((prev) => ({ ...prev, isOpen: true, topOffset, leftOffset: left, width }))
     })
   }
@@ -193,9 +187,7 @@ function BaseDropdown<Options extends Array<Record<PropertyKey, any>> = []>({
   function filterOptions(text: string) {
     if (text === '') return setFiltered(null)
 
-    return setFiltered(
-      options.filter((option) => option[labelKey].toLowerCase().includes(text.toLowerCase()))
-    )
+    return setFiltered(options.filter((option) => option[labelKey].toLowerCase().includes(text.toLowerCase())))
   }
 
   const selectedOption = useMemo(() => {
@@ -216,7 +208,7 @@ function BaseDropdown<Options extends Array<Record<PropertyKey, any>> = []>({
   const mergedOptions = useMemo(() => {
     if (filtered === null) {
       return typeof displayTopOptions === 'function'
-        ? [...displayTopOptions(options), { type: 'divider', [valueKey]: 'divider-0' }, ...options]
+        ? [...displayTopOptions(options), { type: 'Separator', [valueKey]: 'Separator-0' }, ...options]
         : options
     }
 
@@ -233,21 +225,15 @@ function BaseDropdown<Options extends Array<Record<PropertyKey, any>> = []>({
         fullWidth={fullWidth}
         {...props}
       >
-        <Show visible={!displayOnlyIcon}>{slots?.leftAdornments}</Show>
+        <Show when={!displayOnlyIcon}>{slots?.leftAdornments}</Show>
         {selectedOption.icon}
-        <Show visible={!displayOnlyIcon}>
-          <Typography variant="body2" fontWeight="medium" fullFlex>
+        <Show when={!displayOnlyIcon}>
+          <Text variant="body2" fontWeight="medium" fullFlex>
             {selectedOption.label}
-          </Typography>
+          </Text>
         </Show>
-        <Show visible={!displayOnlyIcon}>
-          {slots?.rightAdornments ?? (
-            <Icon
-              name={dropdownState.isOpen ? 'chevron-up' : 'chevron-down'}
-              size={16}
-              color={dropdownState.isOpen ? 'primary.main' : 'action'}
-            />
-          )}
+        <Show when={!displayOnlyIcon}>
+          {slots?.rightAdornments ?? (dropdownState.isOpen ? <IconChevronUp /> : <IconChevronDown />)}
         </Show>
       </StyledDropdown>
       <Modal
@@ -257,11 +243,8 @@ function BaseDropdown<Options extends Array<Record<PropertyKey, any>> = []>({
         onRequestClose={closeDropdown}
         onDismiss={closeDropdown}
       >
-        <Pressable
-          style={[StyleSheet.absoluteFill, { overflow: 'hidden' }]}
-          onPress={closeDropdown}
-        >
-          <AnimatedPaper
+        <Pressable style={[StyleSheet.absoluteFill, { overflow: 'hidden' }]} onPress={closeDropdown}>
+          <AnimatedCard
             ref={optionsBoxEl}
             {...slotProps?.paper}
             style={[
@@ -274,16 +257,16 @@ function BaseDropdown<Options extends Array<Record<PropertyKey, any>> = []>({
               slotProps?.paper?.style,
             ]}
           >
-            <Show visible={enableSearch === true}>
-              <TextField
+            <Show when={enableSearch === true}>
+              <Input
                 placeholder="Search"
                 variant="outlined"
-                leftAdornments={<Icon name="search" size={20} style={{ marginLeft: 8 }} />}
+                leftAdornments={<IconSearch />}
                 slotProps={{ textInput: { onChangeText: filterOptions } }}
               />
             </Show>
             <Show
-              visible={Array.isArray(filtered) && filtered.length === 0}
+              when={Array.isArray(filtered) && filtered.length === 0}
               fallback={
                 <FlatList
                   data={mergedOptions}
@@ -291,32 +274,30 @@ function BaseDropdown<Options extends Array<Record<PropertyKey, any>> = []>({
                     return item[valueKey as keyof typeof item]
                   }}
                   renderItem={({ item }) => {
-                    if (item.type === 'divider') {
-                      return <Divider />
+                    if (item.type === 'Separator') {
+                      return <Separator />
                     }
 
                     return (
                       <ListItemButton style={{ minHeight: 40 }} onPress={() => selectOption(item)}>
                         {item[iconKey]}
-                        <Typography
+                        <Text
                           variant="body2"
                           color={value === item[valueKey] ? 'primary.main' : 'text.primary'}
                           style={{ flex: 1 }}
                         >
                           {item[labelKey as keyof typeof item] as string}
-                        </Typography>
-                        {item[valueKey as keyof typeof item] === value ? (
-                          <Icon name="check" color="primary" size={16} />
-                        ) : null}
+                        </Text>
+                        {item[valueKey as keyof typeof item] === value ? <IconCheck /> : null}
                       </ListItemButton>
                     )
                   }}
                 />
               }
             >
-              <Typography style={{ height: '100%' }}>No items match your search</Typography>
+              <Text style={{ height: '100%' }}>No items match your search</Text>
             </Show>
-          </AnimatedPaper>
+          </AnimatedCard>
         </Pressable>
       </Modal>
     </Fragment>
@@ -324,29 +305,29 @@ function BaseDropdown<Options extends Array<Record<PropertyKey, any>> = []>({
 
   if (label !== undefined || description !== undefined) {
     return (
-      <StyledRootView {...(props as ViewProps & SxProps<ViewProps>)}>
+      <StyledRootView {...(props as ViewProps)}>
         {isValidElement(label) ? (
           label
         ) : typeof label === 'string' ? (
-          <Typography
+          <Text
             variant="body2"
             fontWeight="medium"
             {...(slotProps as Extract<typeof slotProps, { label?: any }>)?.label}
           >
             {label}
-          </Typography>
+          </Text>
         ) : null}
         {DropdownEl}
         {isValidElement(description) ? (
           description
         ) : typeof description === 'string' ? (
-          <Typography
+          <Text
             variant="caption"
             color="secondary"
             {...(slotProps as Extract<typeof slotProps, { description?: any }>)?.description}
           >
             {description}
-          </Typography>
+          </Text>
         ) : null}
       </StyledRootView>
     )
@@ -373,12 +354,11 @@ function UncontrolledDropdown<Options extends Array<Record<PropertyKey, any>> = 
   return <BaseDropdown value={value} onChange={selectOption} valueKey={valueKey} {...props} />
 }
 
-export type DropdownProps<Options extends Array<Record<PropertyKey, any>> = []> =
-  BaseDropdownProps<Options> & {
-    defaultValue?: BaseDropdownProps<Options>['value']
-  }
+export type DropdownProps<Options extends Array<Record<PropertyKey, any>> = []> = BaseDropdownProps<Options> & {
+  defaultValue?: BaseDropdownProps<Options>['value']
+}
 
-export default function Dropdown<Options extends Array<Record<PropertyKey, any>> = []>({
+export function Dropdown<Options extends Array<Record<PropertyKey, any>> = []>({
   value,
   defaultValue,
   ...props

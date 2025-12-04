@@ -1,17 +1,17 @@
-import { Pressable, type PressableProps } from 'react-native'
-import { createComponentStyles, getThemeProperty, styled } from '../../theme/utilities'
-import type { Palette, SxProps, TextColor } from '../../theme/types'
-import Typography, { type TypographyProps } from '../Typography'
 import { Children, type ReactNode } from 'react'
+import { Pressable, type PressableProps } from 'react-native'
+import type { Palette, TextPaletteColors } from '../../theme/types'
+import { createComponentStyles, getThemeProperty, styled } from '../../theme/utilities'
+import { Text, type TextProps } from '../text'
 
-export interface ChipProps extends PressableProps, SxProps<PressableProps> {
+export interface ChipProps extends PressableProps {
   variant?: 'contained' | 'outlined'
   checked?: boolean
   defaultChecked?: boolean
-  color?: keyof Palette | keyof TextColor | (string & {})
+  color?: keyof Palette | keyof TextPaletteColors | (string & {})
   size?: 'small' | 'medium' | 'large'
   slotProps?: {
-    label?: TypographyProps
+    label?: TextProps
   }
   children?: ReactNode
   rounded?: boolean
@@ -28,21 +28,12 @@ const StyledChip = styled(Pressable)<Omit<ChipProps, 'sx'>>(
       display: 'flex',
       flexDirection: 'row',
       maxWidth: 'auto',
-      borderRadius: theme.radius.create(rounded ? 100 : 2),
-      gap: theme.spacing.create(1),
-      borderColor: checked
-        ? theme.palette.primary.main
-        : disabled
-          ? theme.palette.disabled
-          : chipColor,
+      borderRadius: theme.radius(rounded ? 100 : 2),
+      gap: theme.spacing(1),
+      borderColor: checked ? theme.palette.primary.main : disabled ? theme.palette.disabled : chipColor,
       borderWidth: 1,
-      paddingVertical: theme.spacing.create(0.5),
-      paddingHorizontal:
-        size === 'small'
-          ? theme.spacing.create(1)
-          : size === 'medium'
-            ? theme.spacing.create(1)
-            : theme.spacing.create(2),
+      paddingVertical: theme.spacing(0.5),
+      paddingHorizontal: size === 'small' ? theme.spacing(1) : size === 'medium' ? theme.spacing(1) : theme.spacing(2),
       ...theme.typography.variants.body1,
     }
   }
@@ -68,7 +59,7 @@ const useLabelStyles = createComponentStyles(
   }
 )
 
-export default function Chip({ checked, slotProps, children, disabled, ...props }: ChipProps) {
+export function Chip({ checked, slotProps, children, disabled, ...props }: ChipProps) {
   const labelStyles = useLabelStyles({
     color: props.color,
     size: props.size,
@@ -89,9 +80,9 @@ export default function Chip({ checked, slotProps, children, disabled, ...props 
       {Children.map(children, (child) => {
         if (typeof child === 'string' || typeof child === 'number') {
           return (
-            <Typography {...slotProps?.label} style={[labelStyles, slotProps?.label?.style]}>
+            <Text {...slotProps?.label} style={[labelStyles, slotProps?.label?.style]}>
               {child}
-            </Typography>
+            </Text>
           )
         }
 

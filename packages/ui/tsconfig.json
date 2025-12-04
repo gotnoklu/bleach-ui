@@ -2,18 +2,19 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "target": "ESNext",
-    "module": "NodeNext",
+    "module": "esnext",
     "declaration": true,
     "outDir": "dist",
     "moduleDetection": "auto",
-    "moduleResolution": "nodenext",
+    "moduleResolution": "bundler",
     "verbatimModuleSyntax": false,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
+    "baseUrl": "./",
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./src/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx"],

@@ -3,12 +3,12 @@ import Button from '@bleach/ui/dist/components/Button'
 import Icon from '@bleach/ui/dist/components/Icon'
 import ListItemButton from '@bleach/ui/dist/components/ListItemButton'
 import Paper from '@bleach/ui/dist/components/Paper'
-import Popup, { PopupTrigger, PopupContent } from '@bleach/ui/dist/components/Popup'
+import Popup, { PopupContent, PopupTrigger } from '@bleach/ui/dist/components/Popup'
 import Typography from '@bleach/ui/dist/components/Typography'
 import { styled } from '@bleach/ui/dist/theme/utilities'
 
-const Section = styled(Box)<BoxProps>((theme) => ({ gap: theme.spacing.create(4) }))
-const SubSection = styled(Box)<BoxProps>((theme) => ({ gap: theme.spacing.create(2) }))
+const Section = styled(Box)<BoxProps>((theme) => ({ gap: theme.spacing(4) }))
+const SubSection = styled(Box)<BoxProps>((theme) => ({ gap: theme.spacing(2) }))
 
 const PopupPaper = (
   <Paper sx={({ spacing }) => ({ padding: spacing.create(2) })}>
@@ -237,10 +237,10 @@ export const PopupShowcase = () => {
           </PopupTrigger>
           <PopupContent>
             <Paper>
-              <ListItemButton size="small" divider>
+              <ListItemButton size="small" Separator>
                 <Typography>Select</Typography>
               </ListItemButton>
-              <ListItemButton size="small" divider>
+              <ListItemButton size="small" Separator>
                 <Typography color="error">Delete</Typography>
               </ListItemButton>
               <Popup position="right">
@@ -252,7 +252,7 @@ export const PopupShowcase = () => {
                 </PopupTrigger>
                 <PopupContent>
                   <Paper>
-                    <ListItemButton size="small" divider>
+                    <ListItemButton size="small" Separator>
                       <Typography>Nested 1</Typography>
                     </ListItemButton>
                     <Popup position="left">
@@ -264,7 +264,7 @@ export const PopupShowcase = () => {
                       </PopupTrigger>
                       <PopupContent>
                         <Paper>
-                          <ListItemButton size="small" divider>
+                          <ListItemButton size="small" Separator>
                             <Typography>Inner 1</Typography>
                           </ListItemButton>
                           <ListItemButton size="small">

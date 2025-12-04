@@ -1,6 +1,6 @@
-import { CheckboxShowcase } from '@/components/showcase/checkbox'
 import BackgroundView from '@bleach/ui/dist/components/BackgroundView'
 import { ScrollView } from 'react-native'
+import { CheckboxShowcase } from '@/components/showcase/checkbox'
 
 export default function CheckboxScreen() {
   return (
@@ -14,9 +14,9 @@ export default function CheckboxScreen() {
     >
       <BackgroundView
         sx={(theme) => ({
-          paddingHorizontal: theme.spacing.create(2),
-          paddingVertical: theme.spacing.create(4),
-          gap: theme.spacing.create(5),
+          paddingHorizontal: theme.spacing(2),
+          paddingVertical: theme.spacing(4),
+          gap: theme.spacing(5),
         })}
       >
         <CheckboxShowcase />

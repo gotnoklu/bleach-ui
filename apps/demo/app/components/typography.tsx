@@ -1,6 +1,6 @@
-import { TypographyShowcase } from '@/components/showcase/typography'
 import BackgroundView from '@bleach/ui/dist/components/BackgroundView'
 import { ScrollView } from 'react-native'
+import { TypographyShowcase } from '@/components/showcase/typography'
 
 export default function TypographyScreen() {
   return (
@@ -14,9 +14,9 @@ export default function TypographyScreen() {
     >
       <BackgroundView
         sx={(theme) => ({
-          paddingHorizontal: theme.spacing.create(2),
-          paddingVertical: theme.spacing.create(4),
-          gap: theme.spacing.create(5),
+          paddingHorizontal: theme.spacing(2),
+          paddingVertical: theme.spacing(4),
+          gap: theme.spacing(5),
         })}
       >
         <TypographyShowcase />

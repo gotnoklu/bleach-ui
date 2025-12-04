@@ -1,17 +1,17 @@
-import { styled } from '@bleach/ui/dist/theme/utilities'
-import Box, { type BoxProps } from '@bleach/ui/dist/components/Box'
-import Typography from '@bleach/ui/dist/components/Typography'
-import ListItem from '@bleach/ui/dist/components/ListItem'
-import Button from '@bleach/ui/dist/components/Button'
-import Badge from '@bleach/ui/dist/components/Badge'
-import Icon from '@bleach/ui/dist/components/Icon'
 import Avatar from '@bleach/ui/dist/components/Avatar'
+import Badge from '@bleach/ui/dist/components/Badge'
+import Box, { type BoxProps } from '@bleach/ui/dist/components/Box'
+import Button from '@bleach/ui/dist/components/Button'
+import Icon from '@bleach/ui/dist/components/Icon'
+import ListItem from '@bleach/ui/dist/components/ListItem'
+import Typography from '@bleach/ui/dist/components/Typography'
 import { useTheme } from '@bleach/ui/dist/theme/hooks'
+import { styled } from '@bleach/ui/dist/theme/utilities'
 
-const Section = styled(Box)<BoxProps>((theme) => ({ gap: theme.spacing.create(4) }))
-const SubSection = styled(Box)<BoxProps>((theme) => ({ gap: theme.spacing.create(2) }))
+const Section = styled(Box)<BoxProps>((theme) => ({ gap: theme.spacing(4) }))
+const SubSection = styled(Box)<BoxProps>((theme) => ({ gap: theme.spacing(2) }))
 const BadgeItem = styled(Box)<BoxProps>((theme) => ({
-  gap: theme.spacing.create(1),
+  gap: theme.spacing(1),
   alignItems: 'center',
   flex: 1,
 }))
@@ -172,12 +172,7 @@ export const BadgeShowcase = () => {
             </Typography>
           </BadgeItem>
           <BadgeItem>
-            <Badge
-              content="AWAY"
-              color="error"
-              rounded
-              anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-            >
+            <Badge content="AWAY" color="error" rounded anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}>
               <Avatar size="large" variant="rounded" src="https://i.pravatar.cc/300?img=5">
                 MK
               </Avatar>

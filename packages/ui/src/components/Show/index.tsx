@@ -1,17 +1,13 @@
 import type { ReactElement, ReactNode } from 'react'
 
-export type ShowProps<TVisible extends boolean> = {
-  visible: TVisible
+export type ShowProps = {
+  when: boolean
   children: ReactNode | ((...args: unknown[]) => ReactNode | ReactElement) | ReactElement
   fallback?: ReactNode | ((...args: unknown[]) => ReactNode | ReactElement) | ReactElement
 }
 
-export default function Show<TVisible extends boolean>({
-  visible,
-  fallback = null,
-  children,
-}: ShowProps<TVisible>) {
-  if (visible === true) {
+export function Show({ when, fallback = null, children }: ShowProps) {
+  if (when === true) {
     if (typeof children === 'function') {
       return children()
     }

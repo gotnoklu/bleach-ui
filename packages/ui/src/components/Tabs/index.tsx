@@ -1,12 +1,11 @@
-import { Children, type ReactNode, useState, useRef, forwardRef, useEffect } from 'react'
-import { Pressable, View, type PressableProps, type ViewProps, ScrollView } from 'react-native'
-import type { SxProps, Palette, TextColor, Theme } from '../../theme/types'
-import { styled } from '../../theme/utilities'
-import Typography from '../Typography'
+import React, { Children, forwardRef, type ReactNode, useEffect, useRef, useState } from 'react'
+import { Pressable, type PressableProps, ScrollView, View, type ViewProps } from 'react-native'
 import Animated, { useAnimatedStyle, withSpring } from 'react-native-reanimated'
-import React from 'react'
+import type { Palette, TextPaletteColors, Theme } from '../../theme/types'
+import { styled } from '../../theme/utilities'
+import { Text } from '../text'
 
-export interface TabProps extends Omit<PressableProps, 'children'>, SxProps<PressableProps> {
+export interface TabProps extends Omit<PressableProps, 'children'> {
   label: string
   value: string
   icon?: ReactNode
@@ -25,22 +24,20 @@ interface TabsSlotState {
   value?: string
 }
 
-export interface TabsProps extends ViewProps, SxProps<ViewProps> {
+export interface TabsProps extends ViewProps {
   value?: string
   onChange?: (value: string) => void
   variant?: 'standard' | 'scrollable'
-  color?: keyof Palette | keyof TextColor | (string & {})
+  color?: keyof Palette | keyof TextPaletteColors | (string & {})
   children: ReactNode
-  indicatorColor?: keyof Palette | keyof TextColor | (string & {})
+  indicatorColor?: keyof Palette | keyof TextPaletteColors | (string & {})
   slotProps?: {
     container?: ViewProps | ((state: TabsSlotState) => ViewProps)
     tabsContainer?: ViewProps | ((state: TabsSlotState) => ViewProps)
     indicator?: ViewProps | ((state: TabsSlotState) => ViewProps)
     tab?:
       | Omit<TabProps, 'label' | 'value' | 'icon' | 'disabled' | 'isSelected'>
-      | ((
-          state: TabSlotState
-        ) => Omit<TabProps, 'label' | 'value' | 'icon' | 'disabled' | 'isSelected'>)
+      | ((state: TabSlotState) => Omit<TabProps, 'label' | 'value' | 'icon' | 'disabled' | 'isSelected'>)
     label?: ViewProps | ((state: TabSlotState) => ViewProps)
   }
 }
@@ -53,7 +50,7 @@ interface StyledTabsContainerProps extends ViewProps {
 const StyledTabsContainer = styled(View)<StyledTabsContainerProps>((theme) => ({
   flexDirection: 'row',
   borderBottomWidth: 1,
-  borderBottomColor: theme.palette.divider,
+  borderBottomColor: theme.palette.border,
   position: 'relative',
 }))
 
@@ -69,9 +66,9 @@ const StyledTab = styled(Pressable)<StyledTabProps>((theme: Theme, props) => ({
   flexDirection: 'row',
   alignItems: 'center',
   justifyContent: 'center',
-  gap: theme.spacing.create(1),
-  paddingHorizontal: theme.spacing.create(3),
-  paddingVertical: theme.spacing.create(1.5),
+  gap: theme.spacing(1),
+  paddingHorizontal: theme.spacing(3),
+  paddingVertical: theme.spacing(1.5),
   opacity: props.disabled ? 0.5 : 1,
   minHeight: 48,
   flex: props.variant === 'standard' ? 1 : undefined,
@@ -118,25 +115,14 @@ const Tab = forwardRef<View, TabProps & { variant?: TabsProps['variant'] }>(func
       {...props}
     >
       {iconElement}
-      <Typography
-        variant="body2"
-        fontWeight="medium"
-        color={isSelected ? 'primary.main' : 'text.primary'}
-      >
+      <Text variant="body2" fontWeight="medium" color={isSelected ? 'primary.main' : 'text.primary'}>
         {label}
-      </Typography>
+      </Text>
     </StyledTab>
   )
 })
 
-const Tabs = function Tabs({
-  value,
-  onChange,
-  variant = 'standard',
-  children,
-  slotProps,
-  ...props
-}: TabsProps) {
+export const Tabs = function Tabs({ value, onChange, variant = 'standard', children, slotProps, ...props }: TabsProps) {
   const [selectedTabWidth, setSelectedTabWidth] = useState(0)
   const [selectedTabX, setSelectedTabX] = useState(0)
   const tabRefs = useRef<{ [key: string]: View | null }>({})
@@ -153,20 +139,18 @@ const Tabs = function Tabs({
     if (tabRef && containerRef.current) {
       containerRef.current.measure(
         (_cx: number, _cy: number, _cwidth: number, _cheight: number, containerPageX: number) => {
-          tabRef.measure(
-            (_x: number, _y: number, width: number, _height: number, pageX: number) => {
-              setSelectedTabWidth(width)
-              setSelectedTabX(pageX - containerPageX)
+          tabRef.measure((_x: number, _y: number, width: number, _height: number, pageX: number) => {
+            setSelectedTabWidth(width)
+            setSelectedTabX(pageX - containerPageX)
 
-              // Scroll to the selected tab if in scrollable mode
-              if (variant === 'scrollable' && scrollViewRef.current) {
-                scrollViewRef.current.scrollTo({
-                  x: pageX - containerPageX,
-                  animated: true,
-                })
-              }
+            // Scroll to the selected tab if in scrollable mode
+            if (variant === 'scrollable' && scrollViewRef.current) {
+              scrollViewRef.current.scrollTo({
+                x: pageX - containerPageX,
+                animated: true,
+              })
             }
-          )
+          })
         }
       )
     }
@@ -254,11 +238,7 @@ const Tabs = function Tabs({
   )
 
   return (
-    <View
-      style={{ width: variant === 'standard' ? '100%' : 'auto' }}
-      {...getContainerProps({ value })}
-      {...props}
-    >
+    <View style={{ width: variant === 'standard' ? '100%' : 'auto' }} {...getContainerProps({ value })} {...props}>
       {variant === 'scrollable' ? (
         <ScrollView ref={scrollViewRef} horizontal showsHorizontalScrollIndicator={false}>
           {TabsContent}
@@ -271,5 +251,3 @@ const Tabs = function Tabs({
 }
 
 Tabs.Tab = Tab
-
-export default Tabs
