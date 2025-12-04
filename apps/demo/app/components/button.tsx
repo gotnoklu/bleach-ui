@@ -1,5 +1,5 @@
 import { ScrollView } from 'react-native'
-import BackgroundView from 'bleach/dist/components/BackgroundView'
+import BackgroundView from '@bleach/ui/dist/components/BackgroundView'
 import { ButtonShowcase } from '@/components/showcase/button'
 
 export default function HomeScreen() {

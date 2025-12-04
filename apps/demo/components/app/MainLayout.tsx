@@ -1,6 +1,6 @@
 import { ThemeProvider as NativeThemeProvider } from '@react-navigation/native'
 import { StatusBar } from 'expo-status-bar'
-import { ThemeProvider, useThemeMode } from 'bleach'
+import { ThemeProvider, useThemeMode } from '@bleach/ui'
 import { getNativeTheme } from '../../utilities'
 import { Themes } from '../../theme'
 import ScreenStack from './ScreenStack'

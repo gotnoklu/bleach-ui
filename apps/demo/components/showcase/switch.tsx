@@ -1,8 +1,8 @@
-import { styled } from 'bleach/dist/theme/utilities'
-import Box, { type BoxProps } from 'bleach/dist/components/Box'
-import Typography from 'bleach/dist/components/Typography'
-import ListItem from 'bleach/dist/components/ListItem'
-import Switch from 'bleach/dist/components/Switch'
+import { styled } from '@bleach/ui/dist/theme/utilities'
+import Box, { type BoxProps } from '@bleach/ui/dist/components/Box'
+import Typography from '@bleach/ui/dist/components/Typography'
+import ListItem from '@bleach/ui/dist/components/ListItem'
+import Switch from '@bleach/ui/dist/components/Switch'
 
 const Section = styled(Box)<BoxProps>((theme) => ({ gap: theme.spacing.create(4) }))
 const SubSection = styled(Box)<BoxProps>((theme) => ({ gap: theme.spacing.create(2) }))

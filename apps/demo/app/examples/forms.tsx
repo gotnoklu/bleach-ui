@@ -1,12 +1,12 @@
-import Avatar from 'bleach/dist/components/Avatar'
-import Box from 'bleach/dist/components/Box'
-import Icon from 'bleach/dist/components/Icon'
-import Paper from 'bleach/dist/components/Paper'
-import TextField from 'bleach/dist/components/TextField'
-import Typography from 'bleach/dist/components/Typography'
-import Divider from 'bleach/dist/components/Divider'
+import Avatar from '@bleach/ui/dist/components/Avatar'
+import Box from '@bleach/ui/dist/components/Box'
+import Icon from '@bleach/ui/dist/components/Icon'
+import Paper from '@bleach/ui/dist/components/Paper'
+import TextField from '@bleach/ui/dist/components/TextField'
+import Typography from '@bleach/ui/dist/components/Typography'
+import Divider from '@bleach/ui/dist/components/Divider'
 import { ScrollView } from 'react-native'
-import Button from 'bleach/dist/components/Button'
+import Button from '@bleach/ui/dist/components/Button'
 
 export default function Forms() {
   return (

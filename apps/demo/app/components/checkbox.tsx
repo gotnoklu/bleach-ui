@@ -1,5 +1,5 @@
 import { CheckboxShowcase } from '@/components/showcase/checkbox'
-import BackgroundView from 'bleach/dist/components/BackgroundView'
+import BackgroundView from '@bleach/ui/dist/components/BackgroundView'
 import { ScrollView } from 'react-native'
 
 export default function CheckboxScreen() {

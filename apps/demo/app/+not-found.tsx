@@ -1,5 +1,5 @@
-import Box from 'bleach/dist/components/Box'
-import Typography from 'bleach/dist/components/Typography'
+import Box from '@bleach/ui/dist/components/Box'
+import Typography from '@bleach/ui/dist/components/Typography'
 import { Link, Stack } from 'expo-router'
 import { Fragment } from 'react'
 

@@ -1,5 +1,5 @@
 import { TextFieldShowcase } from '@/components/showcase/text-field'
-import BackgroundView from 'bleach/dist/components/BackgroundView'
+import BackgroundView from '@bleach/ui/dist/components/BackgroundView'
 import { ScrollView } from 'react-native'
 
 export default function TextFieldScreen() {

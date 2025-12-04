@@ -1,5 +1,5 @@
 import { ScrollView } from 'react-native'
-import BackgroundView from 'bleach/dist/components/BackgroundView'
+import BackgroundView from '@bleach/ui/dist/components/BackgroundView'
 import DateTimePickerShowcase from '@/components/showcase/date-time-picker'
 
 export default function HomeScreen() {

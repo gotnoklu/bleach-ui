@@ -1,8 +1,8 @@
-import { styled } from 'bleach/dist/theme/utilities'
-import Box, { type BoxProps } from 'bleach/dist/components/Box'
-import Typography from 'bleach/dist/components/Typography'
-import ListItem from 'bleach/dist/components/ListItem'
-import Checkbox from 'bleach/dist/components/Checkbox'
+import { styled } from '@bleach/ui/dist/theme/utilities'
+import Box, { type BoxProps } from '@bleach/ui/dist/components/Box'
+import Typography from '@bleach/ui/dist/components/Typography'
+import ListItem from '@bleach/ui/dist/components/ListItem'
+import Checkbox from '@bleach/ui/dist/components/Checkbox'
 import { useState } from 'react'
 
 const Section = styled(Box)<BoxProps>((theme) => ({ gap: theme.spacing.create(4) }))

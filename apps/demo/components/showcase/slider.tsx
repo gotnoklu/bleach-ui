@@ -1,7 +1,7 @@
-import { styled } from 'bleach/dist/theme/utilities'
-import Box, { type BoxProps } from 'bleach/dist/components/Box'
-import Typography from 'bleach/dist/components/Typography'
-import Slider from 'bleach/dist/components/Slider'
+import { styled } from '@bleach/ui/dist/theme/utilities'
+import Box, { type BoxProps } from '@bleach/ui/dist/components/Box'
+import Typography from '@bleach/ui/dist/components/Typography'
+import Slider from '@bleach/ui/dist/components/Slider'
 import { useState } from 'react'
 
 const Section = styled(Box)<BoxProps>((theme) => ({ gap: theme.spacing.create(4) }))

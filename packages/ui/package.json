@@ -1,7 +1,7 @@
 {
-  "name": "bleach",
+  "name": "@bleach/ui",
   "description": "The stylish UI library for React Native",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "repository": "https://github.com/delalify/conjoin-monorepo",
   "author": "Enoch Klu <cyronix787@gmail.com>",
   "contributors": [
@@ -38,9 +38,7 @@
     "react-native": "*",
     "react-native-reanimated": "*"
   },
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "publishConfig": {
     "access": "public",
     "directory": "dist"

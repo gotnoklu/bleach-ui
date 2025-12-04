@@ -1,4 +1,4 @@
-import { useTheme } from 'bleach'
+import { useTheme } from '@bleach/ui'
 import { Stack } from 'expo-router'
 
 export default function ScreenStack() {

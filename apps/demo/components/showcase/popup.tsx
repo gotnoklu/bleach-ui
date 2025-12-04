@@ -1,11 +1,11 @@
-import Box, { type BoxProps } from 'bleach/dist/components/Box'
-import Button from 'bleach/dist/components/Button'
-import Icon from 'bleach/dist/components/Icon'
-import ListItemButton from 'bleach/dist/components/ListItemButton'
-import Paper from 'bleach/dist/components/Paper'
-import Popup, { PopupTrigger, PopupContent } from 'bleach/dist/components/Popup'
-import Typography from 'bleach/dist/components/Typography'
-import { styled } from 'bleach/dist/theme/utilities'
+import Box, { type BoxProps } from '@bleach/ui/dist/components/Box'
+import Button from '@bleach/ui/dist/components/Button'
+import Icon from '@bleach/ui/dist/components/Icon'
+import ListItemButton from '@bleach/ui/dist/components/ListItemButton'
+import Paper from '@bleach/ui/dist/components/Paper'
+import Popup, { PopupTrigger, PopupContent } from '@bleach/ui/dist/components/Popup'
+import Typography from '@bleach/ui/dist/components/Typography'
+import { styled } from '@bleach/ui/dist/theme/utilities'
 
 const Section = styled(Box)<BoxProps>((theme) => ({ gap: theme.spacing.create(4) }))
 const SubSection = styled(Box)<BoxProps>((theme) => ({ gap: theme.spacing.create(2) }))
