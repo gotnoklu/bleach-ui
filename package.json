@@ -1,10 +1,7 @@
 {
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
+  "workspaces": ["apps/*", "packages/*"],
   "scripts": {
-    "build:bleach": "yarn workspace bleach build"
+    "build:ui": "yarn workspace @bleach/ui build"
   },
   "packageManager": "yarn@4.7.0",
   "devDependencies": {
