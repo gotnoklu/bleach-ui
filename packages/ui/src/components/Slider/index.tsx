@@ -2,7 +2,8 @@ import { useCallback, useEffect, useState } from 'react'
 import { View, type ViewProps } from 'react-native'
 import { Gesture, GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler'
 import Animated, { runOnJS, useAnimatedReaction, useAnimatedStyle, useSharedValue } from 'react-native-reanimated'
-import { alpha, styled } from '../../theme/utilities'
+import { styled } from '../../theme/styles'
+import { alpha } from '../../theme/utilities'
 import { Box } from '../box'
 import { Show } from '../show'
 import { Text } from '../text'
@@ -15,7 +16,7 @@ export interface SliderProps extends ViewProps {
   onChange?: (value: number) => void
   showValue?: boolean
   disabled?: boolean
-  slotProps?: {
+  viewProps?: {
     container?: ViewProps
     track?: ViewProps
     thumb?: ViewProps
@@ -32,7 +33,7 @@ const StyledContainer = styled(View)(() => ({
   width: '100%',
 }))
 
-const StyledTrack = styled(View)<Omit<SliderProps, 'sx'>>((theme, props) => {
+const StyledTrack = styled(View)<SliderProps>((theme, props) => {
   return {
     width: '100%',
     height: 4,
@@ -42,8 +43,8 @@ const StyledTrack = styled(View)<Omit<SliderProps, 'sx'>>((theme, props) => {
   }
 })
 
-const StyledThumb = styled(View)<Omit<SliderProps, 'sx'>>((theme, props) => {
-  const color = props.disabled ? alpha(theme.palette.disabled, 1) : theme.palette.backgrounds.paper
+const StyledThumb = styled(View)<SliderProps>((theme, props) => {
+  const color = props.disabled ? alpha(theme.palette.disabled, 1) : theme.palette.card
   return {
     width: THUMB_SIZE,
     height: THUMB_SIZE,
@@ -56,7 +57,7 @@ const StyledThumb = styled(View)<Omit<SliderProps, 'sx'>>((theme, props) => {
   }
 })
 
-const StyledFill = styled(View)<Omit<SliderProps, 'sx'>>((theme, props) => {
+const StyledFill = styled(View)<SliderProps>((theme, props) => {
   const color = props.disabled ? theme.palette.disabled : theme.palette.primary.main
   return {
     height: '100%',
@@ -78,7 +79,7 @@ export function Slider({
   showValue = false,
   disabled = false,
   style,
-  slotProps,
+  viewProps,
   ...props
 }: SliderProps) {
   const position = useSharedValue(((value - min) / (max - min)) * 100)
@@ -141,18 +142,18 @@ export function Slider({
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <Box style={{ width: '100%', marginVertical: 16 }} {...props}>
-        <StyledContainer {...slotProps?.container}>
+        <StyledContainer {...viewProps?.container}>
           <GestureDetector gesture={panGesture}>
             <Animated.View style={{ flex: 1 }}>
-              <StyledTrack disabled={disabled} {...slotProps?.track} onLayout={onTrackLayout}>
-                <AnimatedFill style={fillStyle} disabled={disabled} {...slotProps?.fill} />
-                <AnimatedThumb style={thumbStyle} disabled={disabled} {...slotProps?.thumb} />
+              <StyledTrack disabled={disabled} {...viewProps?.track} onLayout={onTrackLayout}>
+                <AnimatedFill style={fillStyle} disabled={disabled} {...viewProps?.fill} />
+                <AnimatedThumb style={thumbStyle} disabled={disabled} {...viewProps?.thumb} />
               </StyledTrack>
             </Animated.View>
           </GestureDetector>
         </StyledContainer>
         <Show when={showValue}>
-          <Text variant="caption" style={{ textAlign: 'center' }} {...slotProps?.value}>
+          <Text variant="caption" style={{ textAlign: 'center' }} {...viewProps?.value}>
             {displayValue}
           </Text>
         </Show>

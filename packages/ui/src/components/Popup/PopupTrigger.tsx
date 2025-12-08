@@ -7,7 +7,7 @@ export interface PopupTriggerProps extends ViewProps {
   children: ReactNode
 }
 
-const PopupTrigger = forwardRef(function PopupTrigger(
+export const PopupTrigger = forwardRef(function PopupTrigger(
   { triggerOnEvent = 'onPress', children, ...props }: PopupTriggerProps,
   ref: ForwardedRef<View>
 ) {
@@ -27,5 +27,3 @@ const PopupTrigger = forwardRef(function PopupTrigger(
     </Pressable>
   )
 })
-
-export PopupTrigger

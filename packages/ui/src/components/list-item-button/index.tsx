@@ -1,6 +1,6 @@
-import { type ForwardedRef, Fragment, forwardRef } from 'react'
+import { type ForwardedRef, forwardRef } from 'react'
 import { Pressable, type PressableProps, type View } from 'react-native'
-import { selectStyles, styled } from '../../theme/utilities'
+import { selectStyles, styled } from '../../theme/styles'
 import { Separator } from '../separator'
 
 export interface ListItemButtonProps extends PressableProps {
@@ -10,7 +10,7 @@ export interface ListItemButtonProps extends PressableProps {
   disableMinHeight?: boolean
 }
 
-export const StyledListItemButton = styled(Pressable)<Omit<ListItemButtonProps, 'sx'>>(
+export const StyledListItemButton = styled(Pressable)<ListItemButtonProps>(
   (theme, { size = 'large', disablePadding, disableMinHeight }) => {
     return selectStyles(
       { when: disableMinHeight, styles: { minHeight: 'auto' } },
@@ -43,10 +43,10 @@ export const ListItemButton = forwardRef(function ListItemButton(
 
   if (separator === true) {
     return (
-      <Fragment>
+      <>
         {element}
         <Separator />
-      </Fragment>
+      </>
     )
   }
 

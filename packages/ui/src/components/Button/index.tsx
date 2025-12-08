@@ -1,38 +1,93 @@
 import { Children, type Component, type ForwardedRef, forwardRef, type ReactNode } from 'react'
 import { Pressable, type PressableProps } from 'react-native'
-import { useTheme } from '../../theme/hooks'
-import type { Palette, TextPaletteColors } from '../../theme/types'
-import { alpha, getThemeProperty, selectStyles, styled } from '../../theme/utilities'
-import { merge } from '../../utilities'
+import { selectStyles, styled } from '../../theme/styles'
+import type { PaletteColorToken } from '../../theme/types'
+import { getThemeProperty } from '../../theme/utilities'
 import { Text, type TextProps } from '../text'
 
-export type ButtonVariant = 'contained' | 'outlined' | 'text'
+export type ButtonVariant = 'filled' | 'outlined' | 'ghost'
+export type ButtonSizes = 'sm' | 'md' | 'lg' | 'icon' | 'icon-sm' | 'icon-md' | 'icon-lg'
 
-type PressableStyle = Exclude<PressableProps['style'], (number & Record<PropertyKey, any>) | Array<any> | false | ''>
-
-export interface ButtonProps extends Omit<PressableProps, 'style'> {
+export interface ButtonProps extends PressableProps {
   variant?: ButtonVariant
-  color?: keyof Palette | keyof TextPaletteColors | (string & {})
-  pressedColor?: keyof Palette | keyof TextPaletteColors | (string & {})
-  size?: 'small' | 'medium' | 'large'
-  slotProps?: {
-    label?: TextProps
+  color?: PaletteColorToken | (string & {})
+  size?: ButtonSizes
+  viewProps?: {
+    text?: TextProps
   }
   fullWidth?: boolean
-  fullFlex?: boolean
-  style?: PressableStyle
   children: ReactNode
-  rounded?: boolean
+  shape?: 'default' | 'rounded'
   disabled?: boolean
 }
 
-const StyledButton = styled(Pressable)<Omit<ButtonProps, 'sx'>>(
-  (theme, { variant = 'text', color = 'primary', size = 'medium', fullWidth, fullFlex, disabled, rounded }) => {
-    const buttonSizes = { small: 32, medium: 40, large: 48 }
+const ButtonSizes: { [_ in ButtonSizes]: number } = {
+  sm: 32,
+  md: 40,
+  lg: 48,
+  icon: 40,
+  'icon-sm': 32,
+  'icon-md': 40,
+  'icon-lg': 48,
+}
+
+const ButtonRadii: { [_ in ButtonSizes]: number } = {
+  sm: 2.5,
+  md: 3,
+  lg: 4,
+  icon: 3,
+  'icon-sm': 2.5,
+  'icon-md': 3,
+  'icon-lg': 4,
+}
+
+const TextSizes: { [_ in Exclude<ButtonSizes, `icon${string}`>]: number } = { sm: 14, md: 16, lg: 18 }
+
+const StyledButton = styled(Pressable)<ButtonProps>(
+  (theme, { variant = 'text', color = 'primary', size = 'md', fullWidth, disabled, shape = 'default' }) => {
     const buttonColor = getThemeProperty({ object: theme.palette, key: color, fallback: color })
+
+    if (size.startsWith('icon')) {
+      return selectStyles(
+        {
+          when: variant === 'filled',
+          styles: {
+            backgroundColor: disabled ? theme.palette.disabled : buttonColor,
+            opacity: disabled ? 0.3 : 1,
+          },
+        },
+        {
+          when: variant === 'outlined',
+          styles: {
+            borderColor: disabled ? theme.palette.disabled : buttonColor,
+            borderWidth: 1,
+          },
+        },
+        {
+          when: variant === 'ghost',
+          styles: { backgroundColor: 'transparent' },
+        },
+        {
+          styles: {
+            overflow: 'hidden',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: ButtonSizes[size],
+            height: ButtonSizes[size],
+            maxWidth: ButtonSizes[size],
+            maxHeight: ButtonSizes[size],
+            display: 'flex',
+            flexDirection: 'row',
+            borderRadius: theme.radius(shape === 'rounded' ? 100 : ButtonRadii[size]),
+            padding: theme.spacing(1.5),
+          },
+        }
+      )
+    }
+
     return selectStyles(
       {
-        when: variant === 'contained',
+        when: variant === 'filled',
         styles: {
           backgroundColor: disabled ? theme.palette.disabled : buttonColor,
           opacity: disabled ? 0.3 : 1,
@@ -49,23 +104,20 @@ const StyledButton = styled(Pressable)<Omit<ButtonProps, 'sx'>>(
         when: variant === 'text',
         styles: { backgroundColor: 'transparent' },
       },
-
       {
         styles: {
           overflow: 'hidden',
           alignItems: 'center',
           justifyContent: 'center',
           width: fullWidth ? '100%' : 'auto',
-          flex: fullFlex ? 1 : undefined,
           minWidth: 64,
           display: 'flex',
           flexDirection: 'row',
-          height: buttonSizes[size],
-          maxHeight: buttonSizes[size],
-          borderRadius: theme.radius(rounded ? 100 : 2),
+          height: ButtonSizes[size],
+          maxHeight: ButtonSizes[size],
+          borderRadius: theme.radius(shape === 'rounded' ? 100 : 2),
           gap: theme.spacing(1),
-          paddingHorizontal:
-            size === 'small' ? theme.spacing(1.5) : size === 'medium' ? theme.spacing(3) : theme.spacing(4),
+          paddingHorizontal: size === 'sm' ? theme.spacing(1.5) : size === 'md' ? theme.spacing(3) : theme.spacing(4),
           ...theme.typography.variants.body1,
         },
       }
@@ -73,86 +125,53 @@ const StyledButton = styled(Pressable)<Omit<ButtonProps, 'sx'>>(
   }
 )
 
-const StyledLabel = styled(Text)<
-  Omit<TextProps, 'color'> &
-    Pick<ButtonProps, 'color' | 'size' | 'disabled'> & { buttonVariant?: ButtonProps['variant'] }
->((theme, { buttonVariant = 'text', color = 'primary', size = 'medium', disabled }) => {
-  const labelSizes = { small: 14, medium: 16, large: 18 }
+const StyledText = styled(Text)<
+  TextProps & Pick<ButtonProps, 'size' | 'disabled'> & { buttonVariant?: ButtonProps['variant'] }
+>((theme, { buttonVariant = 'ghost', color = 'primary', size = 'md', disabled }) => {
   const buttonColor = getThemeProperty({ object: theme.palette, key: color, fallback: color })
 
   return selectStyles(
     {
-      when: buttonVariant === 'contained',
+      when: buttonVariant === 'filled',
       styles: {
         color: getThemeProperty({
           object: theme.palette,
-          key: disabled ? 'text.disabled' : `${color}.text`,
+          key: disabled ? 'text.disabled' : `${color}.foreground`,
           fallback: color,
         }),
       },
     },
     {
-      when: buttonVariant === 'outlined' || buttonVariant === 'text',
+      when: buttonVariant === 'outlined' || buttonVariant === 'ghost',
       styles: { color: disabled ? theme.palette.disabled : buttonColor },
     },
     {
+      when: !size.startsWith('icon'),
       styles: {
-        fontSize: labelSizes[size],
+        fontSize: TextSizes[size as keyof typeof TextSizes],
       },
     }
   )
 })
 
 export const Button = forwardRef(function Button(
-  { pressedColor = 'primary.dark', slotProps, children, variant = 'text', disabled, ...props }: ButtonProps,
+  { viewProps, children, variant = 'filled', disabled, ...props }: ButtonProps,
   ref: ForwardedRef<Component<ButtonProps> | null>
 ) {
-  const theme = useTheme()
-
-  const pressablePressedColor = getThemeProperty({
-    object: theme.palette,
-    key: pressedColor,
-    fallback: pressedColor ?? 'rgba(150, 150, 150, 0.2)',
-  })
-
   return (
-    <StyledButton
-      ref={ref}
-      variant={variant}
-      disabled={disabled}
-      android_ripple={{
-        color: pressablePressedColor,
-        borderless: false,
-        foreground: true,
-      }}
-      {...props}
-      style={(state) => ({
-        backgroundColor: disabled
-          ? theme.palette.disabled
-          : state.pressed
-            ? variant !== 'contained'
-              ? alpha(pressablePressedColor as string, 0.1)
-              : pressablePressedColor
-            : undefined,
-        ...(typeof props.style === 'function'
-          ? props.style(state)
-          : Array.isArray(props.style)
-            ? props.style.reduce((result, style) => merge(result, style), {})
-            : props.style),
-      })}
-    >
+    <StyledButton ref={ref} variant={variant} disabled={disabled} {...props}>
       {Children.map(children, (child) => {
         if (typeof child === 'string' || typeof child === 'number') {
           return (
-            <StyledLabel
+            <StyledText
               buttonVariant={variant}
               color={props.color}
               size={props.size}
               disabled={disabled}
-              {...slotProps?.label}
+              {...viewProps?.text}
             >
               {child}
-            </StyledLabel>
+            </StyledText>
           )
         }
 

@@ -1,95 +1,105 @@
 import type { ReactNode } from 'react'
-import { useState } from 'react'
+import { isValidElement, useState } from 'react'
 import type { LayoutChangeEvent, ViewProps } from 'react-native'
 import { View } from 'react-native'
-import type { Palette, TextPaletteColors } from '../../theme/types'
-import { getThemeProperty, selectStyles, styled } from '../../theme/utilities'
+import { selectStyles, styled } from '../../theme/styles'
+import type { PaletteBaseColorToken } from '../../theme/types'
+import { getThemeProperty } from '../../theme/utilities'
 import type { TextProps } from '../text'
 import { Text } from '../text'
 
-export type BadgeVariant = 'contained' | 'outlined'
-export type BadgeAnchorOrigin = {
-  vertical: 'top' | 'bottom'
-  horizontal: 'left' | 'right'
-}
+export type BadgeAnchorOrigin = { y: 'top' | 'bottom'; x: 'left' | 'right' }
 
-export interface BadgeProps extends Omit<ViewProps, 'style'> {
-  variant?: BadgeVariant
-  color?: keyof Palette | keyof TextPaletteColors | (string & {})
-  size?: 'small' | 'medium' | 'large'
-  slotProps?: {
+export interface BadgeProps extends ViewProps {
+  color?: PaletteBaseColorToken
+  size?: 'sm' | 'md' | 'lg'
+  viewProps?: {
     label?: TextProps
   }
-  style?: ViewProps['style']
   children: ReactNode
-  rounded?: boolean
-  content?: ReactNode
-  invisible?: boolean
+  indicator?: ReactNode
+  cutout?: boolean
+  hidden?: boolean
   showZero?: boolean
-  max?: number
-  anchorOrigin?: BadgeAnchorOrigin
+  maxValue?: number
+  position?: BadgeAnchorOrigin
 }
 
-const BadgeContainer = styled(View)(() => ({
+const BadgeRoot = styled(View)(() => ({
   position: 'relative',
   display: 'inline-flex',
 }))
 
-const StyledBadge = styled(View)<BadgeProps>(
-  (theme, { variant = 'contained', color = 'primary', size = 'small', rounded, content }) => {
-    const badgeSizes = { small: 16, medium: 20, large: 24 }
-    const badgeSize = badgeSizes[size]
-    const badgeColor = getThemeProperty({ object: theme.palette, key: color, fallback: color })
-    const isTextContent = typeof content === 'string' || typeof content === 'number'
-    const horizontalPadding = isTextContent ? theme.spacing(1) : 0
-    const verticalPadding = isTextContent ? theme.spacing(0.5) : 0
-    const height = badgeSize + verticalPadding * 2
+const BadgeSizes = { sm: 10, md: 16, lg: 20 }
 
+const StyledBadge = styled(View)<BadgeProps>((theme, { color = 'primary', size = 'sm', indicator, cutout }) => {
+  const baseStyles = {
+    backgroundColor: getThemeProperty({ object: theme.palette, key: color, fallback: color }),
+    position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: theme.radius(4),
+    zIndex: 1,
+  } as const
+
+  if (indicator !== undefined && indicator !== null) {
     return selectStyles(
       {
-        when: variant === 'contained',
-        styles: { backgroundColor: badgeColor },
-      },
-      {
-        when: variant === 'outlined',
+        when: cutout,
         styles: {
-          borderColor: badgeColor,
-          borderWidth: 1,
-          backgroundColor: 'transparent',
+          borderColor: theme.palette.background,
+          borderWidth: 3,
         },
       },
       {
         styles: {
-          position: 'absolute',
-          alignItems: 'center',
-          justifyContent: 'center',
-          minWidth: isTextContent ? badgeSize * 1.5 : badgeSize,
-          height,
-          borderRadius: rounded ? height / 2 : theme.radius(2),
-          paddingHorizontal: horizontalPadding,
-          paddingVertical: verticalPadding,
-          zIndex: 1,
+          ...baseStyles,
+          paddingHorizontal: theme.spacing(isValidElement(indicator) ? 0.5 : 1),
+          paddingVertical: theme.spacing(0.5),
         },
       }
     )
   }
-)
+
+  const badgeSize = BadgeSizes[size]
+
+  return selectStyles(
+    {
+      styles: {
+        ...baseStyles,
+        width: badgeSize,
+        height: badgeSize,
+      },
+    },
+    {
+      when: cutout,
+      styles: {
+        width: badgeSize + 4,
+        height: badgeSize + 4,
+        paddingHorizontal: theme.spacing(0.2),
+        paddingVertical: theme.spacing(0.2),
+        borderColor: theme.palette.background,
+        borderWidth: 3,
+      },
+    }
+  )
+})
 
 export function Badge({
   children,
-  content,
-  variant = 'contained',
-  invisible,
+  indicator,
+  hidden,
   showZero = false,
-  max,
-  slotProps,
-  anchorOrigin = { vertical: 'top', horizontal: 'right' },
+  maxValue,
+  viewProps,
+  position = { y: 'top', x: 'right' },
   ...props
 }: BadgeProps) {
   const [badgeLayout, setBadgeLayout] = useState({ width: 0, height: 0 })
-  const badgeContent = typeof content === 'number' && max !== undefined && content > max ? `${max}+` : content
+  const badgeContent =
+    typeof indicator === 'number' && maxValue !== undefined && indicator > maxValue ? `${maxValue}+` : indicator
 
-  const shouldShow = !invisible && (showZero || badgeContent !== 0)
+  const showBadge = !hidden && (showZero || badgeContent !== 0)
 
   const handleLayout = (event: LayoutChangeEvent) => {
     const { width, height } = event.nativeEvent.layout
@@ -99,48 +109,40 @@ export function Badge({
   const getBadgeStyle = () => {
     const style: any = {}
 
-    if (anchorOrigin.vertical === 'top') {
+    if (position.y === 'top') {
       style.top = 0
     } else {
       style.bottom = 0
     }
 
-    if (anchorOrigin.horizontal === 'right') {
+    if (position.x === 'right') {
       style.right = 0
     } else {
       style.left = 0
     }
 
     style.transform = [
-      {
-        translateX: anchorOrigin.horizontal === 'right' ? badgeLayout.width / 2 : -badgeLayout.width / 2,
-      },
-      {
-        translateY: anchorOrigin.vertical === 'top' ? -badgeLayout.height / 2 : badgeLayout.height / 2,
-      },
+      { translateX: position.x === 'right' ? badgeLayout.width / 2 : -badgeLayout.width / 2 },
+      { translateY: position.y === 'top' ? -badgeLayout.height / 2 : badgeLayout.height / 2 },
     ]
 
     return style
   }
 
   return (
-    <BadgeContainer>
+    <BadgeRoot>
       {children}
-      {shouldShow && (
-        <StyledBadge variant={variant} {...props} content={content} onLayout={handleLayout} style={getBadgeStyle()}>
+      {showBadge ? (
+        <StyledBadge {...props} indicator={indicator} onLayout={handleLayout} style={getBadgeStyle()}>
           {typeof badgeContent === 'string' || typeof badgeContent === 'number' ? (
-            <Text
-              variant="caption"
-              color={variant === 'contained' ? `${props.color || 'primary'}.text` : props.color || 'primary'}
-              {...slotProps?.label}
-            >
+            <Text variant="caption" color={`${props.color || 'primary'}.foreground`} {...viewProps?.label}>
               {badgeContent}
             </Text>
           ) : (
             badgeContent
           )}
         </StyledBadge>
-      )}
-    </BadgeContainer>
+      ) : null}
+    </BadgeRoot>
   )
 }

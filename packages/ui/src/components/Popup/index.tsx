@@ -21,11 +21,11 @@ import {
   type View,
   type ViewProps,
 } from 'react-native'
-import { styled } from '../../theme/utilities'
-import Show from '../show'
+import { styled } from '../../theme/styles'
+import { Show } from '../show'
 import { PopupProvider } from './context'
-import PopupContent from './PopupContent'
-import PopupTrigger, { type PopupTriggerProps } from './PopupTrigger'
+import { PopupContent } from './PopupContent'
+import { PopupTrigger, type PopupTriggerProps } from './PopupTrigger'
 
 export interface PopupProps extends Omit<ModalProps, 'children'> {
   position?:
@@ -78,7 +78,7 @@ function getPopupChildren(children: Array<ReactNode>, refs: { trigger: MutableRe
   return result
 }
 
-const StyledPopup = styled(Modal)<Omit<PopupProps, 'sx' | 'children' | 'popper'> & { children: ReactNode }>({})
+const StyledPopup = styled(Modal)<Omit<PopupProps, 'children' | 'popper'> & { children: ReactNode }>({})
 
 export function Popup({
   position = 'bottom',

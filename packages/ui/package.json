@@ -11,16 +11,17 @@
     }
   ],
   "license": "MIT",
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
-  "packageManager": "yarn@4.6.0",
+  "packageManager": "yarn@4.12.0",
   "scripts": {
-    "watch": "yarn build && chokidar \"./**/*.{ts,tsx,swcrc,json}\" -i \"./dist/**/*.{ts,json}\" -c \"yarn build\"",
-    "build": "yarn lint && rslib build && tsc --declaration --emitDeclarationOnly",
+    "watch": "yarn build && chokidar \"./**/*.{ts,tsx,swcrc,json}\" -i \"./{dist,node_modules}/**/*.{ts,json}\" -c \"yarn build\"",
+    "build": "yarn lint && rslib build",
     "lint": "cd ../../ && yarn lint packages/ui && cd packages/ui && tsc --noEmit --skipLibCheck",
     "lint:fix": "cd ../../ && yarn lint --fix",
     "format": "cd ../../ && yarn format --write",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@tabler/icons-react-native": "^3.35.0"
   },
   "devDependencies": {
     "@rsbuild/plugin-react": "^1.4.2",
@@ -29,28 +30,130 @@
     "chokidar-cli": "^3.0.0",
     "react": "^18",
     "react-native": "^0.76.6",
-    "react-native-reanimated": "^3.16.7",
+    "react-native-reanimated": "3.16.7",
     "typescript": "^5.7.3"
   },
   "peerDependencies": {
     "react": "*",
     "react-native": "*",
-    "react-native-reanimated": "*"
+    "react-native-reanimated": "*",
+    "react-native-svg": "*"
   },
   "files": [
     "dist"
   ],
   "publishConfig": {
-    "access": "public",
-    "directory": "dist"
+    "access": "public"
   },
   "exports": {
-    ".": "./dist/index.js",
-    "./components/*": "./dist/components/*.js",
-    "./theme/*": "./dist/theme/*.js",
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    },
+    "./components/avatar": {
+      "import": "./dist/esm/components/avatar/index.js",
+      "types": "./dist/esm/components/avatar/index.d.ts"
+    },
+    "./components/background-view": {
+      "import": "./dist/esm/components/background-view/index.js",
+      "types": "./dist/esm/components/background-view/index.d.ts"
+    },
+    "./components/badge": {
+      "import": "./dist/esm/components/badge/index.js",
+      "types": "./dist/esm/components/badge/index.d.ts"
+    },
+    "./components/box": {
+      "import": "./dist/esm/components/box/index.js",
+      "types": "./dist/esm/components/box/index.d.ts"
+    },
+    "./components/button": {
+      "import": "./dist/esm/components/button/index.js",
+      "types": "./dist/esm/components/button/index.d.ts"
+    },
+    "./components/card": {
+      "import": "./dist/esm/components/card/index.js",
+      "types": "./dist/esm/components/card/index.d.ts"
+    },
+    "./components/checkbox": {
+      "import": "./dist/esm/components/checkbox/index.js",
+      "types": "./dist/esm/components/checkbox/index.d.ts"
+    },
+    "./components/chip": {
+      "import": "./dist/esm/components/chip/index.js",
+      "types": "./dist/esm/components/chip/index.d.ts"
+    },
+    "./components/color": {
+      "import": "./dist/esm/components/color/index.js",
+      "types": "./dist/esm/components/color/index.d.ts"
+    },
+    "./components/date-time-picker": {
+      "import": "./dist/esm/components/date-time-picker/index.js",
+      "types": "./dist/esm/components/date-time-picker/index.d.ts"
+    },
+    "./components/dropdown": {
+      "import": "./dist/esm/components/dropdown/index.js",
+      "types": "./dist/esm/components/dropdown/index.d.ts"
+    },
+    "./components/icon": {
+      "import": "./dist/esm/components/icon/index.js",
+      "types": "./dist/esm/components/icon/index.d.ts"
+    },
+    "./components/input": {
+      "import": "./dist/esm/components/input/index.js",
+      "types": "./dist/esm/components/input/index.d.ts"
+    },
+    "./components/list-item": {
+      "import": "./dist/esm/components/list-item/index.js",
+      "types": "./dist/esm/components/list-item/index.d.ts"
+    },
+    "./components/list-item-button": {
+      "import": "./dist/esm/components/list-item-button/index.js",
+      "types": "./dist/esm/components/list-item-button/index.d.ts"
+    },
+    "./components/popup": {
+      "import": "./dist/esm/components/popup/index.js",
+      "types": "./dist/esm/components/popup/index.d.ts"
+    },
+    "./components/progress": {
+      "import": "./dist/esm/components/progress/index.js",
+      "types": "./dist/esm/components/progress/index.d.ts"
+    },
+    "./components/separator": {
+      "import": "./dist/esm/components/separator/index.js",
+      "types": "./dist/esm/components/separator/index.d.ts"
+    },
+    "./components/show": {
+      "import": "./dist/esm/components/show/index.js",
+      "types": "./dist/esm/components/show/index.d.ts"
+    },
+    "./components/slider": {
+      "import": "./dist/esm/components/slider/index.js",
+      "types": "./dist/esm/components/slider/index.d.ts"
+    },
+    "./components/switch": {
+      "import": "./dist/esm/components/switch/index.js",
+      "types": "./dist/esm/components/switch/index.d.ts"
+    },
+    "./components/tabs": {
+      "import": "./dist/esm/components/tabs/index.js",
+      "types": "./dist/esm/components/tabs/index.d.ts"
+    },
+    "./components/text": {
+      "import": "./dist/esm/components/text/index.js",
+      "types": "./dist/esm/components/text/index.d.ts"
+    },
+    "./theme/*": {
+      "import": "./dist/esm/theme/*.js",
+      "require": "./dist/cjs/theme/*.js"
+    },
+    "./types/*": {
+      "import": "./dist/esm/types/*.js",
+      "require": "./dist/cjs/types/*.js"
+    },
+    "./utilities/*": {
+      "import": "./dist/esm/utilities/*.js",
+      "require": "./dist/cjs/utilities/*.js"
+    },
     "./package.json": "./package.json"
-  },
-  "dependencies": {
-    "@tabler/icons-react-native": "^3.35.0"
   }
 }

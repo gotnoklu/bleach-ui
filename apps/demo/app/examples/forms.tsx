@@ -1,11 +1,11 @@
-import Avatar from '@bleach/ui/dist/components/Avatar'
-import Box from '@bleach/ui/dist/components/Box'
-import Button from '@bleach/ui/dist/components/Button'
-import Icon from '@bleach/ui/dist/components/Icon'
-import Paper from '@bleach/ui/dist/components/Paper'
-import Separator from '@bleach/ui/dist/components/Separator'
-import TextField from '@bleach/ui/dist/components/TextField'
-import Typography from '@bleach/ui/dist/components/Typography'
+import { Avatar } from '@bleach/ui/components/avatar'
+import { Box } from '@bleach/ui/components/box'
+import { Button } from '@bleach/ui/components/button'
+import { Card } from '@bleach/ui/components/card'
+import { IconUser } from '@bleach/ui/components/icon'
+import { Input } from '@bleach/ui/components/input'
+import { Separator } from '@bleach/ui/components/separator'
+import { Text } from '@bleach/ui/components/text'
 import { ScrollView } from 'react-native'
 
 export default function Forms() {
@@ -21,92 +21,84 @@ export default function Forms() {
         gap: 24,
       }}
     >
-      <Paper variant="outlined">
-        <Box paddingY={1} paddingX={2}>
-          <Typography fontWeight="medium">Login Form</Typography>
-        </Box>
-        <Separator />
+      <Card>
         <Box gap={6} paddingX={2} paddingY={3}>
           <Box gap={2} alignItems="center" style={{ alignSelf: 'center' }}>
-            <Avatar size="large">
-              <Icon name="person" />
+            <Avatar size="lg">
+              <IconUser />
             </Avatar>
             <Box>
-              <Typography fontWeight="medium" style={{ textAlign: 'center' }} gutterBottom>
+              <Text variant="h6" fontWeight="medium" style={{ textAlign: 'center' }} gutterBottom>
                 Welcome!
-              </Typography>
-              <Typography variant="body2" color="text.secondary" style={{ textAlign: 'center' }}>
+              </Text>
+              <Text variant="body2" color="text.secondary" style={{ textAlign: 'center' }}>
                 Please enter your email and password to login
-              </Typography>
+              </Text>
             </Box>
           </Box>
           <Box gap={2}>
-            <TextField variant="outlined" label="Email" placeholder="Enter your email" />
-            <TextField
+            <Input variant="outlined" label="Email" placeholder="Enter your email" />
+            <Input
               variant="outlined"
               label="Password"
               placeholder="Enter your password"
-              slotProps={{ textInput: { secureTextEntry: true } }}
+              viewProps={{ textInput: { secureTextEntry: true } }}
               fullWidth
             />
-            <Typography color="primary" variant="body2" style={{ textAlign: 'right' }} fullFlex>
+            <Text color="primary" variant="body2" style={{ textAlign: 'right', flex: 1 }}>
               Forgot Password?
-            </Typography>
+            </Text>
           </Box>
-          <Button variant="contained">Login</Button>
+          <Button variant="filled">Login</Button>
         </Box>
         <Separator />
         <Box gap={2} paddingY={3} paddingX={2}>
-          <Typography color="text.secondary">Are you new here?</Typography>
+          <Text color="text.secondary">Are you new here?</Text>
           <Button variant="outlined">Sign up</Button>
         </Box>
-      </Paper>
-      <Paper variant="outlined">
-        <Box paddingY={1} paddingX={2}>
-          <Typography fontWeight="medium">Signup Form</Typography>
-        </Box>
-        <Separator />
+      </Card>
+      <Card>
         <Box gap={6} paddingX={2} paddingY={3}>
           <Box gap={2} alignItems="center" style={{ alignSelf: 'center' }}>
-            <Avatar size="large">
-              <Icon name="person" />
+            <Avatar size="lg">
+              <IconUser />
             </Avatar>
             <Box>
-              <Typography fontWeight="medium" style={{ textAlign: 'center' }} gutterBottom>
-                Welcome!
-              </Typography>
-              <Typography variant="body2" color="text.secondary" style={{ textAlign: 'center' }}>
+              <Text variant="h6" fontWeight="medium" style={{ textAlign: 'center' }} gutterBottom>
+                Create New Account
+              </Text>
+              <Text variant="body2" color="text.secondary" style={{ textAlign: 'center' }}>
                 Please enter your details to signup
-              </Typography>
+              </Text>
             </Box>
           </Box>
           <Box gap={2}>
-            <TextField variant="outlined" label="First Name" placeholder="eg: John" />
-            <TextField variant="outlined" label="Last Name" placeholder="eg: Doe" />
-            <TextField variant="outlined" label="Email" placeholder="Enter your email" />
-            <TextField
+            <Input variant="outlined" label="First Name" placeholder="eg: John" />
+            <Input variant="outlined" label="Last Name" placeholder="eg: Doe" />
+            <Input variant="outlined" label="Email" placeholder="Enter your email" />
+            <Input
               variant="outlined"
               label="Password"
               placeholder="Enter your password"
-              slotProps={{ textInput: { secureTextEntry: true } }}
+              viewProps={{ textInput: { secureTextEntry: true } }}
               fullWidth
             />
-            <TextField
+            <Input
               variant="outlined"
               label="Confirm Password"
               placeholder="Retype password"
-              slotProps={{ textInput: { secureTextEntry: true } }}
+              viewProps={{ textInput: { secureTextEntry: true } }}
               fullWidth
             />
           </Box>
-          <Button variant="contained">Sign up</Button>
+          <Button variant="filled">Sign up</Button>
         </Box>
         <Separator />
         <Box gap={2} paddingY={3} paddingX={2}>
-          <Typography color="text.secondary">Already have an account?</Typography>
+          <Text color="text.secondary">Already have an account?</Text>
           <Button variant="outlined">Log in</Button>
         </Box>
-      </Paper>
+      </Card>
     </ScrollView>
   )
 }

@@ -1,8 +1,9 @@
-import BackgroundView from '@bleach/ui/dist/components/BackgroundView'
-import Box from '@bleach/ui/dist/components/Box'
-import Icon from '@bleach/ui/dist/components/Icon'
-import ListItemButton from '@bleach/ui/dist/components/ListItemButton'
-import Typography from '@bleach/ui/dist/components/Typography'
+import { useTheme } from '@bleach/ui'
+import { BackgroundView } from '@bleach/ui/components/background-view'
+import { Box } from '@bleach/ui/components/box'
+import { IconCalendar, IconChevronRight, IconColumns, IconDeviceMobile, IconNumber } from '@bleach/ui/components/icon'
+import { ListItemButton } from '@bleach/ui/components/list-item-button'
+import { Text } from '@bleach/ui/components/text'
 import { type Href, Link } from 'expo-router'
 import type { ReactElement } from 'react'
 import { ScrollView } from 'react-native'
@@ -14,44 +15,43 @@ const COMPONENTS: Array<{
   items: Array<{ label: string; link: Href }>
 }> = [
   {
-    icon: <Icon name="columns" />,
+    icon: <IconColumns />,
     title: 'Layout',
     description: 'Used for screen layouts',
-    items: [{ label: 'Box', link: '/components/box' }],
+    items: [{ label: 'Box', link: '/screens/box' }],
   },
   {
-    icon: <Icon name="device-mobile" />,
+    icon: <IconDeviceMobile />,
     title: 'Display',
     description: 'Used for displaying data',
     items: [
-      { label: 'Avatar', link: '/components/avatar' },
-      { label: 'Badge', link: '/components/badge' },
-      { label: 'Chips', link: '/components/chip' },
-      { label: 'Popups', link: '/components/popup' },
-      { label: 'Progress Bars', link: '/components/progress-bar' },
-      { label: 'Typography', link: '/components/typography' },
+      { label: 'Avatar', link: '/screens/avatar' },
+      { label: 'Badge', link: '/screens/badge' },
+      { label: 'Chips', link: '/screens/chip' },
+      { label: 'Popups', link: '/screens/popup' },
+      { label: 'Progress Bars', link: '/screens/progress' },
+      { label: 'Text', link: '/screens/text' },
     ],
   },
   {
-    icon: <Icon name="number" />,
+    icon: <IconNumber />,
     title: 'Inputs',
     description: 'Used for getting user input',
     items: [
-      { label: 'Buttons', link: '/components/button' },
-      { label: 'Icon Buttons', link: '/components/icon-button' },
-      { label: 'Tabs', link: '/components/tab' },
-      { label: 'TextFields', link: '/components/text-field' },
-      { label: 'Sliders', link: '/components/slider' },
-      { label: 'Dropdowns', link: '/components/dropdown' },
-      { label: 'Checkboxes', link: '/components/checkbox' },
-      { label: 'Switch', link: '/components/switch' },
+      { label: 'Buttons', link: '/screens/button' },
+      { label: 'Tabs', link: '/screens/tab' },
+      { label: 'Inputs', link: '/screens/input' },
+      { label: 'Sliders', link: '/screens/slider' },
+      { label: 'Dropdowns', link: '/screens/dropdown' },
+      { label: 'Checkboxes', link: '/screens/checkbox' },
+      { label: 'Switch', link: '/screens/switch' },
     ],
   },
   {
-    icon: <Icon name="calendar" />,
+    icon: <IconCalendar />,
     description: 'Used for getting complex user input',
     title: 'Pickers',
-    items: [{ label: 'Date & Time Pickers', link: '/components/date-time-picker' }],
+    items: [{ label: 'Date & Time Pickers', link: '/screens/date-time-picker' }],
   },
 ]
 
@@ -62,7 +62,7 @@ const EXAMPLES: Array<{
   link: Href
 }> = [
   {
-    icon: <Icon name="number" />,
+    icon: <IconNumber />,
     label: 'Forms',
     description: 'See a variety of form examples',
     link: '/examples/forms',
@@ -70,76 +70,79 @@ const EXAMPLES: Array<{
 ]
 
 export default function HomeScreen() {
+  const theme = useTheme()
+
   return (
     <ScrollView
       style={{
         flex: 1,
       }}
       contentContainerStyle={{
+        paddingTop: 40,
         paddingBottom: 40,
       }}
     >
       <BackgroundView
-        sx={(theme) => ({
+        style={{
           paddingHorizontal: theme.spacing(2),
           paddingVertical: theme.spacing(4),
           gap: theme.spacing(5),
-        })}
+        }}
       >
         <Box>
-          <Typography variant="h1" fontWeight="medium" gutterBottom>
-            Bleach UI
-          </Typography>
-          <Typography variant="h6" color="text.secondary">
-            The stylish React Native UI library
-          </Typography>
+          <Text variant="h1" fontWeight="medium" gutterBottom>
+            Welcome 👋
+          </Text>
+          <Text variant="body1" color="text.secondary">
+            Bleach UI is the stylish React Native UI library
+          </Text>
         </Box>
         <Box gap={3}>
-          <Typography variant="h6" sx={({ spacing }) => ({ marginBottom: spacing.create(2) })}>
+          <Text variant="h6" style={{ marginBottom: theme.spacing(2) }}>
             Need some examples?
-          </Typography>
+          </Text>
           <Box gap={1}>
             {EXAMPLES.map(({ icon, description, label, link }) => (
               <Link key={label} href={link} asChild>
-                <ListItemButton sx={({ palette }) => ({ borderWidth: 1, borderColor: palette.border })}>
+                <ListItemButton style={{ borderWidth: 1, borderColor: theme.palette.border }}>
                   {icon}
                   <Box flex={1}>
-                    <Typography color="text.secondary" fontWeight="medium">
+                    <Text color="text.secondary" fontWeight="medium">
                       {label}
-                    </Typography>
-                    <Typography color="text.secondary" variant="body2">
+                    </Text>
+                    <Text color="text.secondary" variant="body2">
                       {description}
-                    </Typography>
+                    </Text>
                   </Box>
-                  <Icon name="chevron-right" color="primary" />
+                  <IconChevronRight />
                 </ListItemButton>
               </Link>
             ))}
           </Box>
         </Box>
         <Box gap={3}>
-          <Typography variant="h6" sx={({ spacing }) => ({ marginBottom: spacing.create(2) })}>
-            How about some components?
-          </Typography>
+          <Text variant="h6" style={{ marginBottom: theme.spacing(2) }}>
+            How about some screens?
+          </Text>
           <Box gap={5}>
             {COMPONENTS.map(({ icon, title, description, items }) => (
               <Box key={title} gap={1}>
                 <Box direction="row" alignItems="center" marginBottom={2} gap={2}>
                   {icon}
                   <Box>
-                    <Typography color="text.secondary" fontWeight="medium" gutterBottom>
+                    <Text color="text.secondary" fontWeight="medium" gutterBottom>
                       {title}
-                    </Typography>
-                    <Typography color="text.secondary" variant="body2">
+                    </Text>
+                    <Text color="text.secondary" variant="body2">
                       {description}
-                    </Typography>
+                    </Text>
                   </Box>
                 </Box>
                 {items.map(({ label, link }) => (
                   <Link key={label} href={link} asChild>
-                    <ListItemButton sx={({ palette }) => ({ borderWidth: 1, borderColor: palette.border })}>
-                      <Typography fullFlex>{label}</Typography>
-                      <Icon name="chevron-right" color="primary" />
+                    <ListItemButton style={{ borderWidth: 1, borderColor: theme.palette.border }}>
+                      <Text style={{ flex: 1 }}>{label}</Text>
+                      <IconChevronRight />
                     </ListItemButton>
                   </Link>
                 ))}

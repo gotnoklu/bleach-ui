@@ -1,8 +1,10 @@
 import type { Theme, ThemeMode } from '../types'
-import { DefaultDarkTheme } from './dark'
-import { DefaultLightTheme } from './light'
+import { DarkTheme } from './dark'
+import { LightTheme } from './light'
 
-export const DefaultThemes: { [_ in ThemeMode]: Theme } = {
-  light: DefaultLightTheme,
-  dark: DefaultDarkTheme,
+export const Themes: { [_ in ThemeMode]: Theme } = {
+  light: LightTheme,
+  dark: DarkTheme,
 }
+
+export { LightTheme, DarkTheme }

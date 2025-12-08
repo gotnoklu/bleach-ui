@@ -1,99 +1,64 @@
 import type { ReactNode } from 'react'
 import { Image, type ImageProps, View, type ViewProps } from 'react-native'
-import type { Palette, TextPaletteColors } from '../../theme/types'
-import { getThemeProperty, selectStyles, styled } from '../../theme/utilities'
-import Text, { type TextProps } from '../text'
+import { selectStyles, styled } from '../../theme/styles'
+import type { PaletteColorToken } from '../../theme/types'
+import { getThemeProperty } from '../../theme/utilities'
+import type { TextProps } from '../text'
 
-export type AvatarVariant = 'circular' | 'rounded' | 'square'
-export type AvatarSize = 'small' | 'medium' | 'large'
+type AvatarVariant = 'default' | 'circular'
+type AvatarSize = 'sm' | 'md' | 'lg'
 
 export interface AvatarProps extends ViewProps {
   variant?: AvatarVariant
   size?: AvatarSize
-  src?: string
+  color?: PaletteColorToken | (string & {})
+  source?: ImageProps['source']
   alt?: string
-  color?: keyof Palette | keyof TextPaletteColors | (string & {})
-  backgroundColor?: keyof Palette | (string & {})
   children?: ReactNode
-  slotProps?: {
-    container?: ViewProps
+  viewProps?: {
     image?: Omit<ImageProps, 'source'>
     text?: TextProps
   }
 }
 
-const StyledAvatar = styled(View)<
-  Omit<AvatarProps, 'sx' | 'backgroundColor'> & {
-    $backgroundColor?: AvatarProps['backgroundColor']
-  }
->((theme, { variant = 'circular', size = 'medium', $backgroundColor = 'action' }) => {
-  const avatarSizes = { small: 32, medium: 40, large: 48 }
-  const bgColor = getThemeProperty({
-    object: theme.palette,
-    key: $backgroundColor,
-    fallback: $backgroundColor,
-  })
+const AvatarSizes = { sm: 32, md: 40, lg: 48 }
 
+const StyledAvatar = styled(View)<AvatarProps>((theme, { variant = 'default', size = 'md', color }) => {
   return selectStyles(
     {
+      when: variant === 'default',
+      styles: { borderRadius: theme.radius(2) },
+    },
+    {
       when: variant === 'circular',
-      styles: { borderRadius: avatarSizes[size] / 2 },
-    },
-    {
-      when: variant === 'rounded',
-      styles: { borderRadius: theme.radius(1) },
-    },
-    {
-      when: variant === 'square',
-      styles: { borderRadius: 0 },
+      styles: { borderRadius: AvatarSizes[size] / 2 },
     },
     {
       styles: {
-        backgroundColor: bgColor,
-        width: avatarSizes[size],
-        height: avatarSizes[size],
+        width: AvatarSizes[size],
+        height: AvatarSizes[size],
         alignItems: 'center',
         justifyContent: 'center',
         overflow: 'hidden',
+        backgroundColor: getThemeProperty({ object: theme.palette, key: color ?? 'avatar', fallback: color }),
       },
     }
   )
 })
 
-const AvatarImage = ({ source, ...props }: ImageProps) => (
-  <Image source={source} style={{ width: '100%', height: '100%' }} {...props} />
-)
-
-export function Avatar({
-  src,
-  alt,
-  color = 'text.primary',
-  backgroundColor,
-  children,
-  slotProps,
-  ...props
-}: AvatarProps) {
-  const renderContent = () => {
-    if (src) {
-      return <AvatarImage source={{ uri: src }} resizeMode="cover" {...slotProps?.image} />
-    }
-
-    if (typeof children === 'string') {
-      return (
-        <Text variant="body2" color={color} {...slotProps?.text}>
-          {children.includes(' ')
-            ? children.split(' ')[0][0] + children.split(' ')[1][0]
-            : children.charAt(0).toUpperCase()}
-        </Text>
-      )
-    }
-
-    return children
-  }
-
+export function Avatar({ color, source, alt, children, viewProps, ...props }: AvatarProps) {
   return (
-    <StyledAvatar $backgroundColor={backgroundColor} {...slotProps?.container} {...props}>
-      {renderContent()}
+    <StyledAvatar color={color} {...props}>
+      {source ? (
+        <Image
+          source={source}
+          resizeMode="cover"
+          {...viewProps?.image}
+          style={selectStyles({ styles: { width: '100%', height: '100%' } }, { styles: viewProps?.image?.style })}
+        />
+      ) : (
+        children
+      )}
     </StyledAvatar>
   )
 }

@@ -1,66 +1,99 @@
 import { useState } from 'react'
 import { Pressable, type PressableProps } from 'react-native'
-import { styled } from '../../theme/utilities'
-import { IconCircle, IconCircleCheckFilled } from '../icon'
+import { selectStyles, styled } from '../../theme/styles'
+import { Color } from '../color'
+import { IconCheck } from '../icon'
+
+type CheckboxSizes = 'sm' | 'md' | 'lg'
 
 export interface CheckboxProps extends PressableProps {
+  variant?: 'filled' | 'outlined'
+  shape?: 'default' | 'rounded'
+  size?: 'sm' | 'md' | 'lg'
   checked?: boolean
   defaultChecked?: boolean
-  rounded?: boolean
-  size?: 'small' | 'medium' | 'large'
-  onChange?: (checked: boolean) => void
+  onChecked?: (checked: boolean) => void
 }
 
 const CheckboxSizes = {
-  small: 20.5,
-  medium: 26,
-  large: 32,
+  sm: 20.5,
+  md: 26,
+  lg: 32,
+}
+
+const CheckboxRadii: { [_ in CheckboxSizes]: number } = {
+  sm: 1.5,
+  md: 2,
+  lg: 2.5,
 }
 
 const StyledCheckbox = styled(Pressable)<CheckboxProps>(
-  (theme, { checked = false, size = 'medium', disabled = false, rounded }) => {
-    return {
-      width: CheckboxSizes[size],
-      height: CheckboxSizes[size],
-      borderRadius: rounded ? CheckboxSizes[size] : theme.radius(1.5),
-      borderWidth: 2,
-      borderColor: disabled ? theme.palette.disabled : theme.palette.primary.main,
-      backgroundColor: disabled
-        ? theme.palette.disabled
-        : checked
-          ? theme.palette.primary.main
-          : theme.palette.backgrounds.paper,
-      alignItems: 'center',
-      justifyContent: 'center',
-      opacity: disabled ? 0.5 : 1,
-    }
+  (theme, { variant = 'outlined', checked = false, size = 'md', disabled = false, shape = 'default' }) => {
+    return selectStyles(
+      {
+        when: variant === 'filled',
+        styles: {
+          width: CheckboxSizes[size],
+          height: CheckboxSizes[size],
+          backgroundColor: disabled
+            ? theme.palette.disabled
+            : checked
+              ? theme.palette.primary.main
+              : theme.palette.checkboxFilled,
+        },
+      },
+      {
+        when: variant === 'outlined',
+        styles: {
+          width: CheckboxSizes[size] - 1.2,
+          height: CheckboxSizes[size] - 1.2,
+          borderWidth: 1.2,
+          borderColor: disabled ? theme.palette.disabled : theme.palette.primary.main,
+        },
+      },
+      {
+        styles: {
+          borderRadius: shape === 'rounded' ? CheckboxSizes[size] : theme.radius(CheckboxRadii[size]),
+          alignItems: 'center',
+          justifyContent: 'center',
+          opacity: disabled ? 0.5 : 1,
+        },
+      }
+    )
   }
 )
 
-function ControlledCheckbox({ checked = false, onChange, size = 'medium', disabled, ...props }: CheckboxProps) {
-  function handleChange() {
-    if (typeof onChange === 'function') onChange(!checked)
+function ControlledCheckbox({ variant, checked = false, onChecked, size = 'md', disabled, ...props }: CheckboxProps) {
+  function handleToggleCheck() {
+    if (typeof onChecked === 'function') onChecked(!checked)
   }
 
   return (
-    <StyledCheckbox checked={checked} size={size} disabled={disabled} onPress={handleChange} {...props}>
+    <StyledCheckbox
+      variant={variant}
+      checked={checked}
+      size={size}
+      disabled={disabled}
+      onPress={handleToggleCheck}
+      {...props}
+    >
       {checked ? (
-        <IconCircleCheckFilled size={CheckboxSizes[size] * 0.6} />
-      ) : (
-        <IconCircle size={CheckboxSizes[size] * 0.6} />
-      )}
+        <Color color={variant === 'filled' ? 'primary.foreground' : 'primary.main'}>
+          <IconCheck size={CheckboxSizes[size] * 0.6} />
+        </Color>
+      ) : null}
     </StyledCheckbox>
   )
 }
 
-function UncontrolledCheckbox({ defaultChecked = false, onChange, ...props }: Omit<CheckboxProps, 'checked'>) {
+function UncontrolledCheckbox({ defaultChecked = false, onChecked, ...props }: Omit<CheckboxProps, 'checked'>) {
   const [checked, setChecked] = useState(defaultChecked)
 
-  function handleChange(checked: boolean) {
+  function handleToggleCheck(checked: boolean) {
     setChecked(checked)
   }
 
-  return <ControlledCheckbox checked={checked} onChange={handleChange} {...props} />
+  return <ControlledCheckbox checked={checked} onChecked={handleToggleCheck} {...props} />
 }
 
 export function Checkbox({ checked, defaultChecked, ...props }: CheckboxProps) {

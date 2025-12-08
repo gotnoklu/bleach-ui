@@ -1,72 +1,59 @@
 import { View, type ViewProps } from 'react-native'
-import type { Palette, TextPaletteColors } from '../../theme/types'
-import { getThemeProperty, styled } from '../../theme/utilities'
-import { merge } from '../../utilities'
+import { styled } from '../../theme/styles'
+import type { PaletteColorToken } from '../../theme/types'
+import { getThemeProperty } from '../../theme/utilities'
 
 export interface IndicatorProps extends Omit<ViewProps, 'children'> {}
 
 export interface ProgressBarProps extends Omit<ViewProps, 'children'> {
   progress?: number
-  size?: 'small' | 'medium' | 'large'
-  intermediateColor?: keyof Palette | keyof TextPaletteColors | (string & {})
-  completedColor?: keyof Palette | keyof TextPaletteColors | (string & {})
-  slotProps?: {
+  size?: 'sm' | 'md' | 'lg'
+  shape?: 'default' | 'rounded'
+  colors?: { complete?: PaletteColorToken | (string & {}); incomplete?: PaletteColorToken | (string & {}) }
+  viewProps?: {
     indicator?: IndicatorProps
   }
-  rounded?: boolean
 }
 
+const ProgressSizes = { sm: 4, md: 8, lg: 12 }
+
 const StyledTrack = styled(View)<ProgressBarProps & { children: ViewProps['children'] }>(
-  (theme, { size = 'small', rounded }) => {
-    const baseStyles = {
-      backgroundColor: theme.palette.backgrounds.default,
+  (theme, { size = 'sm', shape = 'default' }) => {
+    return {
+      backgroundColor: theme.palette.progressTrack,
       width: '100%',
-      borderRadius: rounded ? 8 : 0,
+      borderRadius: shape === 'rounded' ? theme.radius(2) : 0,
       overflow: 'hidden',
-    } as const
-
-    if (size === 'small') {
-      return merge(baseStyles, { height: 2 })
+      height: ProgressSizes[size],
     }
-
-    if (size === 'medium') {
-      return merge(baseStyles, { height: 4 })
-    }
-
-    if (size === 'large') {
-      return merge(baseStyles, { height: 8 })
-    }
-
-    return merge(baseStyles, { height: 2 })
   }
 )
 
 const StyledIndicator = styled(View)<
   IndicatorProps & {
     progress?: ProgressBarProps['progress']
-    intermediateColor?: ProgressBarProps['intermediateColor']
-    completedColor?: ProgressBarProps['completedColor']
-    rounded?: ProgressBarProps['rounded']
+    colors?: ProgressBarProps['colors']
+    shape?: ProgressBarProps['shape']
   }
->((theme, { progress = 0, intermediateColor = 'primary.light', completedColor = 'primary.main', rounded }) => {
-  const currentColor = progress === 100 ? completedColor : intermediateColor
+>((theme, { progress = 0, colors = { complete: 'primary.main', incomplete: 'primary.light' }, shape = 'default' }) => {
+  const currentColor = progress === 100 ? colors?.complete : colors?.incomplete
 
   return {
     backgroundColor: getThemeProperty({
       object: theme.palette,
-      key: currentColor,
+      key: currentColor ?? 'primary.main',
       fallback: currentColor,
     }),
     width: `${progress}%`,
     height: '100%',
-    borderRadius: rounded ? 8 : 0,
+    borderRadius: shape === 'rounded' ? theme.radius(2) : 0,
   }
 })
 
-export function ProgressBar({ progress, slotProps, rounded, ...props }: ProgressBarProps) {
+export function Progress({ progress, viewProps, shape, colors, ...props }: ProgressBarProps) {
   return (
-    <StyledTrack rounded={rounded} {...props}>
-      <StyledIndicator progress={progress} rounded={rounded} {...slotProps?.indicator} />
+    <StyledTrack shape={shape} {...props}>
+      <StyledIndicator progress={progress} shape={shape} colors={colors} {...viewProps?.indicator} />
     </StyledTrack>
   )
 }

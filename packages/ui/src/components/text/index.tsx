@@ -1,18 +1,18 @@
 import type { TextProps as ReactNativeTextProps } from 'react-native'
 import { Text as ReactNativeText } from 'react-native'
-import type { TextPaletteColors, Typography } from '../../theme/types'
-import { getThemeProperty, styled } from '../../theme/utilities'
+import { styled } from '../../theme/styles'
+import type { PaletteColorToken, Typography } from '../../theme/types'
+import { getThemeProperty } from '../../theme/utilities'
 import { merge } from '../../utilities'
 
 export interface TextProps extends ReactNativeTextProps {
   variant?: keyof Typography['variants']
-  color?: keyof TextPaletteColors | (string & {})
+  color?: PaletteColorToken | (string & {})
   fontWeight?: keyof Typography['weights']
   gutterBottom?: boolean
-  fullFlex?: boolean
 }
 
-const TextBottomMargins: { [_ in keyof Typography['variants']]: number } = {
+const TextBottomGutters: { [_ in keyof Typography['variants']]: number } = {
   body1: 0.5,
   body2: 0.5,
   caption: 0.2,
@@ -25,11 +25,10 @@ const TextBottomMargins: { [_ in keyof Typography['variants']]: number } = {
 }
 
 const StyledText = styled(ReactNativeText)<TextProps>(
-  (theme, { variant = 'body1', color = 'text.primary', fontWeight, gutterBottom, fullFlex }) => {
+  (theme, { variant = 'body1', color = 'text.primary', fontWeight, gutterBottom }) => {
     return merge(theme.typography.variants[variant], fontWeight ? theme.typography.weights[fontWeight] : {}, {
       color: getThemeProperty({ object: theme.palette, key: color, fallback: color }),
-      marginBottom: gutterBottom ? theme.spacing(TextBottomMargins[variant]) : 0,
-      flex: fullFlex ? 1 : undefined,
+      marginBottom: gutterBottom ? theme.spacing(TextBottomGutters[variant]) : 0,
     })
   }
 )

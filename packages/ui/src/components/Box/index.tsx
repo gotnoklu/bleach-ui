@@ -1,7 +1,8 @@
 import { type ForwardedRef, forwardRef } from 'react'
 import { type AnimatableNumericValue, type DimensionValue, View, type ViewProps } from 'react-native'
+import { selectStyles, styled } from '../../theme/styles'
 import type { Palette, TextPaletteColors } from '../../theme/types'
-import { getThemeProperty, selectStyles, styled } from '../../theme/utilities'
+import { getThemeProperty } from '../../theme/utilities'
 
 export interface BoxProps extends ViewProps {
   width?: DimensionValue
@@ -55,7 +56,7 @@ const StyledBox = styled(View, {
     'gap',
     'backgroundColor',
   ],
-})<Omit<BoxProps, 'sx'>>(
+})<BoxProps>(
   (
     theme,
     {
@@ -75,6 +76,8 @@ const StyledBox = styled(View, {
       marginX,
       paddingTop,
       paddingBottom,
+      paddingLeft,
+      paddingRight,
       marginTop,
       marginBottom,
       gap = 0,
@@ -95,6 +98,18 @@ const StyledBox = styled(View, {
         when: typeof paddingBottom === 'string' || typeof paddingBottom === 'number',
         styles: {
           paddingBottom: typeof paddingBottom === 'number' ? theme.spacing(paddingBottom) : paddingBottom,
+        },
+      },
+      {
+        when: typeof paddingLeft === 'string' || typeof paddingLeft === 'number',
+        styles: {
+          paddingLeft: typeof paddingLeft === 'number' ? theme.spacing(paddingLeft as number) : paddingLeft,
+        },
+      },
+      {
+        when: typeof paddingRight === 'string' || typeof paddingRight === 'number',
+        styles: {
+          paddingRight: typeof paddingRight === 'number' ? theme.spacing(paddingRight as number) : paddingRight,
         },
       },
       {

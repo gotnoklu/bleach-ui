@@ -8,43 +8,40 @@ import {
   View,
   type ViewProps,
 } from 'react-native'
-import { selectStyles, styled } from '../../theme/utilities'
+import { selectStyles, styled } from '../../theme/styles'
 import { Text, type TextProps } from '../text'
 
-export type InputVariant = 'base' | 'filled' | 'outlined'
+export type InputVariant = 'default' | 'filled' | 'outlined'
 
 export interface InputProps extends ViewProps {
   variant?: InputVariant
   label?: ReactNode
   description?: ReactNode
-  typography?: {
-    variant?: TextProps['variant']
-    fontWeight?: TextProps['fontWeight']
-  }
-  slotProps?: {
+  viewProps?: {
     label?: TextProps
     description?: TextProps
     fieldset?: ViewProps
-    textInput?: TextInputProps
+    textInput?: Omit<TextInputProps, 'onFocus' | 'onBlur' | 'placeholder'>
   }
   fullWidth?: boolean
-  isInvalid?: boolean
-  leftAdornments?: ReactNode
-  rightAdornments?: ReactNode
+  invalid?: boolean
+  leftActions?: ReactNode
+  rightActions?: ReactNode
   onFocus?: TextInputProps['onFocus']
   onBlur?: TextInputProps['onBlur']
   placeholder?: TextInputProps['placeholder']
 }
 
-const StyledInput = styled(View)((theme) => {
+const InputRoot = styled(View)<ViewProps & Pick<InputProps, 'fullWidth'>>((theme, { fullWidth }) => {
   return {
     gap: theme.spacing(1),
+    width: fullWidth ? '100%' : 'auto',
   }
 })
 
 const StyledFieldset = styled(View)<
-  ViewProps & Pick<InputProps, 'variant' | 'fullWidth' | 'isInvalid'> & { isFocused?: boolean }
->((theme, { variant, fullWidth, isFocused, isInvalid }) => {
+  ViewProps & Pick<InputProps, 'variant' | 'fullWidth' | 'invalid'> & { isFocused?: boolean }
+>((theme, { variant = 'default', fullWidth, isFocused, invalid }) => {
   return selectStyles(
     {
       styles: {
@@ -63,54 +60,39 @@ const StyledFieldset = styled(View)<
       styles: {
         borderStyle: 'solid',
         borderWidth: 1,
-        borderColor: isInvalid
-          ? theme.palette.error.main
-          : isFocused
-            ? theme.palette.primary.main
-            : theme.palette.border,
+        borderColor: invalid ? theme.palette.error.main : isFocused ? theme.palette.primary.main : theme.palette.border,
       },
     },
     {
       when: variant === 'filled',
       styles: {
-        backgroundColor: 'rgba(150, 150, 150, 0.25)',
+        backgroundColor: theme.palette.inputFilled,
       },
     }
   )
 })
 
-const StyledTextInput = styled(TextInput)<TextInputProps & { typography?: InputProps['typography'] }>(
-  (theme, { typography }) => {
-    return selectStyles(
-      {
-        when: typography?.variant && typography.variant in theme.typography.variants,
-        styles: theme.typography.variants[typography?.variant as Extract<TextProps['variant'], {}>],
-        fallback: theme.typography.variants.body1,
-      },
-      {
-        styles: {
-          flex: 1,
-          color: theme.palette.text.primary,
-          height: '100%',
-          verticalAlign: 'middle',
-          paddingTop: theme.spacing(1.5),
-          paddingBottom: theme.spacing(1.5),
-        },
-      }
-    )
+const StyledTextInput = styled(TextInput)<TextInputProps>((theme) => {
+  return {
+    flex: 1,
+    color: theme.palette.text.primary,
+    height: '100%',
+    verticalAlign: 'middle',
+    paddingTop: theme.spacing(1.5),
+    paddingBottom: theme.spacing(1.5),
+    ...theme.typography.variants.body1,
   }
-)
+})
 
 export function Input({
-  variant = 'outlined',
+  variant,
   label,
   description,
-  slotProps,
-  isInvalid = false,
+  viewProps,
+  invalid = false,
   fullWidth = false,
-  typography,
-  leftAdornments,
-  rightAdornments,
+  leftActions,
+  rightActions,
   placeholder,
   onFocus,
   onBlur,
@@ -134,14 +116,14 @@ export function Input({
   }
 
   return (
-    <StyledInput {...props}>
+    <InputRoot fullWidth={fullWidth} {...props}>
       {isValidElement(label) ? (
         label
       ) : typeof label === 'string' ? (
         <Text
           variant="body2"
-          color={isInvalid ? 'error' : isFocused ? 'primary.main' : 'text.primary'}
-          {...slotProps?.label}
+          color={invalid ? 'error' : isFocused ? 'primary.main' : 'text.primary'}
+          {...viewProps?.label}
         >
           {label}
         </Text>
@@ -151,19 +133,18 @@ export function Input({
           inputRef.current?.focus()
         }}
       >
-        <StyledFieldset variant={variant} isFocused={isFocused} {...slotProps?.fieldset}>
-          {leftAdornments}
+        <StyledFieldset variant={variant} isFocused={isFocused} {...viewProps?.fieldset}>
+          {leftActions}
           <StyledTextInput
             ref={inputRef}
             returnKeyType="next"
             placeholder={placeholder}
             placeholderTextColor={variant === 'filled' ? '#888888' : 'rgba(150, 150, 150, 0.7)'}
-            typography={typography}
-            {...slotProps?.textInput}
+            {...viewProps?.textInput}
             onFocus={onInputFocus}
             onBlur={onInputBlur}
           />
-          {rightAdornments}
+          {rightActions}
         </StyledFieldset>
       </TouchableWithoutFeedback>
       {isValidElement(description) ? (
@@ -171,12 +152,12 @@ export function Input({
       ) : typeof description === 'string' ? (
         <Text
           variant="caption"
-          color={isInvalid ? 'error' : isFocused ? 'primary.main' : 'text.secondary'}
-          {...slotProps?.description}
+          color={invalid ? 'error' : isFocused ? 'primary.main' : 'text.secondary'}
+          {...viewProps?.description}
         >
           {description}
         </Text>
       ) : null}
-    </StyledInput>
+    </InputRoot>
   )
 }

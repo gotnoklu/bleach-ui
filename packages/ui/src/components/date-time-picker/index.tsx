@@ -1,14 +1,13 @@
 import { type ReactNode, useCallback, useEffect, useRef, useState } from 'react'
 import { Animated, Modal, Pressable, ScrollView, type TextInputProps, View, type ViewProps } from 'react-native'
-import { useTheme } from '../../theme/hooks'
+import { useTheme } from '../../theme/context'
+import { styled } from '../../theme/styles'
 import type { Palette, TextPaletteColors, Theme } from '../../theme/types'
-import { styled } from '../../theme/utilities'
-import Box from '../box'
-import Button from '../button'
-import Icon from '../icon'
-import IconButton from '../icon-button'
-import TextField, { type TextFieldProps } from '../input'
-import Typography from '../text'
+import { Box } from '../box'
+import { Button } from '../button'
+import { IconCalendar, IconChevronDown, IconChevronLeft, IconChevronRight } from '../icon'
+import { Input, type InputProps } from '../input'
+import { Text } from '../text'
 
 export type DateTimePickerVariant = 'outlined' | 'filled'
 export type DateTimePickerView = 'date' | 'time' | 'datetime'
@@ -26,14 +25,14 @@ export interface DateTimePickerProps extends ViewProps {
   color?: keyof Palette | keyof TextPaletteColors | (string & {})
   fullWidth?: boolean
   disabled?: boolean
-  isInvalid?: boolean
+  invalid?: boolean
   format?: string
   onChange?: (date: Date) => void
-  slotProps?: {
+  viewProps?: {
     paper?: ViewProps
     label?: ViewProps
     description?: ViewProps
-    textField?: Partial<TextFieldProps>
+    textField?: Partial<InputProps>
   }
 }
 
@@ -42,7 +41,7 @@ const StyledDateTimePicker = styled(View)<DateTimePickerProps>((_, { fullWidth }
 }))
 
 const StyledPicker = styled(View)((theme: Theme) => ({
-  backgroundColor: theme.palette.backgrounds.paper,
+  backgroundColor: theme.palette.card,
   borderRadius: theme.radius(3),
   overflow: 'hidden',
   width: 360,
@@ -98,7 +97,7 @@ const StyledMonthCell = styled(View)((theme: Theme) => ({
 const StyledTimeColumn = styled(ScrollView)((theme: Theme) => ({
   maxHeight: 280,
   paddingVertical: theme.spacing(1),
-  backgroundColor: theme.palette.backgrounds.paper,
+  backgroundColor: theme.palette.card,
 }))
 
 export function DateTimePicker({
@@ -113,10 +112,10 @@ export function DateTimePicker({
   color = 'primary',
   fullWidth = false,
   disabled = false,
-  isInvalid = false,
+  invalid = false,
   format = 'MM/dd/yyyy HH:mm',
   onChange,
-  slotProps,
+  viewProps,
   ...props
 }: DateTimePickerProps) {
   const theme = useTheme()
@@ -223,7 +222,7 @@ export function DateTimePicker({
       years.push(
         <StyledYearCell key={year}>
           <Button
-            variant={isSelected ? 'contained' : isCurrent ? 'outlined' : 'text'}
+            variant={isSelected ? 'filled' : isCurrent ? 'outlined' : 'ghost'}
             onPress={() => {
               setCurrentYear(year)
               setCalendarView('months')
@@ -231,14 +230,14 @@ export function DateTimePicker({
             disabled={isDisabled}
             fullWidth
           >
-            <Typography
+            <Text
               variant="body2"
               color={
                 isSelected ? 'primary.text' : isDisabled ? 'disabled' : isCurrent ? 'primary.main' : 'text.primary'
               }
             >
               {year}
-            </Typography>
+            </Text>
           </Button>
         </StyledYearCell>
       )
@@ -277,16 +276,15 @@ export function DateTimePicker({
       months.push(
         <StyledMonthCell key={month}>
           <Button
-            variant={isSelected ? 'contained' : isCurrent ? 'outlined' : 'text'}
+            variant={isSelected ? 'filled' : isCurrent ? 'outlined' : 'ghost'}
             onPress={() => {
               setCurrentMonth(index)
               setCalendarView('days')
             }}
-            slotProps={{
-              label: {
+            viewProps={{
+              text: {
                 variant: 'body2',
                 color: !isSelected ? (isCurrent ? 'primary.main' : 'text.primary') : undefined,
-                sx: ({ typography }) => ({ fontSize: typography.variants.body2.fontSize }),
               },
             }}
             fullWidth
@@ -310,9 +308,9 @@ export function DateTimePicker({
     dayLabels.forEach((day) => {
       days.push(
         <StyledCell key={`label-${day}`} style={{ height: 32 }}>
-          <Typography variant="body2" color="text.secondary">
+          <Text variant="body2" color="text.secondary">
             {day}
-          </Typography>
+          </Text>
         </StyledCell>
       )
     })
@@ -341,19 +339,18 @@ export function DateTimePicker({
       days.push(
         <StyledCell key={i}>
           <Button
-            size="small"
-            variant={isSelected ? 'contained' : isToday ? 'outlined' : 'text'}
-            slotProps={{
-              label: {
+            size="sm"
+            variant={isSelected ? 'filled' : isToday ? 'outlined' : 'ghost'}
+            viewProps={{
+              text: {
                 variant: 'body2',
                 color: !isSelected ? (isToday ? 'primary.main' : 'text.primary') : undefined,
-                sx: ({ typography }) => ({ fontSize: typography.variants.body2.fontSize }),
               },
             }}
             onPress={() => handleDateSelect(currentDate)}
             disabled={isDisabled}
             style={{ minWidth: 40, paddingHorizontal: 0 }}
-            rounded
+            shape="rounded"
           >
             {i}
           </Button>
@@ -376,7 +373,7 @@ export function DateTimePicker({
       hours.push(
         <Button
           key={i}
-          variant={isSelected ? 'contained' : 'text'}
+          variant={isSelected ? 'filled' : 'ghost'}
           onPress={() => !isDisabled && handleTimeSelect(i, selectedDate.getMinutes())}
           disabled={isDisabled}
           style={{
@@ -386,9 +383,9 @@ export function DateTimePicker({
             opacity: isDisabled ? 0.5 : 1,
           }}
         >
-          <Typography variant="body2" color={isSelected ? 'primary.text' : isDisabled ? 'disabled' : 'text.primary'}>
+          <Text variant="body2" color={isSelected ? 'primary.text' : isDisabled ? 'disabled' : 'text.primary'}>
             {String(i).padStart(2, '0')}
-          </Typography>
+          </Text>
         </Button>
       )
     }
@@ -407,7 +404,7 @@ export function DateTimePicker({
       minutes.push(
         <Button
           key={i}
-          variant={isSelected ? 'contained' : 'text'}
+          variant={isSelected ? 'filled' : 'ghost'}
           onPress={() => !isDisabled && handleTimeSelect(selectedDate.getHours(), i)}
           disabled={isDisabled}
           style={{
@@ -417,9 +414,9 @@ export function DateTimePicker({
             opacity: isDisabled ? 0.5 : 1,
           }}
         >
-          <Typography variant="body2" color={isSelected ? 'primary.text' : isDisabled ? 'disabled' : 'text.primary'}>
+          <Text variant="body2" color={isSelected ? 'primary.text' : isDisabled ? 'disabled' : 'text.primary'}>
             {String(i).padStart(2, '0')}
-          </Typography>
+          </Text>
         </Button>
       )
     }
@@ -427,9 +424,9 @@ export function DateTimePicker({
     return (
       <Box direction="row" style={{ gap: 16 }}>
         <Box flex={1}>
-          <Typography variant="body2" color="text.secondary" style={{ marginBottom: 8, textAlign: 'center' }}>
+          <Text variant="body2" color="text.secondary" style={{ marginBottom: 8, textAlign: 'center' }}>
             Hours
-          </Typography>
+          </Text>
           <StyledTimeColumn
             showsVerticalScrollIndicator={false}
             contentOffset={{ x: 0, y: selectedDate.getHours() * 42 }}
@@ -438,9 +435,9 @@ export function DateTimePicker({
           </StyledTimeColumn>
         </Box>
         <Box flex={1}>
-          <Typography variant="body2" color="text.secondary" style={{ marginBottom: 8, textAlign: 'center' }}>
+          <Text variant="body2" color="text.secondary" style={{ marginBottom: 8, textAlign: 'center' }}>
             Minutes
-          </Typography>
+          </Text>
           <StyledTimeColumn
             showsVerticalScrollIndicator={false}
             contentOffset={{ x: 0, y: Math.floor(selectedDate.getMinutes() / 5) * 42 }}
@@ -462,10 +459,10 @@ export function DateTimePicker({
           marginBottom: 24,
         }}
       >
-        <IconButton variant="text" onPress={animateToDate}>
-          <Icon name="arrow-left" size={24} color="text.secondary" />
-        </IconButton>
-        <Typography variant="h6">Select Time</Typography>
+        <Button variant="ghost" size="icon" onPress={animateToDate}>
+          <IconChevronLeft size={24} />
+        </Button>
+        <Text variant="h6">Select Time</Text>
         <Box style={{ width: 40 }} />
       </Box>
 
@@ -482,10 +479,10 @@ export function DateTimePicker({
           paddingTop: 16,
         }}
       >
-        <Button variant="text" onPress={animateToDate}>
+        <Button variant="ghost" onPress={animateToDate}>
           Back
         </Button>
-        <Button variant="contained" onPress={handleClose}>
+        <Button variant="filled" onPress={handleClose}>
           OK
         </Button>
       </Box>
@@ -494,21 +491,21 @@ export function DateTimePicker({
 
   return (
     <StyledDateTimePicker fullWidth={fullWidth} {...props}>
-      <TextField
+      <Input
         variant={variant}
         label={label}
         description={description}
         placeholder={placeholder}
-        isInvalid={isInvalid}
+        invalid={invalid}
         fullWidth={fullWidth}
-        slotProps={{
+        viewProps={{
           textInput: {
             value: formatDate(selectedDate),
             editable: false,
             onPressIn: handleOpen,
           } as TextInputProps,
         }}
-        rightAdornments={<Icon name="calendar" size={20} color={isInvalid ? 'error' : disabled ? 'disabled' : color} />}
+        rightActions={<IconCalendar size={20} />}
       />
       <Modal visible={isOpen} transparent animationType="fade" onRequestClose={handleClose}>
         <Pressable
@@ -543,13 +540,13 @@ export function DateTimePicker({
                                   paddingHorizontal: theme.spacing(1),
                                 }}
                               >
-                                <Typography variant="h6" style={{ textAlign: 'left' }}>
+                                <Text variant="h6" style={{ textAlign: 'left' }}>
                                   {new Date(currentYear, currentMonth).toLocaleString('default', {
                                     month: 'long',
                                     year: 'numeric',
                                   })}
-                                </Typography>
-                                <Icon name="triangle-down" color="text.primary" size={20.5} />
+                                </Text>
+                                <IconChevronDown size={20.5} />
                               </Button>
                               <Box
                                 direction="row"
@@ -558,7 +555,8 @@ export function DateTimePicker({
                                   height: '100%',
                                 }}
                               >
-                                <IconButton
+                                <Button
+                                  size="icon"
                                   onPress={() => {
                                     setCurrentMonth((prev) => (prev === 0 ? 11 : prev - 1))
                                     if (currentMonth === 0) {
@@ -566,10 +564,11 @@ export function DateTimePicker({
                                     }
                                   }}
                                 >
-                                  <Icon name="chevron-left" size={24} />
-                                </IconButton>
-                                <IconButton
-                                  variant="text"
+                                  <IconChevronLeft size={24} />
+                                </Button>
+                                <Button
+                                  variant="ghost"
+                                  size="icon"
                                   onPress={() => {
                                     setCurrentMonth((prev) => (prev === 11 ? 0 : prev + 1))
                                     if (currentMonth === 11) {
@@ -577,25 +576,25 @@ export function DateTimePicker({
                                     }
                                   }}
                                 >
-                                  <Icon name="chevron-right" size={24} />
-                                </IconButton>
+                                  <IconChevronRight size={24} />
+                                </Button>
                               </Box>
                             </Box>
                           )}
                           {calendarView === 'years' && (
-                            <Typography variant="h6" style={{ width: '100%', textAlign: 'center' }}>
+                            <Text variant="h6" style={{ width: '100%', textAlign: 'center' }}>
                               Select Year
-                            </Typography>
+                            </Text>
                           )}
                           {calendarView === 'months' && (
                             <Box flex={1} alignItems="center">
-                              <Typography variant="h6" fullFlex>
+                              <Text variant="h6" style={{ flex: 1 }}>
                                 Select Month
-                              </Typography>
-                              <Button variant="text" onPress={() => setCalendarView('years')}>
-                                <Typography variant="h6" style={{ textAlign: 'center' }}>
+                              </Text>
+                              <Button variant="ghost" onPress={() => setCalendarView('years')}>
+                                <Text variant="h6" style={{ textAlign: 'center' }}>
                                   {currentYear}
-                                </Typography>
+                                </Text>
                               </Button>
                             </Box>
                           )}
@@ -607,10 +606,10 @@ export function DateTimePicker({
 
                         {view === 'datetime' && calendarView === 'days' && (
                           <Box direction="row" justifyContent="flex-end" gap={1} marginTop={4}>
-                            <Button variant="text" onPress={handleClose}>
+                            <Button variant="ghost" onPress={handleClose}>
                               Cancel
                             </Button>
-                            <Button variant="contained" onPress={animateToTime}>
+                            <Button variant="filled" onPress={animateToTime}>
                               Next
                             </Button>
                           </Box>

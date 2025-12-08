@@ -6,27 +6,27 @@ export function getNativeTheme(theme: Theme): ReactNavigationTheme {
     dark: theme.mode === 'dark',
     colors: {
       primary: theme.palette.primary.main,
-      background: theme.palette.backgrounds.default,
-      card: theme.palette.backgrounds.paper,
-      text: theme.palette.primary.text,
-      notification: theme.palette.backgrounds.notification,
+      background: theme.palette.background,
+      card: theme.palette.card,
+      text: theme.palette.primary.foreground,
+      notification: theme.palette.notification,
       border: theme.palette.border,
     },
     fonts: {
       bold: {
-        fontFamily: theme.typography.types.bold.fontFamily,
+        fontFamily: theme.typography.weights.bold.fontFamily,
         fontWeight: 'bold',
       },
       regular: {
-        fontFamily: theme.typography.types.regular.fontFamily,
+        fontFamily: theme.typography.weights.regular.fontFamily,
         fontWeight: 'normal',
       },
       medium: {
-        fontFamily: theme.typography.types.medium.fontFamily,
+        fontFamily: theme.typography.weights.medium.fontFamily,
         fontWeight: 'normal',
       },
       heavy: {
-        fontFamily: theme.typography.types.bold.fontFamily,
+        fontFamily: theme.typography.weights.bold.fontFamily,
         fontWeight: 'normal',
       },
     },

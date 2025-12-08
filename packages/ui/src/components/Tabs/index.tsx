@@ -1,8 +1,8 @@
 import React, { Children, forwardRef, type ReactNode, useEffect, useRef, useState } from 'react'
 import { Pressable, type PressableProps, ScrollView, View, type ViewProps } from 'react-native'
 import Animated, { useAnimatedStyle, withSpring } from 'react-native-reanimated'
+import { styled } from '../../theme/styles'
 import type { Palette, TextPaletteColors, Theme } from '../../theme/types'
-import { styled } from '../../theme/utilities'
 import { Text } from '../text'
 
 export interface TabProps extends Omit<PressableProps, 'children'> {
@@ -31,9 +31,9 @@ export interface TabsProps extends ViewProps {
   color?: keyof Palette | keyof TextPaletteColors | (string & {})
   children: ReactNode
   indicatorColor?: keyof Palette | keyof TextPaletteColors | (string & {})
-  slotProps?: {
-    container?: ViewProps | ((state: TabsSlotState) => ViewProps)
-    tabsContainer?: ViewProps | ((state: TabsSlotState) => ViewProps)
+  viewProps?: {
+    root?: ViewProps | ((state: TabsSlotState) => ViewProps)
+    tabsView?: ViewProps | ((state: TabsSlotState) => ViewProps)
     indicator?: ViewProps | ((state: TabsSlotState) => ViewProps)
     tab?:
       | Omit<TabProps, 'label' | 'value' | 'icon' | 'disabled' | 'isSelected'>
@@ -122,7 +122,7 @@ const Tab = forwardRef<View, TabProps & { variant?: TabsProps['variant'] }>(func
   )
 })
 
-export const Tabs = function Tabs({ value, onChange, variant = 'standard', children, slotProps, ...props }: TabsProps) {
+export const Tabs = function Tabs({ value, onChange, variant = 'standard', children, viewProps, ...props }: TabsProps) {
   const [selectedTabWidth, setSelectedTabWidth] = useState(0)
   const [selectedTabX, setSelectedTabX] = useState(0)
   const tabRefs = useRef<{ [key: string]: View | null }>({})
@@ -165,7 +165,7 @@ export const Tabs = function Tabs({ value, onChange, variant = 'standard', child
   }, [value])
 
   const getContainerProps = (state: TabsSlotState) => {
-    const slotProp = slotProps?.container
+    const slotProp = viewProps?.root
     if (typeof slotProp === 'function') {
       return slotProp(state)
     }
@@ -173,7 +173,7 @@ export const Tabs = function Tabs({ value, onChange, variant = 'standard', child
   }
 
   const getTabsContainerProps = (state: TabsSlotState) => {
-    const slotProp = slotProps?.tabsContainer
+    const slotProp = viewProps?.tabsView
     if (typeof slotProp === 'function') {
       return slotProp(state)
     }
@@ -181,7 +181,7 @@ export const Tabs = function Tabs({ value, onChange, variant = 'standard', child
   }
 
   const getTabProps = (state: TabSlotState) => {
-    const slotProp = slotProps?.tab
+    const slotProp = viewProps?.tab
     if (typeof slotProp === 'function') {
       return slotProp(state)
     }
@@ -189,7 +189,7 @@ export const Tabs = function Tabs({ value, onChange, variant = 'standard', child
   }
 
   const getIndicatorProps = (state: TabsSlotState) => {
-    const slotProp = slotProps?.indicator
+    const slotProp = viewProps?.indicator
     if (typeof slotProp === 'function') {
       return slotProp(state)
     }

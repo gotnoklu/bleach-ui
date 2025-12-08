@@ -14,18 +14,21 @@ export type Palette = {
   primary: PaletteColors
   secondary: PaletteColors
   text: TextPaletteColors
-  backgrounds: {
-    default: string
-    paper: string
-    notification: string
-  }
   success: PaletteColors
   error: PaletteColors
   info: PaletteColors
   warning: PaletteColors
   disabled: string
-  action: string
+  icon: string
   border: string
+  avatar: string
+  card: string
+  background: string
+  notification: string
+  inputFilled: string
+  checkboxFilled: string
+  progressTrack: string
+  switchTrack: string
 }
 
 export type Typography = {
@@ -73,3 +76,12 @@ export interface Theme {
 }
 
 export type BaseTheme = DeepPartial<Theme>
+
+type PaletteColorTokenMap = {
+  [Key in keyof Palette]: Palette[Key] extends Record<string, string>
+    ? `${Key}.${Extract<keyof Palette[Key], string>}`
+    : Key
+}
+
+export type PaletteColorToken = PaletteColorTokenMap[keyof PaletteColorTokenMap]
+export type PaletteBaseColorToken = keyof Palette

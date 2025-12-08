@@ -1,3 +1,3 @@
 import { createTheme } from '../utilities'
 
-export const DefaultLightTheme = createTheme({})
+export const LightTheme = createTheme({})

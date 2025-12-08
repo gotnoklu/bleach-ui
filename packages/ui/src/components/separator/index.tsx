@@ -1,5 +1,5 @@
 import { View, type ViewProps } from 'react-native'
-import { styled } from '../../theme/utilities'
+import { styled } from '../../theme/styles'
 
 export interface SeparatorProps extends ViewProps {}
 

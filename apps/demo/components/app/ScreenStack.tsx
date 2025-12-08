@@ -9,44 +9,39 @@ export default function ScreenStack() {
       <Stack.Screen
         name="index"
         options={{
-          title: 'Home',
-          headerTitle: 'Home',
-          headerTitleStyle: {
-            color: theme.palette.text.primary,
-            ...(theme.typography.types.medium as { fontFamily: string }),
-          },
+          header: () => null,
         }}
       />
       <Stack.Screen
-        name="showcases/button"
+        name="screens/button"
         options={{
           title: 'Buttons',
           headerTitle: 'Buttons',
           headerTitleStyle: {
             color: theme.palette.text.primary,
-            ...(theme.typography.types.medium as { fontFamily: string }),
+            ...(theme.typography.weights.medium as { fontFamily: string }),
           },
         }}
       />
       <Stack.Screen
-        name="showcases/date-time-picker"
+        name="screens/date-time-picker"
         options={{
           title: 'Date & Time Pickers',
           headerTitle: 'Date & Time Pickers',
           headerTitleStyle: {
             color: theme.palette.text.primary,
-            ...(theme.typography.types.medium as { fontFamily: string }),
+            ...(theme.typography.weights.medium as { fontFamily: string }),
           },
         }}
       />
       <Stack.Screen
-        name="showcases/popup"
+        name="screens/popup"
         options={{
           title: 'Popups',
           headerTitle: 'Popups',
           headerTitleStyle: {
             color: theme.palette.text.primary,
-            ...(theme.typography.types.medium as { fontFamily: string }),
+            ...(theme.typography.weights.medium as { fontFamily: string }),
           },
         }}
       />

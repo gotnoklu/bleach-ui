@@ -11,7 +11,7 @@ import {
   type ViewProps,
 } from 'react-native'
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
-import { selectStyles, styled } from '../../theme/utilities'
+import { selectStyles, styled } from '../../theme/styles'
 import { Card, type CardProps } from '../card'
 import { IconCheck, IconChevronDown, IconChevronUp, IconSearch } from '../icon'
 import { Input } from '../input'
@@ -32,20 +32,20 @@ type BaseProps<Options extends Array<Record<PropertyKey, any>> = []> = {
   options: Options
   fullWidth?: boolean
   slots?: { leftAdornments?: ReactNode; rightAdornments?: ReactNode }
-  slotProps?: { paper?: CardProps }
+  viewProps?: { card?: CardProps }
   enableSearch?: boolean
   displayOnlyIcon?: boolean
   maxOptionsCardHeight?: number
-  onChange?: (option: Options[number]) => void
-  displayTopOptions?: (options: Options) => Options
+  onSelect?(option: Options[number]): void
+  displayTopOptions?(options: Options): Options
 }
 
 type BaseDropdownProps<Options extends Array<Record<PropertyKey, any>> = []> =
   | (ViewProps &
-      Omit<BaseProps<Options>, 'slotProps'> & {
+      Omit<BaseProps<Options>, 'viewProps'> & {
         label?: ReactNode
         description?: ReactNode
-        slotProps?: { paper?: CardProps; label?: TextProps; description?: TextProps }
+        viewProps?: { card?: CardProps; label?: TextProps; description?: TextProps }
       })
   | (PressableProps & BaseProps<Options>)
 
@@ -103,8 +103,8 @@ function BaseDropdown<Options extends Array<Record<PropertyKey, any>> = []>({
   maxOptionsCardHeight = 300,
   fullWidth = false,
   slots,
-  slotProps,
-  onChange,
+  viewProps,
+  onSelect,
   enableSearch,
   displayTopOptions,
   ...props
@@ -175,7 +175,7 @@ function BaseDropdown<Options extends Array<Record<PropertyKey, any>> = []>({
   }
 
   function selectOption(option: Options[number]) {
-    if (typeof onChange === 'function') onChange(option)
+    if (typeof onSelect === 'function') onSelect(option)
     closeDropdown()
   }
 
@@ -228,7 +228,7 @@ function BaseDropdown<Options extends Array<Record<PropertyKey, any>> = []>({
         <Show when={!displayOnlyIcon}>{slots?.leftAdornments}</Show>
         {selectedOption.icon}
         <Show when={!displayOnlyIcon}>
-          <Text variant="body2" fontWeight="medium" fullFlex>
+          <Text variant="body2" fontWeight="medium" style={{ flex: 1 }}>
             {selectedOption.label}
           </Text>
         </Show>
@@ -246,7 +246,7 @@ function BaseDropdown<Options extends Array<Record<PropertyKey, any>> = []>({
         <Pressable style={[StyleSheet.absoluteFill, { overflow: 'hidden' }]} onPress={closeDropdown}>
           <AnimatedCard
             ref={optionsBoxEl}
-            {...slotProps?.paper}
+            {...viewProps?.card}
             style={[
               dropdownAnimationStyles,
               {
@@ -254,15 +254,15 @@ function BaseDropdown<Options extends Array<Record<PropertyKey, any>> = []>({
                 left: dropdownState.leftOffset,
                 width: dropdownState.width,
               },
-              slotProps?.paper?.style,
+              viewProps?.card?.style,
             ]}
           >
             <Show when={enableSearch === true}>
               <Input
                 placeholder="Search"
                 variant="outlined"
-                leftAdornments={<IconSearch />}
-                slotProps={{ textInput: { onChangeText: filterOptions } }}
+                leftActions={<IconSearch />}
+                viewProps={{ textInput: { onChangeText: filterOptions } }}
               />
             </Show>
             <Show
@@ -312,7 +312,7 @@ function BaseDropdown<Options extends Array<Record<PropertyKey, any>> = []>({
           <Text
             variant="body2"
             fontWeight="medium"
-            {...(slotProps as Extract<typeof slotProps, { label?: any }>)?.label}
+            {...(viewProps as Extract<typeof viewProps, { label?: any }>)?.label}
           >
             {label}
           </Text>
@@ -324,7 +324,7 @@ function BaseDropdown<Options extends Array<Record<PropertyKey, any>> = []>({
           <Text
             variant="caption"
             color="secondary"
-            {...(slotProps as Extract<typeof slotProps, { description?: any }>)?.description}
+            {...(viewProps as Extract<typeof viewProps, { description?: any }>)?.description}
           >
             {description}
           </Text>
@@ -339,7 +339,7 @@ function BaseDropdown<Options extends Array<Record<PropertyKey, any>> = []>({
 function UncontrolledDropdown<Options extends Array<Record<PropertyKey, any>> = []>({
   defaultValue,
   valueKey = 'value',
-  onChange,
+  onSelect,
   ...props
 }: Omit<BaseDropdownProps<Options>, 'value'> & {
   defaultValue?: BaseDropdownProps<Options>['value']
@@ -348,10 +348,10 @@ function UncontrolledDropdown<Options extends Array<Record<PropertyKey, any>> = 
 
   function selectOption(option: Options[number]) {
     setValue(option[valueKey])
-    if (typeof onChange === 'function') onChange(option)
+    if (typeof onSelect === 'function') onSelect(option)
   }
 
-  return <BaseDropdown value={value} onChange={selectOption} valueKey={valueKey} {...props} />
+  return <BaseDropdown value={value} onSelect={selectOption} valueKey={valueKey} {...props} />
 }
 
 export type DropdownProps<Options extends Array<Record<PropertyKey, any>> = []> = BaseDropdownProps<Options> & {

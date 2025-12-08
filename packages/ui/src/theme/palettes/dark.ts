@@ -1,6 +1,6 @@
 import { createTheme } from '../utilities'
 
-export const DefaultDarkTheme = createTheme({
+export const DarkTheme = createTheme({
   mode: 'dark',
   palette: {
     primary: {
@@ -11,10 +11,9 @@ export const DefaultDarkTheme = createTheme({
     text: {
       primary: '#FFFFFF',
     },
-    backgrounds: {
-      default: '#0A0A0A',
-      paper: '#1E1E1E',
-    },
-    action: 'rgba(150, 150, 150, 0.6)',
+    icon: '#AAAAAA',
+    card: '#1E1E1E',
+    background: '#0A0A0A',
+    switchTrack: 'rgba(123, 123, 123, 0.5)',
   },
 })
