@@ -105,7 +105,7 @@
   },
   "overrides": [
     {
-      "includes": ["**/*.ts", "**/*.mts", "**/*.cts"],
+      "includes": ["**/*.ts", "**/*.tsx", "**/*.mts", "**/*.cts", "**/*.jsx"],
       "linter": {
         "enabled": true,
         "rules": {
@@ -121,7 +121,7 @@
             "noUnusedImports": {
               "options": {},
               "level": "error",
-              "fix": "safe"
+              "fix": "unsafe"
             },
             "noUnusedFunctionParameters": {
               "options": { "ignoreRestSiblings": true },
