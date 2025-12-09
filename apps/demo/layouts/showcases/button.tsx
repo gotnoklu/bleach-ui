@@ -1,9 +1,9 @@
 import { createStylesheet } from '@bleach/ui'
 import { Button } from '@bleach/ui/components/button'
+import { Color } from '@bleach/ui/components/color'
 import { IconSettings } from '@bleach/ui/components/icon'
 import { ListItem } from '@bleach/ui/components/list-item'
 import { Text } from '@bleach/ui/components/text'
-import { useState } from 'react'
 import { ActivityIndicator, Alert } from 'react-native'
 import { Section, SubSection } from '../../components/section'
 
@@ -13,12 +13,6 @@ const useStyles = createStylesheet((theme) => ({
 
 export const ButtonShowcase = () => {
   const styles = useStyles()
-  const [loading, setLoading] = useState(false)
-
-  const handleLoadingPress = () => {
-    setLoading(true)
-    setTimeout(() => setLoading(false), 2000)
-  }
 
   const handleButtonAlertPress = () => {
     Alert.alert('Button pressed')
@@ -70,14 +64,11 @@ export const ButtonShowcase = () => {
             States
           </Text>
           <ListItem disableMinHeight disablePadding>
-            <Button variant="filled" onPress={handleLoadingPress}>
-              {loading ? 'Loading...' : 'Press me'}
-            </Button>
             <Button variant="filled" disabled>
               Disabled
             </Button>
             <Button variant="filled" onPress={handleButtonAlertPress}>
-              Action
+              Default
             </Button>
           </ListItem>
         </SubSection>
@@ -90,13 +81,19 @@ export const ButtonShowcase = () => {
           </Text>
           <ListItem disableMinHeight disablePadding>
             <Button variant="filled" size="icon">
-              <IconSettings color={styles.icon.color} />
+              <Color color="primary.foreground">
+                <IconSettings />
+              </Color>
             </Button>
             <Button size="icon" variant="outlined">
-              <IconSettings />
+              <Color color="primary.main">
+                <IconSettings />
+              </Color>
             </Button>
             <Button size="icon" variant="ghost">
-              <IconSettings />
+              <Color color="primary.main">
+                <IconSettings />
+              </Color>
             </Button>
           </ListItem>
         </SubSection>
@@ -119,24 +116,36 @@ export const ButtonShowcase = () => {
           </Text>
           <ListItem disableMinHeight disablePadding>
             <Button variant="filled" size="icon-sm">
-              <IconSettings color={styles.icon.color} />
+              <Color color="primary.foreground">
+                <IconSettings />
+              </Color>
             </Button>
             <Button variant="filled" size="icon-md">
-              <IconSettings color={styles.icon.color} />
+              <Color color="primary.foreground">
+                <IconSettings />
+              </Color>
             </Button>
             <Button variant="filled" size="icon-lg">
-              <IconSettings color={styles.icon.color} />
+              <Color color="primary.foreground">
+                <IconSettings />
+              </Color>
             </Button>
           </ListItem>
           <ListItem disableMinHeight disablePadding>
             <Button size="icon-sm" variant="outlined" shape="rounded">
-              <IconSettings />
+              <Color color="primary.main">
+                <IconSettings size={18} />
+              </Color>
             </Button>
             <Button size="icon-md" variant="outlined" shape="rounded">
-              <IconSettings />
+              <Color color="primary.main">
+                <IconSettings />
+              </Color>
             </Button>
             <Button size="icon-lg" variant="outlined" shape="rounded">
-              <IconSettings />
+              <Color color="primary.main">
+                <IconSettings size={26} />
+              </Color>
             </Button>
           </ListItem>
         </SubSection>

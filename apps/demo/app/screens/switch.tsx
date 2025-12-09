@@ -3,8 +3,8 @@ import { ShowcaseScreenLayout } from '../../layouts/showcase-screen-layout'
 
 export default function SwitchScreen() {
   return (
-    // <ShowcaseScreenLayout>
-    <SwitchShowcase />
-    // </ShowcaseScreenLayout>
+    <ShowcaseScreenLayout>
+      <SwitchShowcase />
+    </ShowcaseScreenLayout>
   )
 }

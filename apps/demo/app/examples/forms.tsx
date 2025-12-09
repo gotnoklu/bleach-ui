@@ -2,7 +2,8 @@ import { Avatar } from '@bleach/ui/components/avatar'
 import { Box } from '@bleach/ui/components/box'
 import { Button } from '@bleach/ui/components/button'
 import { Card } from '@bleach/ui/components/card'
-import { IconUser } from '@bleach/ui/components/icon'
+import { Color } from '@bleach/ui/components/color'
+import { IconEye, IconUser } from '@bleach/ui/components/icon'
 import { Input } from '@bleach/ui/components/input'
 import { Separator } from '@bleach/ui/components/separator'
 import { Text } from '@bleach/ui/components/text'
@@ -25,13 +26,15 @@ export default function Forms() {
         <Box gap={6} paddingX={2} paddingY={3}>
           <Box gap={2} alignItems="center" style={{ alignSelf: 'center' }}>
             <Avatar size="lg">
-              <IconUser />
+              <Color color="primary.main">
+                <IconUser />
+              </Color>
             </Avatar>
             <Box>
-              <Text variant="h6" fontWeight="medium" style={{ textAlign: 'center' }} gutterBottom>
+              <Text variant="h6" fontWeight="medium" textAlign="center" gutterBottom>
                 Welcome!
               </Text>
-              <Text variant="body2" color="text.secondary" style={{ textAlign: 'center' }}>
+              <Text variant="body2" color="text.secondary" textAlign="center">
                 Please enter your email and password to login
               </Text>
             </Box>
@@ -42,10 +45,17 @@ export default function Forms() {
               variant="outlined"
               label="Password"
               placeholder="Enter your password"
+              rightActions={
+                <Button variant="ghost" size="icon">
+                  <Color color="icon">
+                    <IconEye />
+                  </Color>
+                </Button>
+              }
               viewProps={{ textInput: { secureTextEntry: true } }}
               fullWidth
             />
-            <Text color="primary" variant="body2" style={{ textAlign: 'right', flex: 1 }}>
+            <Text color="primary" variant="body2" textAlign="right" style={{ flex: 1 }}>
               Forgot Password?
             </Text>
           </Box>
@@ -61,13 +71,15 @@ export default function Forms() {
         <Box gap={6} paddingX={2} paddingY={3}>
           <Box gap={2} alignItems="center" style={{ alignSelf: 'center' }}>
             <Avatar size="lg">
-              <IconUser />
+              <Color color="primary.main">
+                <IconUser />
+              </Color>
             </Avatar>
             <Box>
-              <Text variant="h6" fontWeight="medium" style={{ textAlign: 'center' }} gutterBottom>
+              <Text variant="h6" fontWeight="medium" textAlign="center" gutterBottom>
                 Create New Account
               </Text>
-              <Text variant="body2" color="text.secondary" style={{ textAlign: 'center' }}>
+              <Text variant="body2" color="text.secondary" textAlign="center">
                 Please enter your details to signup
               </Text>
             </Box>
@@ -81,6 +93,13 @@ export default function Forms() {
               label="Password"
               placeholder="Enter your password"
               viewProps={{ textInput: { secureTextEntry: true } }}
+              rightActions={
+                <Button variant="ghost" size="icon">
+                  <Color color="icon">
+                    <IconEye />
+                  </Color>
+                </Button>
+              }
               fullWidth
             />
             <Input
@@ -88,6 +107,13 @@ export default function Forms() {
               label="Confirm Password"
               placeholder="Retype password"
               viewProps={{ textInput: { secureTextEntry: true } }}
+              rightActions={
+                <Button variant="ghost" size="icon">
+                  <Color color="icon">
+                    <IconEye />
+                  </Color>
+                </Button>
+              }
               fullWidth
             />
           </Box>
