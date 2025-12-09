@@ -28,7 +28,9 @@ export type Palette = {
   inputFilled: string
   checkboxFilled: string
   progressTrack: string
-  switchTrack: string
+  switchTrackFilled: string
+  switchTrackOutlined: string
+  transparent: string
 }
 
 export type Typography = {

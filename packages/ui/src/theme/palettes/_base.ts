@@ -166,7 +166,9 @@ export const _BaseTheme: Theme = {
     progressTrack: 'rgba(123, 123, 123, 0.2)',
     inputFilled: 'rgba(123, 123, 123, 0.1)',
     checkboxFilled: 'rgba(123, 123, 123, 0.1)',
-    switchTrack: 'rgba(123, 123, 123, 0.2)',
+    switchTrackFilled: 'rgba(123, 123, 123, 0.2)',
+    switchTrackOutlined: 'rgba(123, 123, 123, 0.3)',
+    transparent: 'rgba(0, 0, 0, 0)',
   },
   typography: {
     weights: TextWeights,

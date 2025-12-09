@@ -14,6 +14,7 @@ export const DarkTheme = createTheme({
     icon: '#AAAAAA',
     card: '#1E1E1E',
     background: '#0A0A0A',
-    switchTrack: 'rgba(123, 123, 123, 0.5)',
+    switchTrackFilled: 'rgba(123, 123, 123, 0.5)',
+    switchTrackOutlined: 'rgba(123, 123, 123, 0.5)',
   },
 })
