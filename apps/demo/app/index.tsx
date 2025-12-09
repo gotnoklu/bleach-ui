@@ -1,7 +1,14 @@
 import { useTheme } from '@bleach/ui'
 import { BackgroundView } from '@bleach/ui/components/background-view'
 import { Box } from '@bleach/ui/components/box'
-import { IconCalendar, IconChevronRight, IconColumns, IconDeviceMobile, IconNumber } from '@bleach/ui/components/icon'
+import {
+  IconCalendar,
+  IconChevronRight,
+  IconColumns,
+  IconDeviceMobile,
+  IconInputCheck,
+  IconNumber,
+} from '@bleach/ui/components/icon'
 import { ListItemButton } from '@bleach/ui/components/list-item-button'
 import { Text } from '@bleach/ui/components/text'
 import { type Href, Link } from 'expo-router'
@@ -34,7 +41,7 @@ const COMPONENTS: Array<{
     ],
   },
   {
-    icon: <IconNumber />,
+    icon: <IconInputCheck />,
     title: 'Inputs',
     description: 'Used for getting user input',
     items: [
