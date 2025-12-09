@@ -13,7 +13,7 @@
   "license": "MIT",
   "packageManager": "yarn@4.12.0",
   "scripts": {
-    "watch": "yarn build && chokidar \"./**/*.{ts,tsx,swcrc,json}\" -i \"./{dist,node_modules}/**/*.{ts,json}\" -c \"yarn build\"",
+    "watch": "rslib build -w",
     "build": "yarn lint && rslib build",
     "lint": "cd ../../ && yarn lint packages/ui && cd packages/ui && tsc --noEmit --skipLibCheck",
     "lint:fix": "cd ../../ && yarn lint --fix",
@@ -27,15 +27,13 @@
     "@rsbuild/plugin-react": "^1.4.2",
     "@rslib/core": "^0.18.3",
     "@types/react": "^18",
-    "chokidar-cli": "^3.0.0",
     "react": "^18",
-    "react-native": "^0.76.6",
-    "react-native-reanimated": "3.16.7",
+    "react-native": "0.76.9",
+    "react-native-reanimated": "~3.16.1",
     "typescript": "^5.7.3"
   },
   "peerDependencies": {
     "react": "*",
-    "react-native": "*",
     "react-native-reanimated": "*",
     "react-native-svg": "*"
   },
