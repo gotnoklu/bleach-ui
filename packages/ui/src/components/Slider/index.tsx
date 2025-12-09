@@ -61,7 +61,7 @@ const StyledFill = styled(View)<SliderProps>((theme, props) => {
   const color = props.disabled ? theme.palette.disabled : theme.palette.primary.main
   return {
     height: '100%',
-    backgroundColor: alpha(color, props.disabled ? 0.5 : 1),
+    backgroundColor: alpha(color, props.disabled ? 0.3 : 1),
     borderRadius: theme.radius(1),
     position: 'absolute',
   }
@@ -153,7 +153,7 @@ export function Slider({
           </GestureDetector>
         </StyledContainer>
         <Show when={showValue}>
-          <Text variant="caption" style={{ textAlign: 'center' }} {...viewProps?.value}>
+          <Text variant="caption" textAlign="center" {...viewProps?.value}>
             {displayValue}
           </Text>
         </Show>

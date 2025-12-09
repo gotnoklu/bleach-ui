@@ -1,4 +1,4 @@
-import type { TextProps as ReactNativeTextProps } from 'react-native'
+import type { TextProps as ReactNativeTextProps, TextStyle } from 'react-native'
 import { Text as ReactNativeText } from 'react-native'
 import { styled } from '../../theme/styles'
 import type { PaletteColorToken, Typography } from '../../theme/types'
@@ -9,6 +9,7 @@ export interface TextProps extends ReactNativeTextProps {
   variant?: keyof Typography['variants']
   color?: PaletteColorToken | (string & {})
   fontWeight?: keyof Typography['weights']
+  textAlign?: TextStyle['textAlign']
   gutterBottom?: boolean
 }
 
@@ -25,10 +26,11 @@ const TextBottomGutters: { [_ in keyof Typography['variants']]: number } = {
 }
 
 const StyledText = styled(ReactNativeText)<TextProps>(
-  (theme, { variant = 'body1', color = 'text.primary', fontWeight, gutterBottom }) => {
+  (theme, { variant = 'body1', color = 'text.primary', fontWeight, textAlign, gutterBottom }) => {
     return merge(theme.typography.variants[variant], fontWeight ? theme.typography.weights[fontWeight] : {}, {
       color: getThemeProperty({ object: theme.palette, key: color, fallback: color }),
       marginBottom: gutterBottom ? theme.spacing(TextBottomGutters[variant]) : 0,
+      textAlign,
     })
   }
 )

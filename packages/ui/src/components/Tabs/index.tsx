@@ -69,7 +69,7 @@ const StyledTab = styled(Pressable)<StyledTabProps>((theme: Theme, props) => ({
   gap: theme.spacing(1),
   paddingHorizontal: theme.spacing(3),
   paddingVertical: theme.spacing(1.5),
-  opacity: props.disabled ? 0.5 : 1,
+  opacity: props.disabled ? 0.3 : 1,
   minHeight: 48,
   flex: props.variant === 'standard' ? 1 : undefined,
   backgroundColor: props.pressed && !props.isSelected ? 'rgba(0, 0, 0, 0.04)' : undefined,

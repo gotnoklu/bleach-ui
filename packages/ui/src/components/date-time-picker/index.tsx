@@ -370,6 +370,7 @@ export function DateTimePicker({
       const isDisabled =
         (minDate && selectedDate.getDate() === minDate.getDate() && i < minDate.getHours()) ||
         (maxDate && selectedDate.getDate() === maxDate.getDate() && i > maxDate.getHours())
+
       hours.push(
         <Button
           key={i}
@@ -380,7 +381,7 @@ export function DateTimePicker({
             margin: 1,
             height: 40,
             backgroundColor: isSelected ? theme.palette.primary.main : 'transparent',
-            opacity: isDisabled ? 0.5 : 1,
+            opacity: disabled ? 0.3 : 1,
           }}
         >
           <Text variant="body2" color={isSelected ? 'primary.text' : isDisabled ? 'disabled' : 'text.primary'}>
@@ -411,7 +412,7 @@ export function DateTimePicker({
             margin: 1,
             height: 40,
             backgroundColor: isSelected ? theme.palette.primary.main : 'transparent',
-            opacity: isDisabled ? 0.5 : 1,
+            opacity: disabled ? 0.3 : 1,
           }}
         >
           <Text variant="body2" color={isSelected ? 'primary.text' : isDisabled ? 'disabled' : 'text.primary'}>
@@ -424,7 +425,7 @@ export function DateTimePicker({
     return (
       <Box direction="row" style={{ gap: 16 }}>
         <Box flex={1}>
-          <Text variant="body2" color="text.secondary" style={{ marginBottom: 8, textAlign: 'center' }}>
+          <Text variant="body2" color="text.secondary" textAlign="center" style={{ marginBottom: 8 }}>
             Hours
           </Text>
           <StyledTimeColumn
@@ -435,7 +436,7 @@ export function DateTimePicker({
           </StyledTimeColumn>
         </Box>
         <Box flex={1}>
-          <Text variant="body2" color="text.secondary" style={{ marginBottom: 8, textAlign: 'center' }}>
+          <Text variant="body2" color="text.secondary" textAlign="center" style={{ marginBottom: 8 }}>
             Minutes
           </Text>
           <StyledTimeColumn
@@ -540,7 +541,7 @@ export function DateTimePicker({
                                   paddingHorizontal: theme.spacing(1),
                                 }}
                               >
-                                <Text variant="h6" style={{ textAlign: 'left' }}>
+                                <Text variant="h6" textAlign="left">
                                   {new Date(currentYear, currentMonth).toLocaleString('default', {
                                     month: 'long',
                                     year: 'numeric',
@@ -582,7 +583,7 @@ export function DateTimePicker({
                             </Box>
                           )}
                           {calendarView === 'years' && (
-                            <Text variant="h6" style={{ width: '100%', textAlign: 'center' }}>
+                            <Text variant="h6" textAlign="center" style={{ width: '100%' }}>
                               Select Year
                             </Text>
                           )}
@@ -592,7 +593,7 @@ export function DateTimePicker({
                                 Select Month
                               </Text>
                               <Button variant="ghost" onPress={() => setCalendarView('years')}>
-                                <Text variant="h6" style={{ textAlign: 'center' }}>
+                                <Text variant="h6" textAlign="center">
                                   {currentYear}
                                 </Text>
                               </Button>

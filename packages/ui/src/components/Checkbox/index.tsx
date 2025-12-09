@@ -56,7 +56,7 @@ const StyledCheckbox = styled(Pressable)<CheckboxProps>(
           borderRadius: shape === 'rounded' ? CheckboxSizes[size] : theme.radius(CheckboxRadii[size]),
           alignItems: 'center',
           justifyContent: 'center',
-          opacity: disabled ? 0.5 : 1,
+          opacity: disabled ? 0.3 : 1,
         },
       }
     )

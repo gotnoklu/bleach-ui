@@ -60,7 +60,7 @@ const StyledButton = styled(Pressable)<ButtonProps>(
           when: variant === 'outlined',
           styles: {
             borderColor: disabled ? theme.palette.disabled : buttonColor,
-            borderWidth: 1,
+            borderWidth: 1.2,
           },
         },
         {
@@ -97,7 +97,7 @@ const StyledButton = styled(Pressable)<ButtonProps>(
         when: variant === 'outlined',
         styles: {
           borderColor: disabled ? theme.palette.disabled : buttonColor,
-          borderWidth: 1,
+          borderWidth: 1.2,
         },
       },
       {
