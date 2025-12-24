@@ -21,12 +21,10 @@
     "format": "cd ../../ && yarn format --write",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "dependencies": {
-    "@tabler/icons-react-native": "^3.35.0"
-  },
   "devDependencies": {
     "@rsbuild/plugin-react": "^1.4.2",
     "@rslib/core": "^0.18.3",
+    "@tabler/icons-react-native": "^3.36.0",
     "@types/react": "^18",
     "chokidar-cli": "^3.0.0",
     "react": "^18",
@@ -38,7 +36,8 @@
     "react": "*",
     "react-native": "*",
     "react-native-reanimated": "*",
-    "react-native-svg": "*"
+    "react-native-svg": "*",
+    "@tabler/icons-react-native": "^3.36.0"
   },
   "files": [
     "dist",

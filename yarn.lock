@@ -1357,7 +1357,7 @@ __metadata:
   dependencies:
     "@rsbuild/plugin-react": "npm:^1.4.2"
     "@rslib/core": "npm:^0.18.3"
-    "@tabler/icons-react-native": "npm:^3.35.0"
+    "@tabler/icons-react-native": "npm:^3.36.0"
     "@types/react": "npm:^18"
     chokidar-cli: "npm:^3.0.0"
     react: "npm:^18"
@@ -2764,21 +2764,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tabler/icons-react-native@npm:^3.35.0":
-  version: 3.35.0
-  resolution: "@tabler/icons-react-native@npm:3.35.0"
+"@tabler/icons-react-native@npm:^3.36.0":
+  version: 3.36.0
+  resolution: "@tabler/icons-react-native@npm:3.36.0"
   dependencies:
-    "@tabler/icons": "npm:3.35.0"
+    "@tabler/icons": "npm:3.36.0"
   peerDependencies:
     react: ">= 16.5.1"
-  checksum: 10c0/4517273d73baa4cf6af72411f87d1e8401d1d0876419f4798404442757f34933f1d25a59a818ba79eda014f7cf30cd83b328103b17f7bfcd434900b597ab85be
+  checksum: 10c0/27e60e14c00999ef649d94aa17642246a4a40c1dc3228b1c1ceedb07b31438256a98ae965ded881fba57a1bb3691a082783258d402009a8ecd121d08319f968c
   languageName: node
   linkType: hard
 
-"@tabler/icons@npm:3.35.0":
-  version: 3.35.0
-  resolution: "@tabler/icons@npm:3.35.0"
-  checksum: 10c0/93098828128ffed2cf412b39bd78992f93f25b22349a4e04523d2a018b7fe376ddeff105babcc3efedd707aa00b705425c7d9f598d6987552a563c62125795a2
+"@tabler/icons@npm:3.36.0":
+  version: 3.36.0
+  resolution: "@tabler/icons@npm:3.36.0"
+  checksum: 10c0/4637add3f1326c3542cf2ebb9fcde162f34b3bfc2a716b103cc7acef666edeeac581504ea9f847946183c3eea81abb1ec5c91389f984064f50e2bad370b3e8dc
   languageName: node
   linkType: hard
 
