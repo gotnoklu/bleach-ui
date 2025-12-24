@@ -36,17 +36,21 @@ const StyledSliderWrapper = styled(View)(() => ({
   position: 'relative',
 }))
 
-const StyledTrack = styled(View)<SliderProps>((theme, { size = 'sm', disabled }) => {
-  return {
-    width: '100%',
-    height: SliderTrackSizes[size],
-    backgroundColor: disabled ? theme.palette.disabled : theme.palette.sliderTrackFilled,
-    borderRadius: theme.radius(4),
-    overflow: 'hidden',
+const StyledTrack = styled(View)<ViewProps & { size?: SliderProps['size']; disabled?: boolean }>(
+  (theme, { size = 'sm', disabled }) => {
+    return {
+      width: '100%',
+      height: SliderTrackSizes[size],
+      backgroundColor: disabled ? theme.palette.disabled : theme.palette.sliderTrackFilled,
+      borderRadius: theme.radius(4),
+      overflow: 'hidden',
+    }
   }
-})
+)
 
-const StyledThumb = styled(View)<SliderProps>((theme, { size = 'sm', showValue, disabled }) => {
+const StyledThumb = styled(View)<
+  ViewProps & { size?: SliderProps['size']; showValue?: SliderProps['showValue']; disabled?: boolean }
+>((theme, { size = 'sm', showValue, disabled }) => {
   const thumbSize = SliderThumbSizes[size]
   const trackSize = SliderTrackSizes[size]
 
@@ -64,7 +68,7 @@ const StyledThumb = styled(View)<SliderProps>((theme, { size = 'sm', showValue, 
   }
 })
 
-const StyledFill = styled(View)<SliderProps>((theme, { disabled }) => {
+const StyledFill = styled(View)<ViewProps & { disabled?: boolean }>((theme, { disabled }) => {
   return {
     height: '100%',
     backgroundColor: disabled ? theme.palette.disabled : theme.palette.primary.main,
