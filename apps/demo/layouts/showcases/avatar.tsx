@@ -1,5 +1,6 @@
 import { createStylesheet } from '@bleeech/ui'
 import { Avatar } from '@bleeech/ui/components/avatar'
+import { Color } from '@bleeech/ui/components/color'
 import { IconBell, IconSettings, IconUser } from '@bleeech/ui/components/icons'
 import { ListItem } from '@bleeech/ui/components/list-item'
 import { Text } from '@bleeech/ui/components/text'
@@ -12,7 +13,7 @@ const useStyles = createStylesheet((theme) => ({
 }))
 
 export const AvatarShowcase = () => {
-  const styles = useStyles()
+  const _styles = useStyles()
 
   return (
     <Section>
@@ -61,13 +62,19 @@ export const AvatarShowcase = () => {
         </Text>
         <ListItem disableMinHeight disablePadding>
           <Avatar>
-            <IconUser size={20} color={styles.icon.color} />
+            <Color color="icon">
+              <IconUser size={20} />
+            </Color>
           </Avatar>
           <Avatar>
-            <IconSettings size={20} color={styles.icon.color} />
+            <Color color="icon">
+              <IconSettings size={20} />
+            </Color>
           </Avatar>
           <Avatar>
-            <IconBell size={20} color={styles.icon.color} />
+            <Color color="icon">
+              <IconBell size={20} />
+            </Color>
           </Avatar>
         </ListItem>
       </SubSection>
