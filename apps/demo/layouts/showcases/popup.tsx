@@ -1,7 +1,7 @@
 import { Box, type BoxProps } from '@bleach/ui/components/box'
 import { Button } from '@bleach/ui/components/button'
 import { Card } from '@bleach/ui/components/card'
-import { Icon } from '@bleach/ui/components/icon'
+import { IconListNumbers } from '@bleach/ui/components/icons'
 import { ListItemButton } from '@bleach/ui/components/list-item-button'
 import { Popup, PopupContent, PopupTrigger } from '@bleach/ui/components/popup'
 import { Text } from '@bleach/ui/components/text'
@@ -11,7 +11,7 @@ const Section = styled(Box)<BoxProps>((theme) => ({ gap: theme.spacing(4) }))
 const SubSection = styled(Box)<BoxProps>((theme) => ({ gap: theme.spacing(2) }))
 
 const PopupCard = (
-  <Card>
+  <Card style={{ padding: 8 }}>
     <Text>Hello!</Text>
   </Card>
 )
@@ -19,9 +19,9 @@ const PopupCard = (
 export const PopupShowcase = () => {
   return (
     <Section>
-      <Text variant="h5">Popup</Text>
+      <Text variant="xl">Popup</Text>
       <SubSection>
-        <Text variant="h6" color="text.secondary">
+        <Text variant="lg" color="text.secondary">
           Positions
         </Text>
         <Box gap={2} direction="row" justifyContent="center">
@@ -110,20 +110,6 @@ export const PopupShowcase = () => {
             <PopupContent>{PopupCard}</PopupContent>
           </Popup>
         </Box>
-        <Box gap={2} justifyContent="center" direction="row">
-          <Popup position="left-center">
-            <PopupTrigger>
-              <Button variant="outlined">Left-Center</Button>
-            </PopupTrigger>
-            <PopupContent>{PopupCard}</PopupContent>
-          </Popup>
-          <Popup position="right-center">
-            <PopupTrigger>
-              <Button variant="outlined">Right-Center</Button>
-            </PopupTrigger>
-            <PopupContent>{PopupCard}</PopupContent>
-          </Popup>
-        </Box>
         <Box gap={2} alignItems="center" justifyContent="center" direction="row">
           <Popup position="center">
             <PopupTrigger>
@@ -150,7 +136,7 @@ export const PopupShowcase = () => {
             <PopupContent>{PopupCard}</PopupContent>
           </Popup>
         </Box>
-        <Box gap={2} direction="row">
+        <Box gap={2} direction="row" justifyContent="center">
           <Popup position="top">
             <PopupTrigger>
               <Button variant="outlined">Top-Left</Button>
@@ -164,7 +150,7 @@ export const PopupShowcase = () => {
             <PopupContent>{PopupCard}</PopupContent>
           </Popup>
         </Box>
-        <Box gap={2} direction="row">
+        <Box gap={2} direction="row" justifyContent="center">
           <Popup position="top-center">
             <PopupTrigger>
               <Button variant="outlined">Top-Center</Button>
@@ -178,7 +164,7 @@ export const PopupShowcase = () => {
             <PopupContent>{PopupCard}</PopupContent>
           </Popup>
         </Box>
-        <Box gap={2} direction="row">
+        <Box gap={2} direction="row" justifyContent="center">
           <Popup position="bottom">
             <PopupTrigger>
               <Button variant="outlined">Bottom-Left</Button>
@@ -194,28 +180,28 @@ export const PopupShowcase = () => {
         </Box>
       </SubSection>
       <SubSection>
-        <Text variant="h6" color="text.secondary">
+        <Text variant="lg" color="text.secondary">
           Variants
         </Text>
         <Popup>
           <PopupTrigger>
             <ListItemButton>
               <Text style={{ flex: 1 }}>Press For Default Popup</Text>
-              <Icon name="list-unordered" />
+              <IconListNumbers />
             </ListItemButton>
           </PopupTrigger>
           <PopupContent>{PopupCard}</PopupContent>
         </Popup>
-        <Popup elevate>
+        {/* <Popup variant="elevated">
           <PopupTrigger>
             <ListItemButton>
               <Text style={{ flex: 1 }}>Press For Elevated Popup</Text>
-              <Icon name="list-unordered" />
+              <IconListNumbers />
             </ListItemButton>
           </PopupTrigger>
           <PopupContent>{PopupCard}</PopupContent>
-        </Popup>
-        <Popup closeOnElevatedTriggerEvent="onPress" elevate>
+        </Popup> */}
+        {/* <Popup variant="elevated">
           <PopupTrigger>
             <Button variant="filled">Toggle Nested Menu</Button>
           </PopupTrigger>
@@ -231,7 +217,7 @@ export const PopupShowcase = () => {
                 <PopupTrigger>
                   <ListItemButton size="small">
                     <Text>More Actions</Text>
-                    <Icon name="chevron-right" />
+                    <IconChevronRight />
                   </ListItemButton>
                 </PopupTrigger>
                 <PopupContent>
@@ -242,7 +228,7 @@ export const PopupShowcase = () => {
                     <Popup position="left">
                       <PopupTrigger>
                         <ListItemButton size="small">
-                          <Icon name="chevron-left" />
+                          <IconChevronLeft />
                           <Text>Nested 2</Text>
                         </ListItemButton>
                       </PopupTrigger>
@@ -250,6 +236,18 @@ export const PopupShowcase = () => {
                         <Card>
                           <ListItemButton size="small" separator>
                             <Text>Inner 1</Text>
+                          </ListItemButton>
+                          <ListItemButton size="small">
+                            <Text>Inner 2</Text>
+                          </ListItemButton>
+                          <ListItemButton size="small">
+                            <Text>Inner 2</Text>
+                          </ListItemButton>
+                          <ListItemButton size="small">
+                            <Text>Inner 2</Text>
+                          </ListItemButton>
+                          <ListItemButton size="small">
+                            <Text>Inner 2</Text>
                           </ListItemButton>
                           <ListItemButton size="small">
                             <Text>Inner 2</Text>
@@ -262,7 +260,7 @@ export const PopupShowcase = () => {
               </Popup>
             </Card>
           </PopupContent>
-        </Popup>
+        </Popup> */}
       </SubSection>
     </Section>
   )

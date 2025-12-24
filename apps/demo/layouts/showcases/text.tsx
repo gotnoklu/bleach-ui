@@ -8,20 +8,20 @@ const SubSection = styled(Box)<BoxProps>((theme) => ({ gap: theme.spacing(2) }))
 export const TextShowcase = () => {
   return (
     <Section>
-      <Text variant="h5">Text</Text>
+      <Text variant="xl">Text</Text>
       <SubSection>
-        <Text variant="h6" color="text.secondary">
+        <Text variant="lg" color="text.secondary">
           Variants
         </Text>
-        <Text variant="h1">Heading 1</Text>
-        <Text variant="h2">Heading 2</Text>
-        <Text variant="h3">Heading 3</Text>
-        <Text variant="h4">Heading 4</Text>
-        <Text variant="h5">Heading 5</Text>
-        <Text variant="h6">Heading 6</Text>
-        <Text variant="body1">Body 1</Text>
-        <Text variant="body2">Body 2</Text>
-        <Text variant="caption">Caption</Text>
+        <Text variant="5xl">Heading 1</Text>
+        <Text variant="4xl">Heading 2</Text>
+        <Text variant="3xl">Heading 3</Text>
+        <Text variant="2xl">Heading 4</Text>
+        <Text variant="xl">Heading 5</Text>
+        <Text variant="lg">Heading 6</Text>
+        <Text variant="md">Body 1</Text>
+        <Text variant="sm">Body 2</Text>
+        <Text variant="xs">Caption</Text>
       </SubSection>
     </Section>
   )

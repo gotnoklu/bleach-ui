@@ -2,8 +2,8 @@ import { merge } from '../utilities'
 import { _BaseTheme } from './palettes/_base'
 import type { BaseTheme, Palette, PaletteColors, TextPaletteColors, Theme } from './types'
 
-export function createTheme(theme: BaseTheme): Theme {
-  return merge(_BaseTheme, theme) as Theme
+export function createTheme(theme: BaseTheme | ((base: BaseTheme) => BaseTheme)): Theme {
+  return merge(_BaseTheme, typeof theme === 'function' ? theme(_BaseTheme) : theme) as Theme
 }
 
 export function getThemeProperty(config: {

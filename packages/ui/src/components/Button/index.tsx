@@ -118,7 +118,7 @@ const StyledButton = styled(Pressable)<ButtonProps>(
           borderRadius: theme.radius(shape === 'rounded' ? 100 : 2),
           gap: theme.spacing(1),
           paddingHorizontal: size === 'sm' ? theme.spacing(1.5) : size === 'md' ? theme.spacing(3) : theme.spacing(4),
-          ...theme.typography.variants.body1,
+          ...theme.typography.variants.md,
         },
       }
     )

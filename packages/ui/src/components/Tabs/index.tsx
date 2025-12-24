@@ -1,45 +1,47 @@
-import React, { Children, forwardRef, type ReactNode, useEffect, useRef, useState } from 'react'
+import { Children, forwardRef, type ReactNode, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { Pressable, type PressableProps, ScrollView, View, type ViewProps } from 'react-native'
-import Animated, { useAnimatedStyle, withSpring } from 'react-native-reanimated'
+import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated'
 import { styled } from '../../theme/styles'
 import type { Palette, TextPaletteColors, Theme } from '../../theme/types'
 import { Text } from '../text'
 
+// TODO: Use context for managing tab state and toggle
+
 export interface TabProps extends Omit<PressableProps, 'children'> {
   label: string
-  value: string
-  icon?: ReactNode
+  value: string | number
+  icon?: ReactNode | ((state: { isSelected: boolean }) => ReactNode)
   disabled?: boolean
   isSelected?: boolean
   onPress?: () => void
 }
 
-interface TabSlotState {
-  value: string
-  isSelected: boolean
-  disabled?: boolean
-}
-
-interface TabsSlotState {
-  value?: string
+interface TabsState {
+  value: string | number
 }
 
 export interface TabsProps extends ViewProps {
-  value?: string
-  onChange?: (value: string) => void
+  value: string | number
+  onTabSelect?: ((value: string) => void) | ((value: number) => void) | ((value: string | number) => void)
   variant?: 'standard' | 'scrollable'
   color?: keyof Palette | keyof TextPaletteColors | (string & {})
   children: ReactNode
   indicatorColor?: keyof Palette | keyof TextPaletteColors | (string & {})
-  viewProps?: {
-    root?: ViewProps | ((state: TabsSlotState) => ViewProps)
-    tabsView?: ViewProps | ((state: TabsSlotState) => ViewProps)
-    indicator?: ViewProps | ((state: TabsSlotState) => ViewProps)
-    tab?:
-      | Omit<TabProps, 'label' | 'value' | 'icon' | 'disabled' | 'isSelected'>
-      | ((state: TabSlotState) => Omit<TabProps, 'label' | 'value' | 'icon' | 'disabled' | 'isSelected'>)
-    label?: ViewProps | ((state: TabSlotState) => ViewProps)
-  }
+  viewProps?:
+    | {
+        root?: ViewProps
+        tabsWrapper?: ViewProps
+        indicator?: ViewProps
+        tab?: Omit<TabProps, 'label' | 'value' | 'icon' | 'disabled' | 'isSelected'>
+        label?: ViewProps
+      }
+    | ((state: TabsState) => {
+        root?: ViewProps
+        tabsWrapper?: ViewProps
+        indicator?: ViewProps
+        tab?: Omit<TabProps, 'label' | 'value' | 'icon' | 'disabled' | 'isSelected'>
+        label?: ViewProps
+      })
 }
 
 interface StyledTabsContainerProps extends ViewProps {
@@ -72,7 +74,7 @@ const StyledTab = styled(Pressable)<StyledTabProps>((theme: Theme, props) => ({
   opacity: props.disabled ? 0.3 : 1,
   minHeight: 48,
   flex: props.variant === 'standard' ? 1 : undefined,
-  backgroundColor: props.pressed && !props.isSelected ? 'rgba(0, 0, 0, 0.04)' : undefined,
+  zIndex: 100,
 }))
 
 interface StyledIndicatorProps extends ViewProps {
@@ -88,19 +90,12 @@ const StyledIndicator = styled(View)<StyledIndicatorProps>((theme: Theme) => ({
 
 const AnimatedIndicator = Animated.createAnimatedComponent(StyledIndicator)
 
-const Tab = forwardRef<View, TabProps & { variant?: TabsProps['variant'] }>(function Tab(
-  { label, value, icon, disabled, isSelected, onPress, variant, ...props },
+export const Tab = forwardRef<View, TabProps & { variant?: TabsProps['variant'] }>(function Tab(
+  { label, value, icon, disabled, isSelected = false, onPress, variant, ...props },
   ref
 ) {
   const [pressed, setPressed] = useState(false)
-
-  const iconElement =
-    icon && React.isValidElement(icon)
-      ? React.cloneElement(icon, {
-          color: isSelected ? 'primary.main' : 'text.primary',
-          ...(icon.props as any),
-        })
-      : icon
+  const iconElement = useMemo(() => (typeof icon === 'function' ? icon({ isSelected }) : icon), [icon])
 
   return (
     <StyledTab
@@ -115,33 +110,40 @@ const Tab = forwardRef<View, TabProps & { variant?: TabsProps['variant'] }>(func
       {...props}
     >
       {iconElement}
-      <Text variant="body2" fontWeight="medium" color={isSelected ? 'primary.main' : 'text.primary'}>
+      <Text variant="sm" fontWeight="medium" color={isSelected ? 'primary.main' : 'text.primary'}>
         {label}
       </Text>
     </StyledTab>
   )
 })
 
-export const Tabs = function Tabs({ value, onChange, variant = 'standard', children, viewProps, ...props }: TabsProps) {
-  const [selectedTabWidth, setSelectedTabWidth] = useState(0)
-  const [selectedTabX, setSelectedTabX] = useState(0)
+export const Tabs = function Tabs({
+  value,
+  onTabSelect,
+  variant = 'standard',
+  children,
+  viewProps,
+  ...props
+}: TabsProps) {
   const tabRefs = useRef<{ [key: string]: View | null }>({})
-  const containerRef = useRef<View>(null)
-  const scrollViewRef = useRef<ScrollView>(null)
+  const containerRef = useRef<View | null>(null)
+  const scrollViewRef = useRef<ScrollView | null>(null)
+  const selectedTabWidth = useSharedValue(0)
+  const selectedTabX = useSharedValue(0)
 
   const indicatorStyle = useAnimatedStyle(() => ({
-    width: withSpring(selectedTabWidth, { damping: 20, stiffness: 150 }),
-    transform: [{ translateX: withSpring(selectedTabX, { damping: 20, stiffness: 150 }) }],
+    width: withSpring(selectedTabWidth.value, { damping: 20, stiffness: 150 }),
+    transform: [{ translateX: withSpring(selectedTabX.value, { damping: 20, stiffness: 150 }) }],
   }))
 
-  const updateTabMetrics = (tabValue: string) => {
+  const updateTabMetrics = (tabValue: string | number) => {
     const tabRef = tabRefs.current[tabValue]
     if (tabRef && containerRef.current) {
       containerRef.current.measure(
         (_cx: number, _cy: number, _cwidth: number, _cheight: number, containerPageX: number) => {
           tabRef.measure((_x: number, _y: number, width: number, _height: number, pageX: number) => {
-            setSelectedTabWidth(width)
-            setSelectedTabX(pageX - containerPageX)
+            selectedTabWidth.value = width
+            selectedTabX.value = pageX - containerPageX
 
             // Scroll to the selected tab if in scrollable mode
             if (variant === 'scrollable' && scrollViewRef.current) {
@@ -156,48 +158,19 @@ export const Tabs = function Tabs({ value, onChange, variant = 'standard', child
     }
   }
 
-  useEffect(() => {
-    if (value) {
-      requestAnimationFrame(() => {
-        updateTabMetrics(value)
-      })
-    }
-  }, [value])
+  useLayoutEffect(() => {
+    requestAnimationFrame(() => {
+      updateTabMetrics(value)
+    })
+  }, [])
 
-  const getContainerProps = (state: TabsSlotState) => {
-    const slotProp = viewProps?.root
-    if (typeof slotProp === 'function') {
-      return slotProp(state)
-    }
-    return slotProp
-  }
-
-  const getTabsContainerProps = (state: TabsSlotState) => {
-    const slotProp = viewProps?.tabsView
-    if (typeof slotProp === 'function') {
-      return slotProp(state)
-    }
-    return slotProp
-  }
-
-  const getTabProps = (state: TabSlotState) => {
-    const slotProp = viewProps?.tab
-    if (typeof slotProp === 'function') {
-      return slotProp(state)
-    }
-    return slotProp
-  }
-
-  const getIndicatorProps = (state: TabsSlotState) => {
-    const slotProp = viewProps?.indicator
-    if (typeof slotProp === 'function') {
-      return slotProp(state)
-    }
-    return slotProp
-  }
+  const resolvedViewProps = useMemo(
+    () => (typeof viewProps === 'function' ? viewProps({ value }) : viewProps),
+    [value, viewProps]
+  )
 
   const TabsContent = (
-    <StyledTabsContainer ref={containerRef} variant={variant} {...getTabsContainerProps({ value })}>
+    <StyledTabsContainer ref={containerRef} variant={variant} {...resolvedViewProps?.tabsWrapper}>
       {Children.map(children, (child) => {
         if (!child) return null
 
@@ -206,24 +179,17 @@ export const Tabs = function Tabs({ value, onChange, variant = 'standard', child
 
         return (
           <Tab
-            {...getTabProps({
-              value: tab.props.value,
-              isSelected,
-              disabled: tab.props.disabled,
-            })}
             {...tab.props}
+            {...resolvedViewProps?.tab}
             key={tab.props.value}
             variant={variant}
             ref={(ref: View | null) => {
               tabRefs.current[tab.props.value] = ref
-              if (isSelected) {
-                updateTabMetrics(tab.props.value)
-              }
             }}
             isSelected={isSelected}
             onPress={() => {
-              if (onChange) {
-                onChange(tab.props.value)
+              if (onTabSelect) {
+                onTabSelect(tab.props.value as never)
               }
               if (tab.props.onPress) {
                 tab.props.onPress()
@@ -233,12 +199,15 @@ export const Tabs = function Tabs({ value, onChange, variant = 'standard', child
           />
         )
       })}
-      <AnimatedIndicator style={indicatorStyle} {...getIndicatorProps({ value })} />
+      <AnimatedIndicator
+        {...resolvedViewProps?.indicator}
+        style={[indicatorStyle, resolvedViewProps?.indicator?.style]}
+      />
     </StyledTabsContainer>
   )
 
   return (
-    <View style={{ width: variant === 'standard' ? '100%' : 'auto' }} {...getContainerProps({ value })} {...props}>
+    <View style={{ width: variant === 'standard' ? '100%' : 'auto' }} {...resolvedViewProps?.root} {...props}>
       {variant === 'scrollable' ? (
         <ScrollView ref={scrollViewRef} horizontal showsHorizontalScrollIndicator={false}>
           {TabsContent}
@@ -249,5 +218,3 @@ export const Tabs = function Tabs({ value, onChange, variant = 'standard', child
     </View>
   )
 }
-
-Tabs.Tab = Tab

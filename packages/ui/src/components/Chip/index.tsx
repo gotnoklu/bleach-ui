@@ -53,7 +53,7 @@ const StyledBaseChip = styled(Pressable)<BaseChipProps>(
           gap: theme.spacing(1),
           paddingVertical: theme.spacing(0.5),
           paddingHorizontal: size === 'sm' ? theme.spacing(1) : size === 'md' ? theme.spacing(1) : theme.spacing(2),
-          ...theme.typography.variants.body1,
+          ...theme.typography.variants.md,
         },
       }
     )
@@ -71,7 +71,7 @@ const useLabelStyles = createStyles(
   }
 )
 
-function BaseChip({ variant, checked, viewProps, children, disabled, onChecked, ...props }: ChipProps) {
+export function BaseChip({ variant, checked, viewProps, children, disabled, onChecked, ...props }: ChipProps) {
   const labelStyles = useLabelStyles({
     color: props.color,
     size: props.size,
@@ -122,5 +122,3 @@ export function Chip({ checked, defaultChecked, ...props }: ChipProps) {
   if (typeof checked === 'boolean') return <ControlledChip checked={checked} {...props} />
   return <UncontrolledChip checked={defaultChecked} {...props} />
 }
-
-Chip.Base = BaseChip

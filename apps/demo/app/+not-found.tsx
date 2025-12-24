@@ -8,7 +8,7 @@ export default function NotFoundScreen() {
     <Fragment>
       <Stack.Screen options={{ title: 'Oops!' }} />
       <Box flex={1} alignItems="center" justifyContent="center" padding={4}>
-        <Text variant="h3">This screen doesn't exist.</Text>
+        <Text variant="3xl">This screen doesn't exist.</Text>
         <Link href="/" style={{ marginTop: 15, paddingVertical: 15 }}>
           <Text color="primary">Go to home screen!</Text>
         </Link>

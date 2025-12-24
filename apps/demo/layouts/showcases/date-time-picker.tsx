@@ -11,10 +11,10 @@ export default function DateTimePickerShowcase() {
 
   return (
     <Section>
-      <Text variant="h5">Date Time Picker</Text>
+      <Text variant="xl">Date Time Picker</Text>
 
       <SubSection>
-        <Text variant="h6" color="text.secondary">
+        <Text variant="lg" color="text.secondary">
           Basic Usage
         </Text>
         <DateTimePicker
@@ -27,7 +27,7 @@ export default function DateTimePickerShowcase() {
       </SubSection>
 
       <SubSection>
-        <Text variant="h6" color="text.secondary">
+        <Text variant="lg" color="text.secondary">
           Date Only
         </Text>
         <DateTimePicker
@@ -42,7 +42,7 @@ export default function DateTimePickerShowcase() {
       </SubSection>
 
       <SubSection>
-        <Text variant="h6" color="text.secondary">
+        <Text variant="lg" color="text.secondary">
           Time Only
         </Text>
         <DateTimePicker
@@ -57,7 +57,7 @@ export default function DateTimePickerShowcase() {
       </SubSection>
 
       <SubSection>
-        <Text variant="h6" color="text.secondary">
+        <Text variant="lg" color="text.secondary">
           Variants
         </Text>
         <Box style={{ gap: 8 }}>
@@ -67,7 +67,7 @@ export default function DateTimePickerShowcase() {
       </SubSection>
 
       <SubSection>
-        <Text variant="h6" color="text.secondary">
+        <Text variant="lg" color="text.secondary">
           States
         </Text>
         <Box style={{ gap: 8 }}>
@@ -77,7 +77,7 @@ export default function DateTimePickerShowcase() {
       </SubSection>
 
       <SubSection>
-        <Text variant="h6" color="text.secondary">
+        <Text variant="lg" color="text.secondary">
           With Min/Max Date
         </Text>
         <DateTimePicker

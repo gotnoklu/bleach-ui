@@ -14,19 +14,19 @@ export interface TextProps extends ReactNativeTextProps {
 }
 
 const TextBottomGutters: { [_ in keyof Typography['variants']]: number } = {
-  body1: 0.5,
-  body2: 0.5,
-  caption: 0.2,
-  h1: 1,
-  h2: 1,
-  h3: 1,
-  h4: 1,
-  h5: 1,
-  h6: 1,
+  '5xl': 1,
+  '4xl': 1,
+  '3xl': 1,
+  '2xl': 1,
+  xl: 1,
+  lg: 1,
+  md: 0.5,
+  sm: 0.5,
+  xs: 0.2,
 }
 
 const StyledText = styled(ReactNativeText)<TextProps>(
-  (theme, { variant = 'body1', color = 'text.primary', fontWeight, textAlign, gutterBottom }) => {
+  (theme, { variant = 'md', color = 'text.primary', fontWeight, textAlign, gutterBottom }) => {
     return merge(theme.typography.variants[variant], fontWeight ? theme.typography.weights[fontWeight] : {}, {
       color: getThemeProperty({ object: theme.palette, key: color, fallback: color }),
       marginBottom: gutterBottom ? theme.spacing(TextBottomGutters[variant]) : 0,

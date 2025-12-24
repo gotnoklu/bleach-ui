@@ -9,9 +9,9 @@ export const SwitchShowcase = () => {
 
   return (
     <Section>
-      <Text variant="h5">Switches</Text>
+      <Text variant="xl">Switches</Text>
       <SubSection>
-        <Text variant="h6" color="text.secondary">
+        <Text variant="lg" color="text.secondary">
           Variants
         </Text>
         <ListItem disableMinHeight disablePadding>
@@ -24,7 +24,7 @@ export const SwitchShowcase = () => {
         </ListItem>
       </SubSection>
       <SubSection>
-        <Text variant="h6" color="text.secondary">
+        <Text variant="lg" color="text.secondary">
           Shapes
         </Text>
         <ListItem disableMinHeight disablePadding>
@@ -37,7 +37,7 @@ export const SwitchShowcase = () => {
         </ListItem>
       </SubSection>
       <SubSection>
-        <Text variant="h6" color="text.secondary">
+        <Text variant="lg" color="text.secondary">
           States
         </Text>
         <ListItem disableMinHeight disablePadding>

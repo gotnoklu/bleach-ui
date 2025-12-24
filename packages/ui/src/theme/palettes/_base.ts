@@ -167,45 +167,47 @@ export const _BaseTheme: Theme = {
     inputFilled: 'rgba(123, 123, 123, 0.1)',
     checkboxFilled: 'rgba(123, 123, 123, 0.1)',
     switchTrackFilled: 'rgba(123, 123, 123, 0.2)',
-    switchTrackOutlined: 'rgba(123, 123, 123, 0.3)',
+    switchTrackOutlined: 'rgba(123, 123, 123, 0.2)',
+    sliderTrackFilled: 'rgba(123, 123, 123, 0.2)',
+    sliderThumbFilled: '#FFFFFF',
     transparent: 'rgba(0, 0, 0, 0)',
   },
   typography: {
     weights: TextWeights,
     variants: {
-      h1: {
+      '5xl': {
         fontSize: 28,
         ...TextWeights.bold,
       },
-      h2: {
+      '4xl': {
         fontSize: 25,
         ...TextWeights.bold,
       },
-      h3: {
+      '3xl': {
         fontSize: 22,
         ...TextWeights.bold,
       },
-      h4: {
+      '2xl': {
         fontSize: 20,
         ...TextWeights.bold,
       },
-      h5: {
+      xl: {
         fontSize: 18,
         ...TextWeights.bold,
       },
-      h6: {
+      lg: {
         fontSize: 16,
         ...TextWeights.bold,
       },
-      body1: {
+      md: {
         fontSize: 14,
         ...TextWeights.regular,
       },
-      body2: {
+      sm: {
         fontSize: 12,
         ...TextWeights.regular,
       },
-      caption: {
+      xs: {
         fontSize: 10.5,
         ...TextWeights.regular,
       },

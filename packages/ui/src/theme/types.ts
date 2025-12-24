@@ -30,6 +30,8 @@ export type Palette = {
   progressTrack: string
   switchTrackFilled: string
   switchTrackOutlined: string
+  sliderTrackFilled: string
+  sliderThumbFilled: string
   transparent: string
 }
 
@@ -41,15 +43,15 @@ export type Typography = {
     }
   }
   variants: {
-    h1: TextStyle
-    h2: TextStyle
-    h3: TextStyle
-    h4: TextStyle
-    h5: TextStyle
-    h6: TextStyle
-    body1: TextStyle
-    body2: TextStyle
-    caption: TextStyle
+    '5xl': TextStyle
+    '4xl': TextStyle
+    '3xl': TextStyle
+    '2xl': TextStyle
+    xl: TextStyle
+    lg: TextStyle
+    md: TextStyle
+    sm: TextStyle
+    xs: TextStyle
   }
 }
 

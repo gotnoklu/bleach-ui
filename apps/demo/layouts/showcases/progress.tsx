@@ -7,10 +7,10 @@ import { Section, SubSection } from '../../components/section'
 export const ProgressShowcase = () => {
   return (
     <Section>
-      <Text variant="h5">Progress</Text>
+      <Text variant="xl">Progress</Text>
 
       <SubSection>
-        <Text variant="h6" color="text.secondary">
+        <Text variant="lg" color="text.secondary">
           Variants
         </Text>
         <ListItem disableMinHeight disablePadding>
@@ -28,7 +28,7 @@ export const ProgressShowcase = () => {
       </SubSection>
 
       <SubSection>
-        <Text variant="h6" color="text.secondary">
+        <Text variant="lg" color="text.secondary">
           Colors
         </Text>
         <ListItem disableMinHeight disablePadding>
@@ -52,7 +52,7 @@ export const ProgressShowcase = () => {
       </SubSection>
 
       <SubSection>
-        <Text variant="h6" color="text.secondary">
+        <Text variant="lg" color="text.secondary">
           Sizes
         </Text>
         <ListItem disableMinHeight disablePadding>

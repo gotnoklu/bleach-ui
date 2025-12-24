@@ -1,6 +1,6 @@
 import { Box } from '@bleach/ui/components/box'
 import { Button } from '@bleach/ui/components/button'
-import { IconCheck, IconEye, IconEyeClosed, IconX } from '@bleach/ui/components/icon'
+import { IconCheck, IconEye, IconEyeClosed, IconX } from '@bleach/ui/components/icons'
 import { Input } from '@bleach/ui/components/input'
 import { ListItem } from '@bleach/ui/components/list-item'
 import { Text } from '@bleach/ui/components/text'
@@ -26,9 +26,9 @@ export const InputShowcase = () => {
 
   return (
     <Section>
-      <Text variant="h5">Inputs</Text>
+      <Text variant="xl">Inputs</Text>
       <SubSection>
-        <Text variant="h6" color="text.secondary">
+        <Text variant="lg" color="text.secondary">
           Variants
         </Text>
         <ListItem disableMinHeight disablePadding>
@@ -42,7 +42,7 @@ export const InputShowcase = () => {
         </ListItem>
       </SubSection>
       <SubSection>
-        <Text variant="h6" color="text.secondary">
+        <Text variant="lg" color="text.secondary">
           Examples
         </Text>
         <ListItem disableMinHeight disablePadding>
@@ -68,31 +68,31 @@ export const InputShowcase = () => {
               <Box gap={1}>
                 <Box direction="row" alignItems="center" gap={0.5}>
                   <IconCheck size={12} color={styles.success.color} />
-                  <Text variant="caption" color="success.main">
+                  <Text variant="xs" color="success.main">
                     Be at least 16 characters long
                   </Text>
                 </Box>
                 <Box direction="row" alignItems="center" gap={0.5}>
                   <IconCheck size={12} color={styles.success.color} />
-                  <Text variant="caption" color="success.main">
+                  <Text variant="xs" color="success.main">
                     Have at least 1 symbol
                   </Text>
                 </Box>
                 <Box direction="row" alignItems="center" gap={0.5}>
                   <IconX size={12} color={styles.error.color} />
-                  <Text variant="caption" color="error.main">
+                  <Text variant="xs" color="error.main">
                     Have at least 1 uppercase character
                   </Text>
                 </Box>
                 <Box direction="row" alignItems="center" gap={0.5}>
                   <IconX size={12} color={styles.error.color} />
-                  <Text variant="caption" color="error.main">
+                  <Text variant="xs" color="error.main">
                     Have at least 1 uppercase character
                   </Text>
                 </Box>
                 <Box direction="row" alignItems="center" gap={0.5}>
                   <IconX size={12} color={styles.error.color} />
-                  <Text variant="caption" color="error.main">
+                  <Text variant="xs" color="error.main">
                     Have at least 1 lowercase character
                   </Text>
                 </Box>

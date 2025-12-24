@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Pressable, type PressableProps } from 'react-native'
 import { selectStyles, styled } from '../../theme/styles'
 import { Color } from '../color'
-import { IconCheck } from '../icon'
+import { IconCheck } from '../icons'
 
 type CheckboxSizes = 'sm' | 'md' | 'lg'
 

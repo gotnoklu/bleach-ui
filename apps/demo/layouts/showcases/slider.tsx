@@ -9,23 +9,40 @@ export const SliderShowcase = () => {
 
   return (
     <Section>
-      <Text variant="h5">Sliders</Text>
+      <Text variant="xl">Sliders</Text>
       <SubSection>
-        <Text variant="h6" color="text.secondary">
+        <Text variant="lg" color="text.secondary">
           Basic Sliders
         </Text>
         <Box>
-          <Slider value={sliderValue1} onChange={setSliderValue1} showValue />
+          <Slider value={sliderValue1} onChange={setSliderValue1} />
         </Box>
         <Box>
           <Slider min={0} max={50} step={5} showValue />
         </Box>
       </SubSection>
+
       <SubSection>
-        <Text variant="h6" color="text.secondary">
+        <Text variant="lg" color="text.secondary">
+          Sizes
+        </Text>
+        <Box>
+          <Slider size="sm" value={sliderValue1} onChange={setSliderValue1} showValue />
+        </Box>
+        <Box>
+          <Slider size="md" min={-50} max={50} step={1} showValue />
+        </Box>
+        <Box>
+          <Slider size="lg" min={0} max={50} step={5} showValue />
+        </Box>
+      </SubSection>
+
+      <SubSection>
+        <Text variant="lg" color="text.secondary">
           States
         </Text>
         <Box>
+          <Text>Disabled</Text>
           <Slider value={30} disabled />
         </Box>
       </SubSection>

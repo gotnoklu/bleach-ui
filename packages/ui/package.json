@@ -1,7 +1,7 @@
 {
   "name": "@bleach/ui",
   "description": "The stylish UI library for React Native",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "repository": "https://github.com/delalify/conjoin-monorepo",
   "author": "Enoch Klu <cyronix787@gmail.com>",
   "contributors": [
@@ -95,9 +95,9 @@
       "import": "./dist/esm/components/dropdown/index.js",
       "types": "./dist/esm/components/dropdown/index.d.ts"
     },
-    "./components/icon": {
-      "import": "./dist/esm/components/icon/index.js",
-      "types": "./dist/esm/components/icon/index.d.ts"
+    "./components/icons": {
+      "import": "./dist/esm/components/icons/index.js",
+      "types": "./dist/esm/components/icons/index.d.ts"
     },
     "./components/input": {
       "import": "./dist/esm/components/input/index.js",

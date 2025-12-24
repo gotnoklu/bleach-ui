@@ -3,7 +3,7 @@ import { Box } from '@bleach/ui/components/box'
 import { Button } from '@bleach/ui/components/button'
 import { Card } from '@bleach/ui/components/card'
 import { Color } from '@bleach/ui/components/color'
-import { IconEye, IconUser } from '@bleach/ui/components/icon'
+import { IconEye, IconUser } from '@bleach/ui/components/icons'
 import { Input } from '@bleach/ui/components/input'
 import { Separator } from '@bleach/ui/components/separator'
 import { Text } from '@bleach/ui/components/text'
@@ -31,10 +31,10 @@ export default function Forms() {
               </Color>
             </Avatar>
             <Box>
-              <Text variant="h6" fontWeight="medium" textAlign="center" gutterBottom>
+              <Text variant="lg" fontWeight="medium" textAlign="center" gutterBottom>
                 Welcome!
               </Text>
-              <Text variant="body2" color="text.secondary" textAlign="center">
+              <Text variant="sm" color="text.secondary" textAlign="center">
                 Please enter your email and password to login
               </Text>
             </Box>
@@ -52,10 +52,10 @@ export default function Forms() {
                   </Color>
                 </Button>
               }
-              viewProps={{ textInput: { secureTextEntry: true } }}
+              secureTextEntry
               fullWidth
             />
-            <Text color="primary" variant="body2" textAlign="right" style={{ flex: 1 }}>
+            <Text color="primary" variant="sm" textAlign="right" style={{ flex: 1 }}>
               Forgot Password?
             </Text>
           </Box>
@@ -76,10 +76,10 @@ export default function Forms() {
               </Color>
             </Avatar>
             <Box>
-              <Text variant="h6" fontWeight="medium" textAlign="center" gutterBottom>
+              <Text variant="lg" fontWeight="medium" textAlign="center" gutterBottom>
                 Create New Account
               </Text>
-              <Text variant="body2" color="text.secondary" textAlign="center">
+              <Text variant="sm" color="text.secondary" textAlign="center">
                 Please enter your details to signup
               </Text>
             </Box>
@@ -92,7 +92,6 @@ export default function Forms() {
               variant="outlined"
               label="Password"
               placeholder="Enter your password"
-              viewProps={{ textInput: { secureTextEntry: true } }}
               rightActions={
                 <Button variant="ghost" size="icon">
                   <Color color="icon">
@@ -100,13 +99,13 @@ export default function Forms() {
                   </Color>
                 </Button>
               }
+              secureTextEntry
               fullWidth
             />
             <Input
               variant="outlined"
               label="Confirm Password"
               placeholder="Retype password"
-              viewProps={{ textInput: { secureTextEntry: true } }}
               rightActions={
                 <Button variant="ghost" size="icon">
                   <Color color="icon">
@@ -114,6 +113,7 @@ export default function Forms() {
                   </Color>
                 </Button>
               }
+              secureTextEntry
               fullWidth
             />
           </Box>

@@ -9,9 +9,9 @@ export const CheckboxShowcase = () => {
 
   return (
     <Section>
-      <Text variant="h5">Checkboxes</Text>
+      <Text variant="xl">Checkboxes</Text>
       <SubSection>
-        <Text variant="h6" color="text.secondary">
+        <Text variant="lg" color="text.secondary">
           Variants
         </Text>
         <ListItem disableMinHeight disablePadding>
@@ -24,7 +24,7 @@ export const CheckboxShowcase = () => {
         </ListItem>
       </SubSection>
       <SubSection>
-        <Text variant="h6" color="text.secondary">
+        <Text variant="lg" color="text.secondary">
           Sizes
         </Text>
         <ListItem disableMinHeight disablePadding>
@@ -44,7 +44,7 @@ export const CheckboxShowcase = () => {
         </ListItem>
       </SubSection>
       <SubSection>
-        <Text variant="h6" color="text.secondary">
+        <Text variant="lg" color="text.secondary">
           Shapes
         </Text>
         <ListItem disableMinHeight disablePadding>
@@ -59,7 +59,7 @@ export const CheckboxShowcase = () => {
         </ListItem>
       </SubSection>
       <SubSection>
-        <Text variant="h6" color="text.secondary">
+        <Text variant="lg" color="text.secondary">
           States
         </Text>
         <ListItem disableMinHeight disablePadding>

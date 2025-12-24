@@ -4,49 +4,49 @@ const LightTheme = createTheme({
   palette: {
     secondary: {
       main: '#00D0FF',
-      text: '#000000',
+      foreground: '#000000',
     },
   },
   typography: {
-    types: {
+    weights: {
       bold: { fontFamily: 'PlusJakartaSans-Bold' },
       medium: { fontFamily: 'PlusJakartaSans-Medium' },
       regular: { fontFamily: 'PlusJakartaSans' },
     },
     variants: {
-      h1: {
+      '5xl': {
         fontSize: 28,
         fontFamily: 'PlusJakartaSans-Bold',
       },
-      h2: {
+      '4xl': {
         fontSize: 25,
         fontFamily: 'PlusJakartaSans-Bold',
       },
-      h3: {
+      '3xl': {
         fontSize: 22,
         fontFamily: 'PlusJakartaSans-Bold',
       },
-      h4: {
+      '2xl': {
         fontSize: 20,
         fontFamily: 'PlusJakartaSans-Medium',
       },
-      h5: {
+      xl: {
         fontSize: 18,
         fontFamily: 'PlusJakartaSans-Medium',
       },
-      h6: {
+      lg: {
         fontSize: 16,
         fontFamily: 'PlusJakartaSans-Medium',
       },
-      body1: {
+      md: {
         fontSize: 14,
         fontFamily: 'PlusJakartaSans',
       },
-      body2: {
+      sm: {
         fontSize: 12,
         fontFamily: 'PlusJakartaSans',
       },
-      caption: {
+      xs: {
         fontSize: 10.5,
         fontFamily: 'PlusJakartaSans',
       },

@@ -13,7 +13,7 @@ import {
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import { selectStyles, styled } from '../../theme/styles'
 import { Card, type CardProps } from '../card'
-import { IconCheck, IconChevronDown, IconChevronUp, IconSearch } from '../icon'
+import { IconCheck, IconChevronDown, IconChevronUp, IconSearch } from '../icons'
 import { Input } from '../input'
 import { ListItemButton } from '../list-item-button'
 import { Separator } from '../separator'
@@ -47,7 +47,11 @@ type BaseDropdownProps<Options extends Array<Record<PropertyKey, any>> = []> =
         description?: ReactNode
         viewProps?: { card?: CardProps; label?: TextProps; description?: TextProps }
       })
-  | (PressableProps & BaseProps<Options>)
+  | (PressableProps &
+      BaseProps<Options> & {
+        label?: ReactNode
+        description?: ReactNode
+      })
 
 const StyledDropdown = styled(Pressable)<
   PressableProps &
@@ -88,9 +92,7 @@ const StyledRootView = styled(View)<ViewProps>((theme) => {
 const AnimatedCard = Animated.createAnimatedComponent(Card)
 
 function BaseDropdown<Options extends Array<Record<PropertyKey, any>> = []>({
-  // @ts-ignore
   label,
-  // @ts-ignore
   description,
   variant = 'base',
   value,
@@ -142,7 +144,7 @@ function BaseDropdown<Options extends Array<Record<PropertyKey, any>> = []>({
     setFiltered(null)
     setTimeout(() => {
       setDropdownState((prev) => ({ ...prev, isOpen: false }))
-    }, 250)
+    }, 200)
   }
 
   function openDropdown() {
@@ -228,7 +230,7 @@ function BaseDropdown<Options extends Array<Record<PropertyKey, any>> = []>({
         <Show when={!displayOnlyIcon}>{slots?.leftAdornments}</Show>
         {selectedOption.icon}
         <Show when={!displayOnlyIcon}>
-          <Text variant="body2" fontWeight="medium" style={{ flex: 1 }}>
+          <Text variant="sm" fontWeight="medium" style={{ flex: 1 }}>
             {selectedOption.label}
           </Text>
         </Show>
@@ -262,7 +264,7 @@ function BaseDropdown<Options extends Array<Record<PropertyKey, any>> = []>({
                 placeholder="Search"
                 variant="outlined"
                 leftActions={<IconSearch />}
-                viewProps={{ textInput: { onChangeText: filterOptions } }}
+                onChangeText={filterOptions}
               />
             </Show>
             <Show
@@ -282,7 +284,7 @@ function BaseDropdown<Options extends Array<Record<PropertyKey, any>> = []>({
                       <ListItemButton style={{ minHeight: 40 }} onPress={() => selectOption(item)}>
                         {item[iconKey]}
                         <Text
-                          variant="body2"
+                          variant="sm"
                           color={value === item[valueKey] ? 'primary.main' : 'text.primary'}
                           style={{ flex: 1 }}
                         >
@@ -309,11 +311,7 @@ function BaseDropdown<Options extends Array<Record<PropertyKey, any>> = []>({
         {isValidElement(label) ? (
           label
         ) : typeof label === 'string' ? (
-          <Text
-            variant="body2"
-            fontWeight="medium"
-            {...(viewProps as Extract<typeof viewProps, { label?: any }>)?.label}
-          >
+          <Text variant="sm" fontWeight="medium" {...(viewProps as Extract<typeof viewProps, { label?: any }>)?.label}>
             {label}
           </Text>
         ) : null}
@@ -322,7 +320,7 @@ function BaseDropdown<Options extends Array<Record<PropertyKey, any>> = []>({
           description
         ) : typeof description === 'string' ? (
           <Text
-            variant="caption"
+            variant="xs"
             color="secondary"
             {...(viewProps as Extract<typeof viewProps, { description?: any }>)?.description}
           >

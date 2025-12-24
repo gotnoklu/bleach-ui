@@ -6,18 +6,18 @@ import { Section, SubSection } from '../../components/section'
 export const DropdownShowcase = () => {
   return (
     <Section>
-      <Text variant="h5">Dropdowns</Text>
+      <Text variant="xl">Dropdowns</Text>
       <SubSection>
-        <Text variant="h6" color="text.secondary">
+        <Text variant="lg" color="text.secondary">
           Variants
         </Text>
         <ListItem disableMinHeight disablePadding>
-          <Dropdown variant="outlined" label="Outlined" options={[]} />
+          <Dropdown variant="outlined" label="Outlined" options={[{ label: '1', value: 1 }]} />
           <Dropdown variant="base" label="Base" options={[]} />
         </ListItem>
       </SubSection>
       <SubSection>
-        <Text variant="h6" color="text.secondary">
+        <Text variant="lg" color="text.secondary">
           States
         </Text>
         <ListItem disableMinHeight disablePadding>

@@ -135,7 +135,7 @@ export function Badge({
       {showBadge ? (
         <StyledBadge {...props} indicator={indicator} onLayout={handleLayout} style={[getBadgeStyle(), props.style]}>
           {typeof badgeContent === 'string' || typeof badgeContent === 'number' ? (
-            <Text variant="caption" color={`${props.color || 'primary'}.foreground`} {...viewProps?.label}>
+            <Text variant="xs" color={`${props.color || 'primary'}.foreground`} {...viewProps?.label}>
               {badgeContent}
             </Text>
           ) : (

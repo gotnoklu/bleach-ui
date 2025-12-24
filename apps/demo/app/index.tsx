@@ -8,7 +8,7 @@ import {
   IconDeviceMobile,
   IconInputCheck,
   IconNumber,
-} from '@bleach/ui/components/icon'
+} from '@bleach/ui/components/icons'
 import { ListItemButton } from '@bleach/ui/components/list-item-button'
 import { Text } from '@bleach/ui/components/text'
 import { type Href, Link } from 'expo-router'
@@ -97,15 +97,15 @@ export default function HomeScreen() {
         }}
       >
         <Box>
-          <Text variant="h1" fontWeight="medium" gutterBottom>
+          <Text variant="5xl" fontWeight="medium" gutterBottom>
             Welcome 👋
           </Text>
-          <Text variant="body1" color="text.secondary">
+          <Text variant="md" color="text.secondary">
             Bleach UI is the stylish React Native UI library
           </Text>
         </Box>
         <Box gap={3}>
-          <Text variant="h6" style={{ marginBottom: theme.spacing(2) }}>
+          <Text variant="lg" style={{ marginBottom: theme.spacing(2) }}>
             Need some examples?
           </Text>
           <Box gap={1}>
@@ -117,7 +117,7 @@ export default function HomeScreen() {
                     <Text color="text.secondary" fontWeight="medium">
                       {label}
                     </Text>
-                    <Text color="text.secondary" variant="body2">
+                    <Text color="text.secondary" variant="sm">
                       {description}
                     </Text>
                   </Box>
@@ -128,7 +128,7 @@ export default function HomeScreen() {
           </Box>
         </Box>
         <Box gap={3}>
-          <Text variant="h6" style={{ marginBottom: theme.spacing(2) }}>
+          <Text variant="lg" style={{ marginBottom: theme.spacing(2) }}>
             How about some screens?
           </Text>
           <Box gap={5}>
@@ -140,7 +140,7 @@ export default function HomeScreen() {
                     <Text color="text.secondary" fontWeight="medium" gutterBottom>
                       {title}
                     </Text>
-                    <Text color="text.secondary" variant="body2">
+                    <Text color="text.secondary" variant="sm">
                       {description}
                     </Text>
                   </Box>

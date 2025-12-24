@@ -1,5 +1,5 @@
-import { Chip } from '@bleach/ui/components/chip'
-import { IconUser } from '@bleach/ui/components/icon'
+import { BaseChip, Chip } from '@bleach/ui/components/chip'
+import { IconUser } from '@bleach/ui/components/icons'
 import { ListItem } from '@bleach/ui/components/list-item'
 import { Text } from '@bleach/ui/components/text'
 import { Section, SubSection } from '../../components/section'
@@ -7,51 +7,51 @@ import { Section, SubSection } from '../../components/section'
 export const ChipShowcase = () => {
   return (
     <Section>
-      <Text variant="h5">Chips</Text>
+      <Text variant="xl">Chips</Text>
       <SubSection>
-        <Text variant="h6" color="text.secondary">
+        <Text variant="lg" color="text.secondary">
           Variants
         </Text>
         <ListItem style={{ flexWrap: 'wrap' }} disableMinHeight disablePadding>
-          <Chip.Base>Filled</Chip.Base>
-          <Chip.Base variant="outlined">Outlined</Chip.Base>
-          <Chip.Base>
+          <BaseChip>Filled</BaseChip>
+          <BaseChip variant="outlined">Outlined</BaseChip>
+          <BaseChip>
             <IconUser size={16} /> With Icon
-          </Chip.Base>
-          <Chip.Base variant="outlined">
+          </BaseChip>
+          <BaseChip variant="outlined">
             <IconUser size={16} /> With Icon
-          </Chip.Base>
+          </BaseChip>
         </ListItem>
       </SubSection>
       <SubSection>
-        <Text variant="h6" color="text.secondary">
+        <Text variant="lg" color="text.secondary">
           Sizes
         </Text>
         <ListItem disableMinHeight disablePadding>
-          <Chip.Base variant="outlined" size="sm">
+          <BaseChip variant="outlined" size="sm">
             Small
-          </Chip.Base>
-          <Chip.Base variant="outlined" size="md">
+          </BaseChip>
+          <BaseChip variant="outlined" size="md">
             Medium
-          </Chip.Base>
-          <Chip.Base variant="outlined" size="lg">
+          </BaseChip>
+          <BaseChip variant="outlined" size="lg">
             Large
-          </Chip.Base>
+          </BaseChip>
         </ListItem>
       </SubSection>
       <SubSection>
-        <Text variant="h6" color="text.secondary">
+        <Text variant="lg" color="text.secondary">
           Shapes
         </Text>
         <ListItem disableMinHeight disablePadding>
-          <Chip.Base variant="outlined">Default</Chip.Base>
-          <Chip.Base variant="outlined" shape="rounded">
+          <BaseChip variant="outlined">Default</BaseChip>
+          <BaseChip variant="outlined" shape="rounded">
             Rounded
-          </Chip.Base>
+          </BaseChip>
         </ListItem>
       </SubSection>
       <SubSection>
-        <Text variant="h6" color="text.secondary">
+        <Text variant="lg" color="text.secondary">
           States
         </Text>
         <ListItem disableMinHeight disablePadding>

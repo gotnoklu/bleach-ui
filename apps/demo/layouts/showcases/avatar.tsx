@@ -1,6 +1,6 @@
 import { createStylesheet } from '@bleach/ui'
 import { Avatar } from '@bleach/ui/components/avatar'
-import { IconBell, IconSettings, IconUser } from '@bleach/ui/components/icon'
+import { IconBell, IconSettings, IconUser } from '@bleach/ui/components/icons'
 import { ListItem } from '@bleach/ui/components/list-item'
 import { Text } from '@bleach/ui/components/text'
 import { Section, SubSection } from '../../components/section'
@@ -16,9 +16,9 @@ export const AvatarShowcase = () => {
 
   return (
     <Section>
-      <Text variant="h5">Avatars</Text>
+      <Text variant="xl">Avatars</Text>
       <SubSection>
-        <Text variant="h6" color="text.secondary">
+        <Text variant="lg" color="text.secondary">
           Variants
         </Text>
         <ListItem disableMinHeight disablePadding>
@@ -31,7 +31,7 @@ export const AvatarShowcase = () => {
         </ListItem>
       </SubSection>
       <SubSection>
-        <Text variant="h6" color="text.secondary">
+        <Text variant="lg" color="text.secondary">
           Sizes
         </Text>
         <ListItem disableMinHeight disablePadding>
@@ -47,7 +47,7 @@ export const AvatarShowcase = () => {
         </ListItem>
       </SubSection>
       <SubSection>
-        <Text variant="h6" color="text.secondary">
+        <Text variant="lg" color="text.secondary">
           Images
         </Text>
         <ListItem disableMinHeight disablePadding>
@@ -56,7 +56,7 @@ export const AvatarShowcase = () => {
         </ListItem>
       </SubSection>
       <SubSection>
-        <Text variant="h6" color="text.secondary">
+        <Text variant="lg" color="text.secondary">
           Icons
         </Text>
         <ListItem disableMinHeight disablePadding>

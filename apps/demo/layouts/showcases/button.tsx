@@ -1,7 +1,7 @@
 import { createStylesheet } from '@bleach/ui'
 import { Button } from '@bleach/ui/components/button'
 import { Color } from '@bleach/ui/components/color'
-import { IconSettings } from '@bleach/ui/components/icon'
+import { IconSettings } from '@bleach/ui/components/icons'
 import { ListItem } from '@bleach/ui/components/list-item'
 import { Text } from '@bleach/ui/components/text'
 import { ActivityIndicator, Alert } from 'react-native'
@@ -21,9 +21,9 @@ export const ButtonShowcase = () => {
   return (
     <>
       <Section>
-        <Text variant="h5">Buttons</Text>
+        <Text variant="xl">Buttons</Text>
         <SubSection>
-          <Text variant="h6" color="text.secondary">
+          <Text variant="lg" color="text.secondary">
             Variants
           </Text>
           <ListItem disableMinHeight disablePadding>
@@ -33,7 +33,7 @@ export const ButtonShowcase = () => {
           </ListItem>
         </SubSection>
         <SubSection>
-          <Text variant="h6" color="text.secondary">
+          <Text variant="lg" color="text.secondary">
             Shapes
           </Text>
           <ListItem disableMinHeight disablePadding>
@@ -44,7 +44,7 @@ export const ButtonShowcase = () => {
           </ListItem>
         </SubSection>
         <SubSection>
-          <Text variant="h6" color="text.secondary">
+          <Text variant="lg" color="text.secondary">
             Sizes
           </Text>
           <ListItem disableMinHeight disablePadding>
@@ -60,7 +60,7 @@ export const ButtonShowcase = () => {
           </ListItem>
         </SubSection>
         <SubSection>
-          <Text variant="h6" color="text.secondary">
+          <Text variant="lg" color="text.secondary">
             States
           </Text>
           <ListItem disableMinHeight disablePadding>
@@ -74,9 +74,9 @@ export const ButtonShowcase = () => {
         </SubSection>
       </Section>
       <Section>
-        <Text variant="h5">IconButtons</Text>
+        <Text variant="xl">IconButtons</Text>
         <SubSection>
-          <Text variant="h6" color="text.secondary">
+          <Text variant="lg" color="text.secondary">
             Variants
           </Text>
           <ListItem disableMinHeight disablePadding>
@@ -98,7 +98,7 @@ export const ButtonShowcase = () => {
           </ListItem>
         </SubSection>
         <SubSection>
-          <Text variant="h6" color="text.secondary">
+          <Text variant="lg" color="text.secondary">
             Shapes
           </Text>
           <ListItem disableMinHeight disablePadding>
@@ -111,7 +111,7 @@ export const ButtonShowcase = () => {
           </ListItem>
         </SubSection>
         <SubSection>
-          <Text variant="h6" color="text.secondary">
+          <Text variant="lg" color="text.secondary">
             Sizes
           </Text>
           <ListItem disableMinHeight disablePadding>
@@ -150,7 +150,7 @@ export const ButtonShowcase = () => {
           </ListItem>
         </SubSection>
         <SubSection>
-          <Text variant="h6" color="text.secondary">
+          <Text variant="lg" color="text.secondary">
             States
           </Text>
           <ListItem disableMinHeight disablePadding>

@@ -14,7 +14,7 @@ import {
   IconShoppingCart,
   IconStar,
   IconStarFilled,
-} from '@bleach/ui/components/icon'
+} from '@bleach/ui/components/icons'
 import { ListItem } from '@bleach/ui/components/list-item'
 import { Text } from '@bleach/ui/components/text'
 import { createStylesheet, styled } from '@bleach/ui/theme/styles'
@@ -37,9 +37,9 @@ export const BadgeShowcase = () => {
 
   return (
     <Section>
-      <Text variant="h5">Badges</Text>
+      <Text variant="xl">Badges</Text>
       <SubSection style={{ paddingVertical: 24 }}>
-        <Text variant="h6" color="text.secondary">
+        <Text variant="lg" color="text.secondary">
           Basic Usage
         </Text>
         <ListItem disableMinHeight disablePadding>
@@ -49,7 +49,7 @@ export const BadgeShowcase = () => {
                 <IconInbox size={28} />
               </Color>
             </Badge>
-            <Text variant="body2" color="text.secondary">
+            <Text variant="sm" color="text.secondary">
               Unread messages
             </Text>
           </BadgeShowcaseItem>
@@ -59,7 +59,7 @@ export const BadgeShowcase = () => {
                 <IconGift size={28} />
               </Color>
             </Badge>
-            <Text variant="body2" color="text.secondary">
+            <Text variant="sm" color="text.secondary">
               Special offer
             </Text>
           </BadgeShowcaseItem>
@@ -67,7 +67,7 @@ export const BadgeShowcase = () => {
       </SubSection>
 
       <SubSection style={{ paddingVertical: 24 }}>
-        <Text variant="h6" color="text.secondary">
+        <Text variant="lg" color="text.secondary">
           Colors
         </Text>
         <ListItem disableMinHeight disablePadding>
@@ -77,7 +77,7 @@ export const BadgeShowcase = () => {
                 <IconBell size={24} />
               </Color>
             </Badge>
-            <Text variant="body2" color="text.secondary">
+            <Text variant="sm" color="text.secondary">
               Notifications
             </Text>
           </BadgeShowcaseItem>
@@ -87,7 +87,7 @@ export const BadgeShowcase = () => {
                 <IconBroadcast size={24} />
               </Color>
             </Badge>
-            <Text variant="body2" color="text.secondary">
+            <Text variant="sm" color="text.secondary">
               Streaming
             </Text>
           </BadgeShowcaseItem>
@@ -97,7 +97,7 @@ export const BadgeShowcase = () => {
                 <IconAlertSquareRounded size={24} />
               </Color>
             </Badge>
-            <Text variant="body2" color="text.secondary">
+            <Text variant="sm" color="text.secondary">
               Alerts
             </Text>
           </BadgeShowcaseItem>
@@ -105,7 +105,7 @@ export const BadgeShowcase = () => {
       </SubSection>
 
       <SubSection style={{ paddingVertical: 24 }}>
-        <Text variant="h6" color="text.secondary">
+        <Text variant="lg" color="text.secondary">
           Interactive Examples
         </Text>
         <ListItem disableMinHeight disablePadding>
@@ -118,7 +118,7 @@ export const BadgeShowcase = () => {
                 </Color>
               </Button>
             </Badge>
-            <Text variant="body2" color="text.secondary">
+            <Text variant="sm" color="text.secondary">
               Message count
             </Text>
           </BadgeShowcaseItem>
@@ -131,7 +131,7 @@ export const BadgeShowcase = () => {
                 </Color>
               </Button>
             </Badge>
-            <Text variant="body2" color="text.secondary">
+            <Text variant="sm" color="text.secondary">
               Shopping cart
             </Text>
           </BadgeShowcaseItem>
@@ -139,7 +139,7 @@ export const BadgeShowcase = () => {
       </SubSection>
 
       <SubSection style={{ paddingVertical: 24 }}>
-        <Text variant="h6" color="text.secondary">
+        <Text variant="lg" color="text.secondary">
           Profile Examples
         </Text>
         <ListItem disableMinHeight disablePadding>
@@ -149,7 +149,7 @@ export const BadgeShowcase = () => {
                 <Text>JD</Text>
               </Avatar>
             </Badge>
-            <Text variant="body2" color="text.secondary">
+            <Text variant="sm" color="text.secondary">
               Active now
             </Text>
           </BadgeShowcaseItem>
@@ -159,7 +159,7 @@ export const BadgeShowcase = () => {
                 <Text>MK</Text>
               </Avatar>
             </Badge>
-            <Text variant="body2" color="text.secondary">
+            <Text variant="sm" color="text.secondary">
               Away status
             </Text>
           </BadgeShowcaseItem>
@@ -179,7 +179,7 @@ export const BadgeShowcase = () => {
                 <Text>VK</Text>
               </Avatar>
             </Badge>
-            <Text variant="body2" color="text.secondary">
+            <Text variant="sm" color="text.secondary">
               Verified user
             </Text>
           </BadgeShowcaseItem>
@@ -187,7 +187,7 @@ export const BadgeShowcase = () => {
       </SubSection>
 
       <SubSection style={{ paddingVertical: 24 }}>
-        <Text variant="h6" color="text.secondary">
+        <Text variant="lg" color="text.secondary">
           Advanced Examples
         </Text>
         <ListItem disableMinHeight disablePadding>
@@ -197,7 +197,7 @@ export const BadgeShowcase = () => {
                 <IconStar size={24} color={styles.icon.color} />
               </Avatar>
             </Badge>
-            <Text variant="body2" color="text.secondary">
+            <Text variant="sm" color="text.secondary">
               Achievement
             </Text>
           </BadgeShowcaseItem>
@@ -211,7 +211,7 @@ export const BadgeShowcase = () => {
                 <IconGift size={24} color={styles.icon.color} />
               </Avatar>
             </Badge>
-            <Text variant="body2" color="text.secondary">
+            <Text variant="sm" color="text.secondary">
               Special item
             </Text>
           </BadgeShowcaseItem>

@@ -20,16 +20,39 @@ export interface InputProps extends ViewProps {
   viewProps?: {
     label?: TextProps
     description?: TextProps
-    fieldset?: ViewProps
-    textInput?: Omit<TextInputProps, 'onFocus' | 'onBlur' | 'placeholder'>
+    textInputWrapper?: ViewProps
+    textInput?: Omit<
+      TextInputProps,
+      | 'value'
+      | 'defaultValue'
+      | 'onChange'
+      | 'onChangeText'
+      | 'onFocus'
+      | 'onBlur'
+      | 'placeholder'
+      | 'secureTextEntry'
+      | 'onPress'
+      | 'onPressIn'
+      | 'onPressOut'
+    >
   }
   fullWidth?: boolean
   invalid?: boolean
   leftActions?: ReactNode
   rightActions?: ReactNode
+  value?: TextInputProps['value']
+  defaultValue?: TextInputProps['defaultValue']
+  onChange?: TextInputProps['onChange']
+  onChangeText?: TextInputProps['onChangeText']
   onFocus?: TextInputProps['onFocus']
   onBlur?: TextInputProps['onBlur']
+  secureTextEntry?: TextInputProps['secureTextEntry']
+  editable?: TextInputProps['editable']
+  onPressIn?: TextInputProps['onPressIn']
+  onPressOut?: TextInputProps['onPressOut']
+  onPress?: TextInputProps['onPress']
   placeholder?: TextInputProps['placeholder']
+  disabled?: boolean
 }
 
 const InputRoot = styled(View)<ViewProps & Pick<InputProps, 'fullWidth'>>((theme, { fullWidth }) => {
@@ -39,7 +62,7 @@ const InputRoot = styled(View)<ViewProps & Pick<InputProps, 'fullWidth'>>((theme
   }
 })
 
-const StyledFieldset = styled(View)<
+const StyledTextInputWrapper = styled(View)<
   ViewProps & Pick<InputProps, 'variant' | 'fullWidth' | 'invalid'> & { isFocused?: boolean }
 >((theme, { variant = 'default', fullWidth, isFocused, invalid }) => {
   return selectStyles(
@@ -72,15 +95,15 @@ const StyledFieldset = styled(View)<
   )
 })
 
-const StyledTextInput = styled(TextInput)<TextInputProps>((theme) => {
+const StyledTextInput = styled(TextInput)<TextInputProps & { disabled?: boolean }>((theme, { disabled = false }) => {
   return {
     flex: 1,
-    color: theme.palette.text.primary,
+    color: disabled ? theme.palette.disabled : theme.palette.text.primary,
     height: '100%',
     verticalAlign: 'middle',
     paddingTop: theme.spacing(1.5),
     paddingBottom: theme.spacing(1.5),
-    ...theme.typography.variants.body1,
+    ...theme.typography.variants.md,
   }
 })
 
@@ -96,6 +119,16 @@ export function Input({
   placeholder,
   onFocus,
   onBlur,
+  secureTextEntry,
+  editable,
+  onPress,
+  onPressIn,
+  onPressOut,
+  value,
+  defaultValue,
+  onChange,
+  onChangeText,
+  disabled,
   ...props
 }: InputProps) {
   const [isFocused, setIsFocused] = useState(false)
@@ -121,7 +154,7 @@ export function Input({
         label
       ) : typeof label === 'string' ? (
         <Text
-          variant="body2"
+          variant="sm"
           color={invalid ? 'error' : isFocused ? 'primary.main' : 'text.primary'}
           {...viewProps?.label}
         >
@@ -132,26 +165,37 @@ export function Input({
         onPress={() => {
           inputRef.current?.focus()
         }}
+        disabled={disabled}
       >
-        <StyledFieldset variant={variant} isFocused={isFocused} {...viewProps?.fieldset}>
+        <StyledTextInputWrapper variant={variant} isFocused={isFocused} {...viewProps?.textInputWrapper}>
           {leftActions}
           <StyledTextInput
+            {...viewProps?.textInput}
             ref={inputRef}
             returnKeyType="next"
             placeholder={placeholder}
             placeholderTextColor={variant === 'filled' ? '#888888' : 'rgba(150, 150, 150, 0.7)'}
-            {...viewProps?.textInput}
             onFocus={onInputFocus}
             onBlur={onInputBlur}
+            secureTextEntry={secureTextEntry}
+            editable={editable}
+            onPress={disabled ? undefined : onPress}
+            onPressIn={disabled ? undefined : onPressIn}
+            onPressOut={disabled ? undefined : onPressOut}
+            defaultValue={defaultValue}
+            value={value}
+            onChange={onChange}
+            onChangeText={onChangeText}
+            disabled={disabled}
           />
           {rightActions}
-        </StyledFieldset>
+        </StyledTextInputWrapper>
       </TouchableWithoutFeedback>
       {isValidElement(description) ? (
         description
       ) : typeof description === 'string' ? (
         <Text
-          variant="caption"
+          variant="xs"
           color={invalid ? 'error' : isFocused ? 'primary.main' : 'text.secondary'}
           {...viewProps?.description}
         >

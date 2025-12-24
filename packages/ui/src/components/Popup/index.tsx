@@ -11,23 +11,14 @@ import {
   useRef,
   useState,
 } from 'react'
-import {
-  Animated,
-  Modal,
-  type ModalProps,
-  Pressable,
-  StyleSheet,
-  useWindowDimensions,
-  type View,
-  type ViewProps,
-} from 'react-native'
+import { Animated, Modal, type ModalProps, Pressable, StyleSheet, useWindowDimensions, type View } from 'react-native'
 import { styled } from '../../theme/styles'
-import { Show } from '../show'
 import { PopupProvider } from './context'
 import { PopupContent } from './PopupContent'
 import { PopupTrigger, type PopupTriggerProps } from './PopupTrigger'
 
 export interface PopupProps extends Omit<ModalProps, 'children'> {
+  variant?: 'default' //| 'elevated'
   position?:
     | 'top'
     | 'top-center'
@@ -45,9 +36,7 @@ export interface PopupProps extends Omit<ModalProps, 'children'> {
     | 'bottom-right'
     | 'center'
   offsetMargin?: number | { x: number } | { y: number } | { x: number; y: number }
-  elevate?: boolean
-  automatic?: boolean
-  closeOnElevatedTriggerEvent?: 'onPress' | 'onPressIn' | 'onPressOut' | 'onLongPress'
+  showOnMount?: boolean
   children: Array<ReactNode>
 }
 
@@ -82,14 +71,12 @@ const StyledPopup = styled(Modal)<Omit<PopupProps, 'children' | 'popper'> & { ch
 
 export function Popup({
   position = 'bottom',
-  elevate = false,
-  automatic = false,
+  variant = 'default',
+  showOnMount = false,
   offsetMargin = 8,
-  closeOnElevatedTriggerEvent,
   children,
   ...props
 }: PopupProps) {
-  const elevatedContentRef = useRef<View | null>(null)
   const triggerRef = useRef<View | null>(null)
   const contentRef = useRef<View | null>(null)
   const dimensions = useWindowDimensions()
@@ -129,7 +116,7 @@ export function Popup({
 
   useLayoutEffect(() => {
     if (state.shown) {
-      contentRef.current?.measureInWindow((_left, _top, width, height) => {
+      contentRef.current?.measure((_x, _y, width, height) => {
         const xyOffsets = { left: 0, top: 0 }
         const marginX =
           typeof offsetMargin === 'number'
@@ -157,20 +144,24 @@ export function Popup({
             xyOffsets.top = state.targetRect.y - height - marginY
           } else if (position.startsWith('bottom')) {
             if (state.targetRect.y + state.targetRect.height + marginY + height >= dimensions.height) {
-              xyOffsets.top = dimensions.height - state.targetRect.y + marginY
+              xyOffsets.top = state.targetRect.y - height - marginY
             } else {
               xyOffsets.top = state.targetRect.y + state.targetRect.height + marginY
             }
           }
         } else if (position.startsWith('left') || position.startsWith('right')) {
-          if (position.endsWith('-top')) {
-            xyOffsets.top = state.targetRect.y - height - marginY
-          } else if (position.endsWith('-bottom')) {
-            xyOffsets.top = state.targetRect.y + height + marginY
-          } else if (position.endsWith('-center')) {
-            xyOffsets.top = state.targetRect.y + state.targetRect.height / 2 - height / 2
+          if (state.targetRect.y + state.targetRect.height + marginY + height >= dimensions.height) {
+            xyOffsets.top = state.targetRect.y + state.targetRect.height - height
           } else {
-            xyOffsets.top = state.targetRect.y
+            if (position.endsWith('-top')) {
+              xyOffsets.top = state.targetRect.y - height - marginY
+            } else if (position.endsWith('-bottom')) {
+              xyOffsets.top = state.targetRect.y + height + marginY
+            } else if (position.endsWith('-center')) {
+              xyOffsets.top = state.targetRect.y + state.targetRect.height / 2 - height / 2
+            } else {
+              xyOffsets.top = state.targetRect.y
+            }
           }
 
           if (position.startsWith('left')) {
@@ -186,13 +177,6 @@ export function Popup({
         setState((prev) => ({ ...prev, contentOffsetsSet: true, contentOffsets: xyOffsets }))
         scale.setValue(0)
         opacity.setValue(1)
-        console.warn({
-          offsetX: xyOffsets.left,
-          offsetY: xyOffsets.top,
-          targetX: state.targetRect.x,
-          contentWidth: width,
-          contentHeight: height,
-        })
       })
     }
   }, [state.shown])
@@ -212,14 +196,14 @@ export function Popup({
   }, [state.contentOffsetsSet])
 
   useEffect(() => {
-    if (automatic) {
+    if (showOnMount) {
       showContent()
     }
 
     return () => {
       hideContent()
     }
-  }, [automatic])
+  }, [])
 
   const [trigger, content] = useMemo(() => {
     return getPopupChildren(children, { trigger: triggerRef })
@@ -241,20 +225,26 @@ export function Popup({
             StyleSheet.absoluteFill,
             {
               overflow: 'hidden',
-              backgroundColor: elevate ? 'rgba(100, 100, 100, 0.5)' : 'transparent',
+              backgroundColor: 'transparent', //variant === 'elevated' ? 'rgba(100, 100, 100, 0.5)' : 'transparent',
             },
           ]}
           onPress={hideContent}
         >
-          <Show when={elevate}>
-            {isValidElement(trigger)
-              ? cloneElement(trigger as ReactElement<ViewProps & { ref: MutableRefObject<View | null> }>, {
-                  ref: elevatedContentRef,
-                  style: { flex: 0 },
-                  ...(closeOnElevatedTriggerEvent ? { [closeOnElevatedTriggerEvent]: hideContent } : {}),
-                })
-              : trigger}
-          </Show>
+          {/* <Show when={variant === 'elevated'}>
+            <View style={{ height: '100%', width: '100%', position: 'relative' }}>
+              <View
+                style={{
+                  position: 'absolute',
+                  left: state.targetRect.x,
+                  top: state.targetRect.y,
+                  width: state.targetRect.width,
+                  height: state.targetRect.height,
+                }}
+              >
+                {state.shown && variant === 'elevated' ? trigger : null}
+              </View>
+            </View>
+          </Show> */}
           <Animated.View
             ref={contentRef}
             style={[{ opacity }, { transform: [{ scale }] }, { position: 'absolute', ...state.contentOffsets }]}
