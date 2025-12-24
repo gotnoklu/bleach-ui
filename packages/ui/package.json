@@ -1,9 +1,9 @@
 {
   "name": "@bleeech/ui",
   "description": "The stylish UI library for React Native",
-  "version": "0.1.1",
+  "version": "0.1.3",
   "repository": "https://github.com/gotnoklu/bleeech",
-  "author": "Enoch Klu <cyronix787@gmail.com>",
+  "author": "Enoch Klu <klueenoch@gmail.com>",
   "contributors": [
     {
       "name": "Delali Azumah",
@@ -40,8 +40,7 @@
     "react-native-svg": "*"
   },
   "files": [
-    "dist",
-    "tsconfig.json",
+    "./dist/*",
     "package.json",
     "README.md",
     "LICENSE"
