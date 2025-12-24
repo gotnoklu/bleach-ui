@@ -1351,9 +1351,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@bleach/ui@npm:*, @bleach/ui@workspace:packages/ui":
+"@bleeech/ui@npm:*, @bleeech/ui@workspace:packages/ui":
   version: 0.0.0-use.local
-  resolution: "@bleach/ui@workspace:packages/ui"
+  resolution: "@bleeech/ui@workspace:packages/ui"
   dependencies:
     "@rsbuild/plugin-react": "npm:^1.4.2"
     "@rslib/core": "npm:^0.18.3"
@@ -4240,7 +4240,7 @@ __metadata:
   resolution: "demo@workspace:apps/demo"
   dependencies:
     "@babel/core": "npm:^7.25.2"
-    "@bleach/ui": "npm:*"
+    "@bleeech/ui": "npm:*"
     "@expo/vector-icons": "npm:^14.0.2"
     "@react-navigation/bottom-tabs": "npm:^7.2.0"
     "@react-navigation/native": "npm:^7.0.14"

@@ -10,14 +10,14 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.bleach.demo.app"
+      "bundleIdentifier": "com.bleeech.demo.app"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.bleach.demo.app"
+      "package": "com.bleeech.demo.app"
     },
     "web": {
       "bundler": "metro",

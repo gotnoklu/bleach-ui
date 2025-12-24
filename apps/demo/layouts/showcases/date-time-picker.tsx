@@ -1,6 +1,6 @@
-import { Box } from '@bleach/ui/components/box'
-import { DateTimePicker } from '@bleach/ui/components/date-time-picker'
-import { Text } from '@bleach/ui/components/text'
+import { Box } from '@bleeech/ui/components/box'
+import { DateTimePicker } from '@bleeech/ui/components/date-time-picker'
+import { Text } from '@bleeech/ui/components/text'
 import { useState } from 'react'
 import { Section, SubSection } from '../../components/section'
 

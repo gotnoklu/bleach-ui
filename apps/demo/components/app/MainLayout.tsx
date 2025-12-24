@@ -1,8 +1,8 @@
+import { ThemeProvider, useThemeMode } from '@bleeech/ui'
 import { ThemeProvider as NativeThemeProvider } from '@react-navigation/native'
 import { StatusBar } from 'expo-status-bar'
-import { ThemeProvider, useThemeMode } from '@bleach/ui'
-import { getNativeTheme } from '../../utilities'
 import { Themes } from '../../theme'
+import { getNativeTheme } from '../../utilities'
 import ScreenStack from './ScreenStack'
 
 export default function MainLayout() {

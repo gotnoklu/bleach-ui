@@ -1,5 +1,5 @@
-import { Box } from '@bleach/ui/components/box'
-import { Text } from '@bleach/ui/components/text'
+import { Box } from '@bleeech/ui/components/box'
+import { Text } from '@bleeech/ui/components/text'
 import { Link, Stack } from 'expo-router'
 import { Fragment } from 'react'
 

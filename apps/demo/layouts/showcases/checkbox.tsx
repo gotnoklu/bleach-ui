@@ -1,6 +1,6 @@
-import { Checkbox } from '@bleach/ui/components/checkbox'
-import { ListItem } from '@bleach/ui/components/list-item'
-import { Text } from '@bleach/ui/components/text'
+import { Checkbox } from '@bleeech/ui/components/checkbox'
+import { ListItem } from '@bleeech/ui/components/list-item'
+import { Text } from '@bleeech/ui/components/text'
 import { useState } from 'react'
 import { Section, SubSection } from '../../components/section'
 

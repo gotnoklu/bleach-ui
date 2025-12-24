@@ -86,9 +86,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace 'com.bleach.demo.app'
+    namespace 'com.bleeech.demo.app'
     defaultConfig {
-        applicationId 'com.bleach.demo.app'
+        applicationId 'com.bleeech.demo.app'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

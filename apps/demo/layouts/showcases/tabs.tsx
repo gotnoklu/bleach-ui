@@ -1,5 +1,5 @@
-import { Box } from '@bleach/ui/components/box'
-import { Color } from '@bleach/ui/components/color'
+import { Box } from '@bleeech/ui/components/box'
+import { Color } from '@bleeech/ui/components/color'
 import {
   IconCaretRight,
   IconHome,
@@ -7,9 +7,9 @@ import {
   IconSearch,
   IconSettings,
   IconVideo,
-} from '@bleach/ui/components/icons'
-import { Tab, Tabs } from '@bleach/ui/components/tabs'
-import { Text } from '@bleach/ui/components/text'
+} from '@bleeech/ui/components/icons'
+import { Tab, Tabs } from '@bleeech/ui/components/tabs'
+import { Text } from '@bleeech/ui/components/text'
 import { useState } from 'react'
 import { Section, SubSection } from '../../components/section'
 

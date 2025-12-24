@@ -1,7 +1,7 @@
-import { Box } from '@bleach/ui/components/box'
-import { ListItem } from '@bleach/ui/components/list-item'
-import { Progress } from '@bleach/ui/components/progress'
-import { Text } from '@bleach/ui/components/text'
+import { Box } from '@bleeech/ui/components/box'
+import { ListItem } from '@bleeech/ui/components/list-item'
+import { Progress } from '@bleeech/ui/components/progress'
+import { Text } from '@bleeech/ui/components/text'
 import { Section, SubSection } from '../../components/section'
 
 export const ProgressShowcase = () => {

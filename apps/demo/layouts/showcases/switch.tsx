@@ -1,6 +1,6 @@
-import { ListItem } from '@bleach/ui/components/list-item'
-import { Switch } from '@bleach/ui/components/switch'
-import { Text } from '@bleach/ui/components/text'
+import { ListItem } from '@bleeech/ui/components/list-item'
+import { Switch } from '@bleeech/ui/components/switch'
+import { Text } from '@bleeech/ui/components/text'
 import { useState } from 'react'
 import { Section, SubSection } from '../../components/section'
 

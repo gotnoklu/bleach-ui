@@ -1,4 +1,4 @@
-import type { Theme } from '@bleach/ui'
+import type { Theme } from '@bleeech/ui'
 import type { Theme as ReactNavigationTheme } from '@react-navigation/native'
 
 export function getNativeTheme(theme: Theme): ReactNavigationTheme {

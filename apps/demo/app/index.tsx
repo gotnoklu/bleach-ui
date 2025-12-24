@@ -1,6 +1,6 @@
-import { useTheme } from '@bleach/ui'
-import { BackgroundView } from '@bleach/ui/components/background-view'
-import { Box } from '@bleach/ui/components/box'
+import { useTheme } from '@bleeech/ui'
+import { BackgroundView } from '@bleeech/ui/components/background-view'
+import { Box } from '@bleeech/ui/components/box'
 import {
   IconCalendar,
   IconChevronRight,
@@ -8,9 +8,9 @@ import {
   IconDeviceMobile,
   IconInputCheck,
   IconNumber,
-} from '@bleach/ui/components/icons'
-import { ListItemButton } from '@bleach/ui/components/list-item-button'
-import { Text } from '@bleach/ui/components/text'
+} from '@bleeech/ui/components/icons'
+import { ListItemButton } from '@bleeech/ui/components/list-item-button'
+import { Text } from '@bleeech/ui/components/text'
 import { type Href, Link } from 'expo-router'
 import type { ReactElement } from 'react'
 import { ScrollView } from 'react-native'

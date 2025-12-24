@@ -4,7 +4,7 @@
     "packages/*"
   ],
   "scripts": {
-    "build:ui": "yarn workspace @bleach/ui build",
+    "build:ui": "yarn workspace @bleeech/ui build",
     "lint": "biome check",
     "format": "biome format"
   },

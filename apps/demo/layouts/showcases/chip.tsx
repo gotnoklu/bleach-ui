@@ -1,7 +1,7 @@
-import { BaseChip, Chip } from '@bleach/ui/components/chip'
-import { IconUser } from '@bleach/ui/components/icons'
-import { ListItem } from '@bleach/ui/components/list-item'
-import { Text } from '@bleach/ui/components/text'
+import { BaseChip, Chip } from '@bleeech/ui/components/chip'
+import { IconUser } from '@bleeech/ui/components/icons'
+import { ListItem } from '@bleeech/ui/components/list-item'
+import { Text } from '@bleeech/ui/components/text'
 import { Section, SubSection } from '../../components/section'
 
 export const ChipShowcase = () => {

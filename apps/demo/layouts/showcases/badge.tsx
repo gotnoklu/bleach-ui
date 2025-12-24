@@ -1,8 +1,8 @@
-import { Avatar } from '@bleach/ui/components/avatar'
-import { Badge } from '@bleach/ui/components/badge'
-import { Box, type BoxProps } from '@bleach/ui/components/box'
-import { Button } from '@bleach/ui/components/button'
-import { Color } from '@bleach/ui/components/color'
+import { Avatar } from '@bleeech/ui/components/avatar'
+import { Badge } from '@bleeech/ui/components/badge'
+import { Box, type BoxProps } from '@bleeech/ui/components/box'
+import { Button } from '@bleeech/ui/components/button'
+import { Color } from '@bleeech/ui/components/color'
 import {
   IconAlertSquareRounded,
   IconBell,
@@ -14,10 +14,10 @@ import {
   IconShoppingCart,
   IconStar,
   IconStarFilled,
-} from '@bleach/ui/components/icons'
-import { ListItem } from '@bleach/ui/components/list-item'
-import { Text } from '@bleach/ui/components/text'
-import { createStylesheet, styled } from '@bleach/ui/theme/styles'
+} from '@bleeech/ui/components/icons'
+import { ListItem } from '@bleeech/ui/components/list-item'
+import { Text } from '@bleeech/ui/components/text'
+import { createStylesheet, styled } from '@bleeech/ui/theme/styles'
 import { Section, SubSection } from '../../components/section'
 
 const BadgeShowcaseItem = styled(Box)<BoxProps>((theme) => ({

@@ -1,8 +1,8 @@
-import { createStylesheet } from '@bleach/ui'
-import { Avatar } from '@bleach/ui/components/avatar'
-import { IconBell, IconSettings, IconUser } from '@bleach/ui/components/icons'
-import { ListItem } from '@bleach/ui/components/list-item'
-import { Text } from '@bleach/ui/components/text'
+import { createStylesheet } from '@bleeech/ui'
+import { Avatar } from '@bleeech/ui/components/avatar'
+import { IconBell, IconSettings, IconUser } from '@bleeech/ui/components/icons'
+import { ListItem } from '@bleeech/ui/components/list-item'
+import { Text } from '@bleeech/ui/components/text'
 import { Section, SubSection } from '../../components/section'
 
 const useStyles = createStylesheet((theme) => ({

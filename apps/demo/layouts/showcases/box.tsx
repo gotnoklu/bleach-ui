@@ -1,5 +1,5 @@
-import { Box } from '@bleach/ui/components/box'
-import { Text } from '@bleach/ui/components/text'
+import { Box } from '@bleeech/ui/components/box'
+import { Text } from '@bleeech/ui/components/text'
 import { Section, SubSection } from '../../components/section'
 
 export const BoxShowcase = () => {

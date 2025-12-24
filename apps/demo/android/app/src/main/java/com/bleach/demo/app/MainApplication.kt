@@ -1,4 +1,4 @@
-package com.bleach.demo.app
+package com.bleeech.demo.app
 
 import android.app.Application
 import android.content.res.Configuration

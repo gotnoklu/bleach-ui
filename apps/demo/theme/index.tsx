@@ -1,4 +1,4 @@
-import { createTheme, type Theme, type ThemeMode } from '@bleach/ui'
+import { createTheme, type Theme, type ThemeMode } from '@bleeech/ui'
 
 const LightTheme = createTheme({
   palette: {

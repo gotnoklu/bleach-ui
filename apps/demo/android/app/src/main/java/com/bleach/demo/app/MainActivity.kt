@@ -1,4 +1,4 @@
-package com.bleach.demo.app
+package com.bleeech.demo.app
 import expo.modules.splashscreen.SplashScreenManager
 
 import android.os.Build

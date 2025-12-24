@@ -1,6 +1,6 @@
-import { Dropdown } from '@bleach/ui/components/dropdown'
-import { ListItem } from '@bleach/ui/components/list-item'
-import { Text } from '@bleach/ui/components/text'
+import { Dropdown } from '@bleeech/ui/components/dropdown'
+import { ListItem } from '@bleeech/ui/components/list-item'
+import { Text } from '@bleeech/ui/components/text'
 import { Section, SubSection } from '../../components/section'
 
 export const DropdownShowcase = () => {

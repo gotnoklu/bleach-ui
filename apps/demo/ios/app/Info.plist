@@ -28,7 +28,7 @@
         <key>CFBundleURLSchemes</key>
         <array>
           <string>myapp</string>
-          <string>com.bleach.demo.app</string>
+          <string>com.bleeech.demo.app</string>
         </array>
       </dict>
     </array>

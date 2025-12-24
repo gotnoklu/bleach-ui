@@ -1,6 +1,6 @@
-import { Box } from '@bleach/ui/components/box'
-import { Slider } from '@bleach/ui/components/slider'
-import { Text } from '@bleach/ui/components/text'
+import { Box } from '@bleeech/ui/components/box'
+import { Slider } from '@bleeech/ui/components/slider'
+import { Text } from '@bleeech/ui/components/text'
 import { useState } from 'react'
 import { Section, SubSection } from '../../components/section'
 
