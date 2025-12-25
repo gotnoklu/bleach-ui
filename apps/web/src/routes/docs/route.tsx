@@ -1,6 +1,5 @@
 /** biome-ignore-all lint/suspicious/noArrayIndexKey: <explanation> */
-import { createFileRoute, useMatches } from '@tanstack/react-router'
-import type { ReactNode } from 'react'
+import { createFileRoute, Outlet, useMatches } from '@tanstack/react-router'
 import { AppSidebar } from '../../components/app-sidebar'
 import {
   Breadcrumb,
@@ -18,15 +17,9 @@ export const Route = createFileRoute('/docs')({
   context: () => ({ title: 'Docs' }),
 })
 
-type DocsLayoutComponentProps = {
-  children?: ReactNode
-}
-
-function DocsLayoutComponent({ children, ...p }: DocsLayoutComponentProps) {
+function DocsLayoutComponent() {
   const matchedRoutes = useMatches()
   const currentRoute = matchedRoutes[matchedRoutes.length - 1]
-
-  console.log(children, p)
 
   return (
     <SidebarProvider>
@@ -55,7 +48,9 @@ function DocsLayoutComponent({ children, ...p }: DocsLayoutComponentProps) {
             </BreadcrumbList>
           </Breadcrumb>
         </header>
-        <div className="max-w-xl bg-red-950">{children}</div>
+        <div className="max-w-xl">
+          <Outlet />
+        </div>
       </SidebarInset>
     </SidebarProvider>
   )

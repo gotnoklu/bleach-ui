@@ -1,12 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
-import type { ReactNode } from 'react'
 
 export const Route = createFileRoute('/')({ component: App })
 
-interface AppProps {
-  children?: ReactNode
-}
-
-function App({ children }: AppProps) {
+function App() {
   return <div>Hello</div>
 }
