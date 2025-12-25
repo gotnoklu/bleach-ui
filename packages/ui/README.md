@@ -148,7 +148,7 @@ function Component() {
 ```
 
 ## Contributing
-All contributions to Bleeech are welcome! Please check out our [Contributing Guide]() to get started.
+All contributions to Bleeech are welcome! Please check out our [contributing guide]() to get started.
 
 ## License
 Bleeech is MIT licensed.
