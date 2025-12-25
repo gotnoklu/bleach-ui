@@ -117,6 +117,7 @@ To style your components, Bleeech provides styling primitives that integrate dir
 ```tsx
 import { View } from 'react-native';
 import { createStylesheet, styled } from '@bleeech/theme/styles';
+import { Text } from '@bleeech/ui/components/text';
 
 // Create a styled component from another component
 const Container = styled(View)((theme) => ({
