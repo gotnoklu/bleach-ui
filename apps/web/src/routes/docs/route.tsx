@@ -1,5 +1,5 @@
-/** biome-ignore-all lint/suspicious/noArrayIndexKey: <explanation> */
 import { createFileRoute, Outlet, useMatches } from '@tanstack/react-router'
+import { Fragment } from 'react'
 import { AppSidebar } from '../../components/app-sidebar'
 import {
   Breadcrumb,
@@ -30,21 +30,25 @@ function DocsLayoutComponent() {
           <Separator orientation="vertical" className="mr-2 data-[orientation=vertical]:h-4" />
           <Breadcrumb>
             <BreadcrumbList>
-              {(currentRoute.context as { title: string }).title.split('/').map((part, index, self) => (
-                <>
-                  <BreadcrumbItem
-                    key={`${part}-${index}`}
-                    className={index < self.length - 1 ? 'hidden md:block' : undefined}
+              {(currentRoute.context as { title: string }).title.split('/').map((part, index, self) => {
+                return (
+                  <Fragment
+                    key={`${part}-${
+                      // biome-ignore lint/suspicious/noArrayIndexKey: it's static
+                      index
+                    }`}
                   >
-                    {index < self.length - 1 ? (
-                      <BreadcrumbLink href="#">{part}</BreadcrumbLink>
-                    ) : (
-                      <BreadcrumbPage>{part}</BreadcrumbPage>
-                    )}
-                  </BreadcrumbItem>
-                  {index < self.length - 1 ? <BreadcrumbSeparator className="hidden md:block" /> : null}
-                </>
-              ))}
+                    <BreadcrumbItem className={index < self.length - 1 ? 'hidden md:block' : undefined}>
+                      {index < self.length - 1 ? (
+                        <BreadcrumbLink href="#">{part}</BreadcrumbLink>
+                      ) : (
+                        <BreadcrumbPage>{part}</BreadcrumbPage>
+                      )}
+                    </BreadcrumbItem>
+                    {index < self.length - 1 ? <BreadcrumbSeparator className="hidden md:block" /> : null}
+                  </Fragment>
+                )
+              })}
             </BreadcrumbList>
           </Breadcrumb>
         </header>
