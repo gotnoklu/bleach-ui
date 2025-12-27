@@ -1,7 +1,7 @@
 {
   "name": "@bleeech/ui",
   "description": "The stylish UI library for React Native",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "repository": "https://github.com/gotnoklu/bleeech",
   "author": "Enoch Klu <klueenoch@gmail.com>",
   "contributors": [
@@ -11,6 +11,16 @@
     }
   ],
   "license": "MIT",
+  "keywords": [
+    "ui",
+    "react-native",
+    "styles",
+    "native"
+  ],
+  "bugs": {
+    "url": "https://github.com/gotnoklu/bleeech/issues"
+  },
+  "homepage": "https://github.com/gotnoklu/bleeech#readme",
   "packageManager": "yarn@4.12.0",
   "scripts": {
     "watch": "rslib build -w",
