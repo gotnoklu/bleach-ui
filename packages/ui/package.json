@@ -1,7 +1,7 @@
 {
   "name": "@bleeech/ui",
   "description": "The stylish UI library for React Native",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "repository": "https://github.com/gotnoklu/bleeech",
   "author": "Enoch Klu <klueenoch@gmail.com>",
   "contributors": [
