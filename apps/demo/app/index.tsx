@@ -1,4 +1,3 @@
-import { useTheme } from '@bleeech/ui'
 import { BackgroundView } from '@bleeech/ui/components/background-view'
 import { Box } from '@bleeech/ui/components/box'
 import {
@@ -11,6 +10,7 @@ import {
 } from '@bleeech/ui/components/icons'
 import { ListItemButton } from '@bleeech/ui/components/list-item-button'
 import { Text } from '@bleeech/ui/components/text'
+import { useTheme } from '@bleeech/ui/theme/context'
 import { type Href, Link } from 'expo-router'
 import type { ReactElement } from 'react'
 import { ScrollView } from 'react-native'

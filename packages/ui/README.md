@@ -50,7 +50,7 @@ Bleeech features a theming system that supports multi-theming (light/dark) and u
 
 ```tsx
 /** screen-stack.tsx **/
-import { useTheme } from '@bleeech/ui'
+import { useTheme } from '@bleeech/ui/theme/context'
 import { Stack } from 'expo-router'
 
 export function ScreenStack() {

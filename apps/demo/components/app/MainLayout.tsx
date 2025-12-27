@@ -1,16 +1,15 @@
-import { ThemeProvider, useThemeMode } from '@bleeech/ui'
+import { ThemeProvider, useThemeMode } from '@bleeech/ui/theme/context'
 import { ThemeProvider as NativeThemeProvider } from '@react-navigation/native'
 import { StatusBar } from 'expo-status-bar'
-import { Themes } from '../../theme'
-import { getNativeTheme } from '../../utilities'
+import { AppThemes, NativeThemes } from '../../theme'
 import ScreenStack from './ScreenStack'
 
 export default function MainLayout() {
   const { mode } = useThemeMode()
 
   return (
-    <ThemeProvider themes={Themes}>
-      <NativeThemeProvider value={getNativeTheme(mode === 'dark' ? Themes.dark : Themes.light)}>
+    <ThemeProvider themes={AppThemes}>
+      <NativeThemeProvider value={NativeThemes[mode]}>
         <ScreenStack />
         <StatusBar style="auto" />
       </NativeThemeProvider>

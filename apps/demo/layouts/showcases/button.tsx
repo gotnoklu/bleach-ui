@@ -1,9 +1,9 @@
-import { createStylesheet } from '@bleeech/ui'
 import { Button } from '@bleeech/ui/components/button'
 import { Color } from '@bleeech/ui/components/color'
 import { IconSettings } from '@bleeech/ui/components/icons'
 import { ListItem } from '@bleeech/ui/components/list-item'
 import { Text } from '@bleeech/ui/components/text'
+import { createStylesheet } from '@bleeech/ui/theme/styles'
 import { ActivityIndicator, Alert } from 'react-native'
 import { Section, SubSection } from '../../components/section'
 
@@ -103,10 +103,10 @@ export const ButtonShowcase = () => {
           </Text>
           <ListItem disableMinHeight disablePadding>
             <Button variant="filled" size="icon">
-              <IconSettings color={styles.icon.color} />
+              <IconSettings style={styles.icon} />
             </Button>
             <Button variant="filled" size="icon" shape="rounded">
-              <IconSettings color={styles.icon.color} />
+              <IconSettings style={styles.icon} />
             </Button>
           </ListItem>
         </SubSection>

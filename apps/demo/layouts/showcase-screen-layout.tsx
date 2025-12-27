@@ -1,5 +1,5 @@
-import { createStylesheet } from '@bleeech/ui'
 import { BackgroundView } from '@bleeech/ui/components/background-view'
+import { createStylesheet } from '@bleeech/ui/theme/styles'
 import type { ReactNode } from 'react'
 import { ScrollView } from 'react-native'
 

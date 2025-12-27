@@ -1,4 +1,4 @@
-import { useTheme } from '@bleeech/ui'
+import { useTheme } from '@bleeech/ui/theme/context'
 import { Stack } from 'expo-router'
 
 export default function ScreenStack() {

@@ -1,6 +1,0 @@
-export * from './theme/context'
-export * from './theme/palettes'
-export * from './theme/styles'
-export * from './theme/types'
-export * from './theme/utilities'
-export * from './utilities'

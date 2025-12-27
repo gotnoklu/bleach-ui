@@ -1,4 +1,6 @@
-import { createTheme, type Theme, type ThemeMode } from '@bleeech/ui'
+import type { Theme, ThemeMode } from '@bleeech/ui/theme/types'
+import { createTheme, getNativeTheme } from '@bleeech/ui/theme/utilities'
+import type { Theme as ReactNavigationTheme } from '@react-navigation/native'
 
 const LightTheme = createTheme({
   palette: {
@@ -56,4 +58,12 @@ const LightTheme = createTheme({
 
 const DarkTheme = createTheme({ mode: 'dark' })
 
-export const Themes: { [_ in ThemeMode]: Theme } = { light: LightTheme, dark: DarkTheme }
+export const AppThemes: { [_ in ThemeMode]: Theme } = {
+  light: LightTheme,
+  dark: DarkTheme,
+}
+
+export const NativeThemes: { [_ in ThemeMode]: ReactNavigationTheme } = {
+  light: getNativeTheme(LightTheme),
+  dark: getNativeTheme(DarkTheme),
+}

@@ -1,9 +1,42 @@
+import type { Theme as ReactNavigationTheme } from '@react-navigation/native'
 import { merge } from '../utilities'
 import { _BaseTheme } from './palettes/_base'
 import type { BaseTheme, Palette, PaletteColors, TextPaletteColors, Theme } from './types'
 
 export function createTheme(theme: BaseTheme | ((base: BaseTheme) => BaseTheme)): Theme {
   return merge(_BaseTheme, typeof theme === 'function' ? theme(_BaseTheme) : theme) as Theme
+}
+
+export function getNativeTheme(theme: Theme): ReactNavigationTheme {
+  return {
+    dark: theme.mode === 'dark',
+    colors: {
+      primary: theme.palette.primary.main,
+      background: theme.palette.background,
+      card: theme.palette.card,
+      text: theme.palette.primary.foreground,
+      notification: theme.palette.notification,
+      border: theme.palette.border,
+    },
+    fonts: {
+      bold: {
+        fontFamily: theme.typography.weights.bold.fontFamily,
+        fontWeight: 'bold',
+      },
+      regular: {
+        fontFamily: theme.typography.weights.regular.fontFamily,
+        fontWeight: 'normal',
+      },
+      medium: {
+        fontFamily: theme.typography.weights.medium.fontFamily,
+        fontWeight: 'normal',
+      },
+      heavy: {
+        fontFamily: theme.typography.weights.bold.fontFamily,
+        fontWeight: 'normal',
+      },
+    },
+  }
 }
 
 export function getThemeProperty(config: {

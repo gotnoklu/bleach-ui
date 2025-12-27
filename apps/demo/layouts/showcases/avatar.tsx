@@ -1,9 +1,9 @@
-import { createStylesheet } from '@bleeech/ui'
 import { Avatar } from '@bleeech/ui/components/avatar'
 import { Color } from '@bleeech/ui/components/color'
 import { IconBell, IconSettings, IconUser } from '@bleeech/ui/components/icons'
 import { ListItem } from '@bleeech/ui/components/list-item'
 import { Text } from '@bleeech/ui/components/text'
+import { createStylesheet } from '@bleeech/ui/theme/styles'
 import { Section, SubSection } from '../../components/section'
 
 const useStyles = createStylesheet((theme) => ({

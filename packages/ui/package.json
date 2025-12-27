@@ -1,7 +1,7 @@
 {
   "name": "@bleeech/ui",
   "description": "The stylish UI library for React Native",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "repository": "https://github.com/gotnoklu/bleeech",
   "author": "Enoch Klu <klueenoch@gmail.com>",
   "contributors": [
@@ -22,6 +22,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
+    "@react-navigation/native": "^7.1.26",
     "@rsbuild/plugin-react": "^1.4.2",
     "@rslib/core": "^0.18.3",
     "@tabler/icons-react-native": "^3.36.0",
@@ -29,14 +30,17 @@
     "chokidar-cli": "^3.0.0",
     "react": "^18",
     "react-native": "0.76.9",
+    "react-native-gesture-handler": "^2.30.0",
     "react-native-reanimated": "~3.16.1",
     "typescript": "^5.7.3"
   },
   "peerDependencies": {
+    "@react-navigation/native": "*",
     "@tabler/icons-react-native": "^3.36.0",
     "react": "*",
     "react-native": "*",
     "react-native-reanimated": "*",
+    "react-native-gesture-handler": "*",
     "react-native-svg": "*"
   },
   "files": [
@@ -148,14 +152,6 @@
     "./theme/*": {
       "import": "./dist/esm/theme/*.js",
       "require": "./dist/cjs/theme/*.js"
-    },
-    "./types/*": {
-      "import": "./dist/esm/types/*.js",
-      "require": "./dist/cjs/types/*.js"
-    },
-    "./utilities/*": {
-      "import": "./dist/esm/utilities/*.js",
-      "require": "./dist/cjs/utilities/*.js"
     },
     "./package.json": "./package.json"
   }
