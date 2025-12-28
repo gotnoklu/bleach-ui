@@ -18,6 +18,7 @@ export function styled<
   const TElement extends
     | ComponentType<PropsWithChildren<{ style?: StyleProp<ViewStyle> }>>
     | ComponentType<PropsWithChildren<{ style?: StyleProp<TextStyle> }>>
+    | ComponentType<PropsWithChildren<{ style?: any }>>
     | ForwardRefExoticComponent<PressableProps & RefAttributes<View>>,
 >(
   el: TElement,

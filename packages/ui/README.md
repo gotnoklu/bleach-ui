@@ -1,6 +1,6 @@
 # Bleeech UI
 
-Bleeech is a modular and aesthetically pleasing UI library built for React Native with type-safety and a small bundle size. It is the stylish UI library you've probably bbeen looking for.
+Bleeech is a modular and aesthetically pleasing UI library built for React Native with type-safety and a small bundle size. It is the stylish UI library you've probably been looking for.
 
 Visit [the website]() to get started. 
 
@@ -50,7 +50,7 @@ Bleeech features a theming system that supports multi-theming (light/dark) and u
 
 ```tsx
 /** screen-stack.tsx **/
-import { useTheme } from '@bleeech/ui/theme/context'
+import { useTheme } from '@bleeech/ui/theme'
 import { Stack } from 'expo-router'
 
 export function ScreenStack() {
