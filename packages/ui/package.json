@@ -97,10 +97,6 @@
       "import": "./dist/esm/components/chip/index.js",
       "types": "./dist/esm/components/chip/index.d.ts"
     },
-    "./components/color": {
-      "import": "./dist/esm/components/color/index.js",
-      "types": "./dist/esm/components/color/index.d.ts"
-    },
     "./components/date-time-picker": {
       "import": "./dist/esm/components/date-time-picker/index.js",
       "types": "./dist/esm/components/date-time-picker/index.d.ts"

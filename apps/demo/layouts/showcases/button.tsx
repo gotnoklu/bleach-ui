@@ -1,19 +1,11 @@
 import { Button } from '@bleeech/ui/components/button'
-import { Color } from '@bleeech/ui/components/color'
 import { IconSettings } from '@bleeech/ui/components/icons'
 import { ListItem } from '@bleeech/ui/components/list-item'
 import { Text } from '@bleeech/ui/components/text'
-import { createStylesheet } from '@bleeech/ui/theme/styles'
 import { ActivityIndicator, Alert } from 'react-native'
 import { Section, SubSection } from '../../components/section'
 
-const useStyles = createStylesheet((theme) => ({
-  icon: { color: theme.palette.primary.foreground },
-}))
-
 export const ButtonShowcase = () => {
-  const styles = useStyles()
-
   const handleButtonAlertPress = () => {
     Alert.alert('Button pressed')
   }
@@ -81,19 +73,13 @@ export const ButtonShowcase = () => {
           </Text>
           <ListItem disableMinHeight disablePadding>
             <Button variant="filled" size="icon">
-              <Color color="primary.foreground">
-                <IconSettings />
-              </Color>
+              <IconSettings color="primary.foreground" />
             </Button>
             <Button size="icon" variant="outlined">
-              <Color color="primary.main">
-                <IconSettings />
-              </Color>
+              <IconSettings color="primary.main" />
             </Button>
             <Button size="icon" variant="ghost">
-              <Color color="primary.main">
-                <IconSettings />
-              </Color>
+              <IconSettings color="primary.main" />
             </Button>
           </ListItem>
         </SubSection>
@@ -103,10 +89,10 @@ export const ButtonShowcase = () => {
           </Text>
           <ListItem disableMinHeight disablePadding>
             <Button variant="filled" size="icon">
-              <IconSettings style={styles.icon} />
+              <IconSettings color="primary.foreground" />
             </Button>
             <Button variant="filled" size="icon" shape="rounded">
-              <IconSettings style={styles.icon} />
+              <IconSettings color="primary.foreground" />
             </Button>
           </ListItem>
         </SubSection>
@@ -116,36 +102,24 @@ export const ButtonShowcase = () => {
           </Text>
           <ListItem disableMinHeight disablePadding>
             <Button variant="filled" size="icon-sm">
-              <Color color="primary.foreground">
-                <IconSettings />
-              </Color>
+              <IconSettings color="primary.foreground" />
             </Button>
             <Button variant="filled" size="icon-md">
-              <Color color="primary.foreground">
-                <IconSettings />
-              </Color>
+              <IconSettings color="primary.foreground" />
             </Button>
             <Button variant="filled" size="icon-lg">
-              <Color color="primary.foreground">
-                <IconSettings />
-              </Color>
+              <IconSettings color="primary.foreground" />
             </Button>
           </ListItem>
           <ListItem disableMinHeight disablePadding>
             <Button size="icon-sm" variant="outlined" shape="rounded">
-              <Color color="primary.main">
-                <IconSettings size={18} />
-              </Color>
+              <IconSettings size={18} color="primary.main" />
             </Button>
             <Button size="icon-md" variant="outlined" shape="rounded">
-              <Color color="primary.main">
-                <IconSettings />
-              </Color>
+              <IconSettings color="primary.main" />
             </Button>
             <Button size="icon-lg" variant="outlined" shape="rounded">
-              <Color color="primary.main">
-                <IconSettings size={26} />
-              </Color>
+              <IconSettings size={26} color="primary.main" />
             </Button>
           </ListItem>
         </SubSection>
@@ -163,7 +137,7 @@ export const ButtonShowcase = () => {
           </ListItem>
           <ListItem disableMinHeight disablePadding>
             <Button variant="filled" size="icon">
-              <ActivityIndicator color={styles.icon.color} />
+              <ActivityIndicator color="primary.foreground" />
             </Button>
             <Button size="icon" variant="outlined">
               <ActivityIndicator />

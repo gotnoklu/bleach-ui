@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { Pressable, type PressableProps } from 'react-native'
 import { selectStyles, styled } from '../../theme/styles'
-import { Color } from '../color'
 import { IconCheck } from '../icons'
 
 type CheckboxSizes = 'sm' | 'md' | 'lg'
@@ -78,9 +77,10 @@ function ControlledCheckbox({ variant, checked = false, onChecked, size = 'md', 
       {...props}
     >
       {checked ? (
-        <Color color={variant === 'filled' ? 'primary.foreground' : 'primary.main'}>
-          <IconCheck size={CheckboxSizes[size] * 0.6} />
-        </Color>
+        <IconCheck
+          color={variant === 'filled' ? 'primary.foreground' : 'primary.main'}
+          size={CheckboxSizes[size] * 0.6}
+        />
       ) : null}
     </StyledCheckbox>
   )

@@ -1,11 +1,10 @@
-import { type ReactNode, useCallback, useEffect, useRef, useState } from 'react'
+import { createElement, type ReactNode, useCallback, useEffect, useRef, useState } from 'react'
 import { Animated, Modal, Pressable, ScrollView, View, type ViewProps } from 'react-native'
 import { useTheme } from '../../theme/context'
 import { styled } from '../../theme/styles'
 import type { Palette, TextPaletteColors, Theme } from '../../theme/types'
 import { Box } from '../box'
 import { Button } from '../button'
-import { Color } from '../color'
 import {
   IconCalendar,
   IconCalendarTime,
@@ -114,9 +113,9 @@ const DayLabels = [
 ]
 
 const DateTimePickerViewIcons = {
-  time: <IconClockHour4 size={20} />,
-  date: <IconCalendar size={20} />,
-  datetime: <IconCalendarTime size={20} />,
+  time: IconClockHour4,
+  date: IconCalendar,
+  datetime: IconCalendarTime,
 }
 
 const DateTimePickerViews = {
@@ -543,7 +542,7 @@ export function DateTimePicker({
         onPressIn={handleOpen}
         rightActions={
           <Button size="icon-sm" variant="ghost" onPress={handleOpen} disabled={disabled}>
-            <Color color={disabled ? 'disabled' : 'icon'}>{DateTimePickerViewIcons[type]}</Color>
+            {createElement(DateTimePickerViewIcons[type], { color: disabled ? 'disabled' : 'icon' })}
           </Button>
         }
         disabled={disabled}

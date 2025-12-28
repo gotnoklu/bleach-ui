@@ -1,5 +1,4 @@
 import { Avatar } from '@bleeech/ui/components/avatar'
-import { Color } from '@bleeech/ui/components/color'
 import { IconBell, IconSettings, IconUser } from '@bleeech/ui/components/icons'
 import { ListItem } from '@bleeech/ui/components/list-item'
 import { Text } from '@bleeech/ui/components/text'
@@ -62,19 +61,13 @@ export const AvatarShowcase = () => {
         </Text>
         <ListItem disableMinHeight disablePadding>
           <Avatar>
-            <Color color="icon">
-              <IconUser size={20} />
-            </Color>
+            <IconUser size={20} />
           </Avatar>
           <Avatar>
-            <Color color="icon">
-              <IconSettings size={20} />
-            </Color>
+            <IconSettings size={20} />
           </Avatar>
           <Avatar>
-            <Color color="icon">
-              <IconBell size={20} />
-            </Color>
+            <IconBell size={20} />
           </Avatar>
         </ListItem>
       </SubSection>

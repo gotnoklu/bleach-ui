@@ -2,7 +2,6 @@ import { Avatar } from '@bleeech/ui/components/avatar'
 import { Box } from '@bleeech/ui/components/box'
 import { Button } from '@bleeech/ui/components/button'
 import { Card } from '@bleeech/ui/components/card'
-import { Color } from '@bleeech/ui/components/color'
 import { IconEye, IconUser } from '@bleeech/ui/components/icons'
 import { Input } from '@bleeech/ui/components/input'
 import { Separator } from '@bleeech/ui/components/separator'
@@ -26,9 +25,7 @@ export default function Forms() {
         <Box gap={6} paddingX={2} paddingY={3}>
           <Box gap={2} alignItems="center" style={{ alignSelf: 'center' }}>
             <Avatar size="lg">
-              <Color color="primary.main">
-                <IconUser />
-              </Color>
+              <IconUser color="primary.main" />
             </Avatar>
             <Box>
               <Text variant="lg" fontWeight="medium" textAlign="center" gutterBottom>
@@ -47,9 +44,7 @@ export default function Forms() {
               placeholder="Enter your password"
               rightActions={
                 <Button variant="ghost" size="icon">
-                  <Color color="icon">
-                    <IconEye />
-                  </Color>
+                  <IconEye />
                 </Button>
               }
               secureTextEntry
@@ -71,9 +66,7 @@ export default function Forms() {
         <Box gap={6} paddingX={2} paddingY={3}>
           <Box gap={2} alignItems="center" style={{ alignSelf: 'center' }}>
             <Avatar size="lg">
-              <Color color="primary.main">
-                <IconUser />
-              </Color>
+              <IconUser />
             </Avatar>
             <Box>
               <Text variant="lg" fontWeight="medium" textAlign="center" gutterBottom>
@@ -94,9 +87,7 @@ export default function Forms() {
               placeholder="Enter your password"
               rightActions={
                 <Button variant="ghost" size="icon">
-                  <Color color="icon">
-                    <IconEye />
-                  </Color>
+                  <IconEye />
                 </Button>
               }
               secureTextEntry
@@ -108,9 +99,7 @@ export default function Forms() {
               placeholder="Retype password"
               rightActions={
                 <Button variant="ghost" size="icon">
-                  <Color color="icon">
-                    <IconEye />
-                  </Color>
+                  <IconEye />
                 </Button>
               }
               secureTextEntry

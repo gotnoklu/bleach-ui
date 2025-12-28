@@ -1,5 +1,4 @@
 import { Box } from '@bleeech/ui/components/box'
-import { Color } from '@bleeech/ui/components/color'
 import {
   IconCaretRight,
   IconHome,
@@ -78,9 +77,21 @@ export const TabsShowcase = () => {
               With Icons
             </Text>
             <Tabs value={iconTab} onTabSelect={setIconTab}>
-              <Tab label="Home" value="home" icon={<IconHome size={20} />} />
-              <Tab label="Search" value="search" icon={<IconSearch size={20} />} />
-              <Tab label="Gear" value="settings" icon={<IconSettings size={20} />} />
+              <Tab
+                label="Home"
+                value="home"
+                icon={({ isSelected }) => <IconHome size={20} color={isSelected ? 'primary.main' : 'icon'} />}
+              />
+              <Tab
+                label="Search"
+                value="search"
+                icon={({ isSelected }) => <IconSearch size={20} color={isSelected ? 'primary.main' : 'icon'} />}
+              />
+              <Tab
+                label="Gear"
+                value="settings"
+                icon={({ isSelected }) => <IconSettings size={20} color={isSelected ? 'primary.main' : 'icon'} />}
+              />
             </Tabs>
           </Box>
           <Box>
@@ -118,29 +129,17 @@ export const TabsShowcase = () => {
               <Tab
                 label="Music"
                 value="music"
-                icon={({ isSelected }) => (
-                  <Color color={isSelected ? 'primary.main' : 'icon'}>
-                    <IconCaretRight size={20} />
-                  </Color>
-                )}
+                icon={({ isSelected }) => <IconCaretRight size={20} color={isSelected ? 'primary.main' : 'icon'} />}
               />
               <Tab
                 label="Videos"
                 value="videos"
-                icon={({ isSelected }) => (
-                  <Color color={isSelected ? 'primary.main' : 'icon'}>
-                    <IconVideo size={20} />
-                  </Color>
-                )}
+                icon={({ isSelected }) => <IconVideo size={20} color={isSelected ? 'primary.main' : 'icon'} />}
               />
               <Tab
                 label="Photos"
                 value="photos"
-                icon={({ isSelected }) => (
-                  <Color color={isSelected ? 'primary.main' : 'icon'}>
-                    <IconMountain size={20} />
-                  </Color>
-                )}
+                icon={({ isSelected }) => <IconMountain size={20} color={isSelected ? 'primary.main' : 'icon'} />}
               />
             </Tabs>
           </Box>

@@ -2,7 +2,6 @@ import { Avatar } from '@bleeech/ui/components/avatar'
 import { Badge } from '@bleeech/ui/components/badge'
 import { Box, type BoxProps } from '@bleeech/ui/components/box'
 import { Button } from '@bleeech/ui/components/button'
-import { Color } from '@bleeech/ui/components/color'
 import {
   IconAlertSquareRounded,
   IconBell,
@@ -17,7 +16,7 @@ import {
 } from '@bleeech/ui/components/icons'
 import { ListItem } from '@bleeech/ui/components/list-item'
 import { Text } from '@bleeech/ui/components/text'
-import { createStylesheet, styled } from '@bleeech/ui/theme/styles'
+import { styled } from '@bleeech/ui/theme/styles'
 import { Section, SubSection } from '../../components/section'
 
 const BadgeShowcaseItem = styled(Box)<BoxProps>((theme) => ({
@@ -26,15 +25,7 @@ const BadgeShowcaseItem = styled(Box)<BoxProps>((theme) => ({
   flex: 1,
 }))
 
-const useStyles = createStylesheet((theme) => ({
-  icon: {
-    color: theme.palette.primary.foreground,
-  },
-}))
-
 export const BadgeShowcase = () => {
-  const styles = useStyles()
-
   return (
     <Section>
       <Text variant="xl">Badges</Text>
@@ -45,9 +36,7 @@ export const BadgeShowcase = () => {
         <ListItem disableMinHeight disablePadding>
           <BadgeShowcaseItem>
             <Badge indicator={3} color="primary">
-              <Color color="icon">
-                <IconInbox size={28} />
-              </Color>
+              <IconInbox size={28} />
             </Badge>
             <Text variant="sm" color="text.secondary">
               Unread messages
@@ -55,9 +44,7 @@ export const BadgeShowcase = () => {
           </BadgeShowcaseItem>
           <BadgeShowcaseItem>
             <Badge indicator="NEW" color="success">
-              <Color color="icon">
-                <IconGift size={28} />
-              </Color>
+              <IconGift size={28} />
             </Badge>
             <Text variant="sm" color="text.secondary">
               Special offer
@@ -73,9 +60,7 @@ export const BadgeShowcase = () => {
         <ListItem disableMinHeight disablePadding>
           <BadgeShowcaseItem>
             <Badge indicator={12} color="primary">
-              <Color color="icon">
-                <IconBell size={24} />
-              </Color>
+              <IconBell size={24} />
             </Badge>
             <Text variant="sm" color="text.secondary">
               Notifications
@@ -83,9 +68,7 @@ export const BadgeShowcase = () => {
           </BadgeShowcaseItem>
           <BadgeShowcaseItem>
             <Badge indicator="LIVE" color="error">
-              <Color color="icon">
-                <IconBroadcast size={24} />
-              </Color>
+              <IconBroadcast size={24} />
             </Badge>
             <Text variant="sm" color="text.secondary">
               Streaming
@@ -93,9 +76,7 @@ export const BadgeShowcase = () => {
           </BadgeShowcaseItem>
           <BadgeShowcaseItem>
             <Badge indicator="5" color="warning">
-              <Color color="icon">
-                <IconAlertSquareRounded size={24} />
-              </Color>
+              <IconAlertSquareRounded size={24} />
             </Badge>
             <Text variant="sm" color="text.secondary">
               Alerts
@@ -112,10 +93,7 @@ export const BadgeShowcase = () => {
           <BadgeShowcaseItem>
             <Badge indicator={99} maxValue={99} color="error">
               <Button variant="outlined" size="sm">
-                See Messages{' '}
-                <Color color="primary.main">
-                  <IconMail size={16} />
-                </Color>
+                See Messages <IconMail size={16} color="primary.main" />
               </Button>
             </Badge>
             <Text variant="sm" color="text.secondary">
@@ -125,10 +103,7 @@ export const BadgeShowcase = () => {
           <BadgeShowcaseItem>
             <Badge indicator="1" color="success">
               <Button variant="outlined" size="sm">
-                View Cart{' '}
-                <Color color="primary.main">
-                  <IconShoppingCart size={16} />
-                </Color>
+                View Cart <IconShoppingCart size={16} color="primary.main" />
               </Button>
             </Badge>
             <Text variant="sm" color="text.secondary">
@@ -165,11 +140,7 @@ export const BadgeShowcase = () => {
           </BadgeShowcaseItem>
           <BadgeShowcaseItem>
             <Badge
-              indicator={
-                <Color color="primary.main">
-                  <IconCircleDashedCheck size={16} />
-                </Color>
-              }
+              indicator={<IconCircleDashedCheck size={16} color="primary.main" />}
               position={{ y: 'bottom', x: 'right' }}
               color="transparent"
               style={{ paddingVertical: 0, paddingHorizontal: 0 }}
@@ -194,7 +165,7 @@ export const BadgeShowcase = () => {
           <BadgeShowcaseItem>
             <Badge indicator="1st" color="primary">
               <Avatar size="lg" color="warning.main">
-                <IconStar size={24} color={styles.icon.color} />
+                <IconStar size={24} color="primary.foreground" />
               </Avatar>
             </Badge>
             <Text variant="sm" color="text.secondary">
@@ -203,12 +174,12 @@ export const BadgeShowcase = () => {
           </BadgeShowcaseItem>
           <BadgeShowcaseItem>
             <Badge
-              indicator={<IconStarFilled size={12} color={styles.icon.color} />}
+              indicator={<IconStarFilled size={12} color="primary.foreground" />}
               color="warning"
               position={{ y: 'top', x: 'left' }}
             >
               <Avatar size="lg" color="primary.main">
-                <IconGift size={24} color={styles.icon.color} />
+                <IconGift size={24} color="primary.foreground" />
               </Avatar>
             </Badge>
             <Text variant="sm" color="text.secondary">
