@@ -8,7 +8,7 @@ export default defineConfig({
       format: 'esm',
       source: {
         entry: {
-          index: ['./src/**', '!./src/**/*.{md,json,txt}', '!./src/utilities', '!./src/types'],
+          index: ['./src/**', '!./src/**/*.{md,json,txt}'],
         },
         include: ['package.json', 'tsconfig.json'],
         exclude: ['node_modules'],
@@ -29,7 +29,7 @@ export default defineConfig({
       format: 'cjs',
       source: {
         entry: {
-          index: ['./src/**', '!./src/**/*.{md,json,txt}', '!./src/utilities', '!./src/types'],
+          index: ['./src/**', '!./src/**/*.{md,json,txt}'],
         },
         include: ['package.json', 'tsconfig.json'],
         exclude: ['node_modules'],

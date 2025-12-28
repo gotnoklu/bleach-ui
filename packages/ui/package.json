@@ -1,7 +1,7 @@
 {
   "name": "@bleeech/ui",
   "description": "The stylish UI library for React Native",
-  "version": "0.1.7",
+  "version": "0.2.0",
   "repository": "https://github.com/gotnoklu/bleeech",
   "author": "Enoch Klu <klueenoch@gmail.com>",
   "contributors": [
@@ -159,12 +159,11 @@
     },
     "./theme": {
       "import": "./dist/esm/theme/index.js",
-      "types": "./dist/esm/theme/index.d.ts",
-      "require": "./dist/cjs/theme/index.js"
+      "types": "./dist/esm/theme/index.d.ts"
     },
     "./theme/*": {
       "import": "./dist/esm/theme/*.js",
-      "require": "./dist/cjs/theme/*.js"
+      "types": "./dist/cjs/theme/*.d.ts"
     },
     "./package.json": "./package.json"
   },
