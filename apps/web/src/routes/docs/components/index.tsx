@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
+import Hello from '../../../content/posts/hello.mdx'
 
 export const Route = createFileRoute('/docs/components/')({
   component: ComponentsPage,
@@ -6,5 +7,9 @@ export const Route = createFileRoute('/docs/components/')({
 })
 
 function ComponentsPage() {
-  return <div>Hello "/docs/components/"!</div>
+  return (
+    <div>
+      <Hello />
+    </div>
+  )
 }

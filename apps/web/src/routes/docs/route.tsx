@@ -11,6 +11,8 @@ import {
 } from '../../components/ui/breadcrumb'
 import { Separator } from '../../components/ui/separator'
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '../../components/ui/sidebar'
+import { MDXProvider } from '@mdx-js/react'
+import { AppMdxComponents } from '../../components/mdx-components'
 
 export const Route = createFileRoute('/docs')({
   component: DocsLayoutComponent,
@@ -53,7 +55,9 @@ function DocsLayoutComponent() {
           </Breadcrumb>
         </header>
         <div className="max-w-xl">
-          <Outlet />
+          <MDXProvider components={AppMdxComponents}>
+            <Outlet />
+          </MDXProvider>
         </div>
       </SidebarInset>
     </SidebarProvider>
