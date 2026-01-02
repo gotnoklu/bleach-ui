@@ -12,7 +12,6 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as DocsRouteRouteImport } from './routes/docs/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DocsIndexRouteImport } from './routes/docs/index'
-import { Route as PostsSplatRouteImport } from './routes/posts/$'
 import { Route as DocsGettingStartedIndexRouteImport } from './routes/docs/getting-started/index'
 import { Route as DocsComponentsIndexRouteImport } from './routes/docs/components/index'
 import { Route as DocsBuildingYourAppIndexRouteImport } from './routes/docs/building-your-app/index'
@@ -42,11 +41,6 @@ const DocsIndexRoute = DocsIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => DocsRouteRoute,
-} as any)
-const PostsSplatRoute = PostsSplatRouteImport.update({
-  id: '/posts/$',
-  path: '/posts/$',
-  getParentRoute: () => rootRouteImport,
 } as any)
 const DocsGettingStartedIndexRoute = DocsGettingStartedIndexRouteImport.update({
   id: '/getting-started/',
@@ -126,7 +120,6 @@ const DemoStartSsrDataOnlyRoute = DemoStartSsrDataOnlyRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/docs': typeof DocsRouteRouteWithChildren
-  '/posts/$': typeof PostsSplatRoute
   '/docs/': typeof DocsIndexRoute
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
@@ -145,7 +138,6 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/posts/$': typeof PostsSplatRoute
   '/docs': typeof DocsIndexRoute
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
@@ -166,7 +158,6 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/docs': typeof DocsRouteRouteWithChildren
-  '/posts/$': typeof PostsSplatRoute
   '/docs/': typeof DocsIndexRoute
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
@@ -188,7 +179,6 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/docs'
-    | '/posts/$'
     | '/docs/'
     | '/demo/api/names'
     | '/demo/start/api-request'
@@ -207,7 +197,6 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/posts/$'
     | '/docs'
     | '/demo/api/names'
     | '/demo/start/api-request'
@@ -227,7 +216,6 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/docs'
-    | '/posts/$'
     | '/docs/'
     | '/demo/api/names'
     | '/demo/start/api-request'
@@ -248,7 +236,6 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DocsRouteRoute: typeof DocsRouteRouteWithChildren
-  PostsSplatRoute: typeof PostsSplatRoute
   DemoApiNamesRoute: typeof DemoApiNamesRoute
   DemoStartApiRequestRoute: typeof DemoStartApiRequestRoute
   DemoStartServerFuncsRoute: typeof DemoStartServerFuncsRoute
@@ -280,13 +267,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/docs/'
       preLoaderRoute: typeof DocsIndexRouteImport
       parentRoute: typeof DocsRouteRoute
-    }
-    '/posts/$': {
-      id: '/posts/$'
-      path: '/posts/$'
-      fullPath: '/posts/$'
-      preLoaderRoute: typeof PostsSplatRouteImport
-      parentRoute: typeof rootRouteImport
     }
     '/docs/getting-started/': {
       id: '/docs/getting-started/'
@@ -418,7 +398,6 @@ const DocsRouteRouteWithChildren = DocsRouteRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DocsRouteRoute: DocsRouteRouteWithChildren,
-  PostsSplatRoute: PostsSplatRoute,
   DemoApiNamesRoute: DemoApiNamesRoute,
   DemoStartApiRequestRoute: DemoStartApiRequestRoute,
   DemoStartServerFuncsRoute: DemoStartServerFuncsRoute,
