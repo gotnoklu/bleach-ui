@@ -37,7 +37,7 @@ import { Text } from '@bleeech/ui/components/text';
 
 export const Example = () => (
   <View>
-    <Avatar variant="circular" source={{ uri: 'https://test.com/image.png' }} />
+    <Avatar shape="circular" source={{ uri: 'https://test.com/image.png' }} />
     <Text variant="lg" color="text.secondary">Here is some text!</Text>
     <Button variant="outlined">Button here</Button>
   </View>

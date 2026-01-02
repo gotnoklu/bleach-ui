@@ -5,7 +5,7 @@ import viteReact from '@vitejs/plugin-react'
 import viteTsConfigPaths from 'vite-tsconfig-paths'
 import tailwindcss from '@tailwindcss/vite'
 import { nitro } from 'nitro/vite'
-import contentCollections from '@content-collections/vite'
+import remarkGfm from 'remark-gfm'
 import mdx from '@mdx-js/rollup'
 
 const config = defineConfig({
@@ -23,6 +23,7 @@ const config = defineConfig({
       enforce: 'pre',
       ...mdx({
         providerImportSource: '@mdx-js/react',
+        remarkPlugins: [[remarkGfm, { strict: true }]],
       }),
     },
     viteReact(),

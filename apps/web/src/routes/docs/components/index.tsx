@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import Hello from '../../../content/posts/hello.mdx'
+import ComponentsHome from '../../../content/docs/components/home.mdx'
 
 export const Route = createFileRoute('/docs/components/')({
   component: ComponentsPage,
@@ -9,7 +9,7 @@ export const Route = createFileRoute('/docs/components/')({
 function ComponentsPage() {
   return (
     <div>
-      <Hello />
+      <ComponentsHome />
     </div>
   )
 }

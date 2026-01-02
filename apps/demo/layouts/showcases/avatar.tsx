@@ -2,18 +2,9 @@ import { Avatar } from '@bleeech/ui/components/avatar'
 import { IconBell, IconSettings, IconUser } from '@bleeech/ui/components/icons'
 import { ListItem } from '@bleeech/ui/components/list-item'
 import { Text } from '@bleeech/ui/components/text'
-import { createStylesheet } from '@bleeech/ui/theme/styles'
 import { Section, SubSection } from '../../components/section'
 
-const useStyles = createStylesheet((theme) => ({
-  icon: {
-    color: theme.palette.icon,
-  },
-}))
-
 export const AvatarShowcase = () => {
-  const _styles = useStyles()
-
   return (
     <Section>
       <Text variant="xl">Avatars</Text>
@@ -25,7 +16,7 @@ export const AvatarShowcase = () => {
           <Avatar color="primary">
             <Text color="primary.foreground">J</Text>
           </Avatar>
-          <Avatar variant="circular" color="primary">
+          <Avatar shape="circular" color="primary">
             <Text color="primary.foreground">R</Text>
           </Avatar>
         </ListItem>
@@ -52,7 +43,7 @@ export const AvatarShowcase = () => {
         </Text>
         <ListItem disableMinHeight disablePadding>
           <Avatar source={{ uri: 'https://i.pravatar.cc/300?img=1' }} alt="User 1" />
-          <Avatar variant="circular" source={{ uri: 'https://i.pravatar.cc/300?img=2' }} alt="User 2" />
+          <Avatar shape="circular" source={{ uri: 'https://i.pravatar.cc/300?img=2' }} alt="User 2" />
         </ListItem>
       </SubSection>
       <SubSection>

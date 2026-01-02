@@ -1,0 +1,444 @@
+import { IconFileTypeTsx, IconFileTypeJsx, IconBubble } from '@tabler/icons-react'
+
+
+export const BasicCodes = [
+  {
+    id: 'tsx',
+    icon: <IconFileTypeTsx />,
+    label: 'Typescript',
+    language: 'tsx',
+    filename: 'basic-avatar.tsx',
+    code: `import { Avatar, type AvatarProps } from '@bleeech/ui/components/avatar'
+import { Text } from '@bleeech/ui/components/text'
+
+export interface BasicAvatarProps extends AvatarProps {}
+
+export const BasicAvatar = (props: AvatarProps) => {
+  return (
+    <Avatar color="primary" {...props}>
+      <Text color="primary.foreground">J</Text>
+    </Avatar>
+  )
+}
+`,
+  },
+  {
+    id: 'jsx',
+    icon: <IconFileTypeJsx />,
+    label: 'JavaScript',
+    language: 'jsx',
+    filename: 'basic-avatar.jsx',
+    code: `import { Avatar } from '@bleeech/ui/components/avatar'
+import { Text } from '@bleeech/ui/components/text'
+
+export const BasicAvatar = (props) => {
+  return (
+    <Avatar color="primary" {...props}>
+      <Text color="primary.foreground">J</Text>
+    </Avatar>
+  )
+}
+`,
+  },
+]
+
+export const VariantCodes = [
+  {
+    id: 'tsx',
+    icon: <IconFileTypeTsx />,
+    label: 'Typescript',
+    language: 'tsx',
+    filename: 'avatar-variants.tsx',
+    code: `import { Avatar } from '@bleeech/ui/components/avatar'
+import { Text } from '@bleeech/ui/components/text'
+
+export const AvatarVariants = () => {
+  return (
+    <>
+      <Avatar color="primary">
+        <Text color="primary.foreground">J</Text>
+      </Avatar>
+      <Avatar shape="circular" color="primary">
+        <Text color="primary.foreground">R</Text>
+      </Avatar>
+    </>
+  )
+}
+`,
+  },
+  {
+    id: 'jsx',
+    icon: <IconFileTypeJsx />,
+    label: 'JavaScript',
+    language: 'jsx',
+    filename: 'avatar-variants.jsx',
+    code: `import { Avatar } from '@bleeech/ui/components/avatar'
+import { Text } from '@bleeech/ui/components/text'
+
+export const AvatarVariants = () => {
+  return (
+    <>
+      <Avatar color="primary">
+        <Text color="primary.foreground">J</Text>
+      </Avatar>
+      <Avatar shape="circular" color="primary">
+        <Text color="primary.foreground">R</Text>
+      </Avatar>
+    </>
+  )
+}
+`,
+  },
+]
+
+export const SizeCodes = [
+  {
+    id: 'tsx',
+    icon: <IconFileTypeTsx />,
+    label: 'Typescript',
+    language: 'tsx',
+    filename: 'avatar-sizes.tsx',
+    code: `import { Avatar } from '@bleeech/ui/components/avatar'
+import { Text } from '@bleeech/ui/components/text'
+
+export const AvatarSizes = () => {
+  return (
+    <>
+      <Avatar size="sm">
+        <Text fontWeight="medium">S</Text>
+      </Avatar>
+      <Avatar size="md">
+        <Text fontWeight="medium">M</Text>
+      </Avatar>
+      <Avatar size="lg">
+        <Text fontWeight="medium">L</Text>
+      </Avatar>
+    </>
+  )
+}
+`,
+  },
+  {
+    id: 'jsx',
+    icon: <IconFileTypeJsx />,
+    label: 'JavaScript',
+    language: 'jsx',
+    filename: 'avatar-sizes.jsx',
+    code: `import { Avatar } from '@bleeech/ui/components/avatar'
+import { Text } from '@bleeech/ui/components/text'
+
+export const AvatarSizes = () => {
+  return (
+    <>
+      <Avatar size="sm">
+        <Text fontWeight="medium">S</Text>
+      </Avatar>
+      <Avatar size="md">
+        <Text fontWeight="medium">M</Text>
+      </Avatar>
+      <Avatar size="lg">
+        <Text fontWeight="medium">L</Text>
+      </Avatar>
+    </>
+  )
+}
+`,
+  },
+]
+
+export const ImageCodes = [
+  {
+    id: 'tsx',
+    icon: <IconFileTypeTsx />,
+    label: 'Typescript',
+    language: 'tsx',
+    filename: 'avatar-image.tsx',
+    code: `import { Avatar } from '@bleeech/ui/components/avatar'
+
+export const AvatarImage = () => {
+  return (
+    <Avatar 
+      source={{ uri: 'https://i.pravatar.cc/300?img=1' }} 
+      alt="User 1" 
+    />
+  )
+}
+`,
+  },
+  {
+    id: 'jsx',
+    icon: <IconFileTypeJsx />,
+    label: 'JavaScript',
+    language: 'jsx',
+    filename: 'avatar-image.jsx',
+    code: `import { Avatar } from '@bleeech/ui/components/avatar'
+
+export const AvatarImage = () => {
+  return (
+    <Avatar 
+      source={{ uri: 'https://i.pravatar.cc/300?img=1' }} 
+      alt="User 1" 
+    />
+  )
+}
+`,
+  },
+]
+
+export const IconCodes = [
+  {
+    id: 'tsx',
+    icon: <IconFileTypeTsx />,
+    label: 'Typescript',
+    language: 'tsx',
+    filename: 'avatar-icon.tsx',
+    code: `import { Avatar } from '@bleeech/ui/components/avatar'
+import { IconUser, IconSettings, IconBell } from '@bleeech/ui/components/icons'
+
+export const AvatarIcon = () => {
+  return (
+    <>
+      <Avatar>
+        <IconUser size={20} />
+      </Avatar>
+      <Avatar>
+        <IconSettings size={20} />
+      </Avatar>
+      <Avatar>
+        <IconBell size={20} />
+      </Avatar>
+    </>
+  )
+}
+`,
+  },
+  {
+    id: 'jsx',
+    icon: <IconFileTypeJsx />,
+    label: 'JavaScript',
+    language: 'jsx',
+    filename: 'avatar-icon.jsx',
+    code: `import { Avatar } from '@bleeech/ui/components/avatar'
+import { IconUser, IconSettings, IconBell } from '@bleeech/ui/components/icons'
+
+export const AvatarIcon = () => {
+  return (
+    <>
+      <Avatar>
+        <IconUser size={20} />
+      </Avatar>
+      <Avatar>
+        <IconSettings size={20} />
+      </Avatar>
+      <Avatar>
+        <IconBell size={20} />
+      </Avatar>
+    </>
+  )
+}
+`,
+  },
+]
+
+# Avatar
+
+The Avatar component displays user profile pictures, initials, or icons in a consistent, styled container. It supports multiple variants, sizes, and can display images, text, or custom content.
+
+## Props
+
+<Alert>
+  <IconBubble />
+  <AlertTitle>Spread Props</AlertTitle>
+  <AlertDescription>The root view for the Avatar component is a View and supports its props.</AlertDescription>
+</Alert>
+
+<Accordion type="multiple" collapsible className="w-full">
+  <AccordionItem value="variant">
+    <AccordionTrigger>variant</AccordionTrigger>
+    <AccordionContent>
+      <div className="space-y-2 flex flex-col gap-3">
+        <p>The variant of the avatar.</p>
+        <div>
+          <h6 className='text-xs mb-2 text-muted-foreground'>Type</h6>
+          <code className='text-blue-500 border-blue-500'>`enum`</code>
+        </div>
+        <div>
+          <h6 className='text-xs mb-2 text-muted-foreground'>Values</h6>
+          <div className='flex items-center gap-2'>
+            <code>`'filled'`</code>
+            <code>`'outlined'`</code>
+          </div>
+        </div>
+        <div>
+          <h6 className='text-xs mb-2 text-muted-foreground'>Default</h6>
+          <code>`'filled'`</code>
+        </div>
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="shape">
+    <AccordionTrigger>shape</AccordionTrigger>
+    <AccordionContent>
+      <div className="space-y-2 flex flex-col gap-3">
+        <p>Shape variant of the avatar. <code>default</code> creates a rounded square, <code>circular</code> creates a fully rounded circle.</p>
+        <div>
+          <h6 className='text-xs mb-2 text-muted-foreground'>Type</h6>
+          <code className='text-blue-500 border-blue-500'>`enum`</code>
+        </div>
+        <div>
+          <h6 className='text-xs mb-2 text-muted-foreground'>Values</h6>
+          <div className='flex items-center gap-2'>
+            <code>`'default'`</code>
+            <code>`'rounded'`</code>
+            <code>`'circular'`</code>
+          </div>
+        </div>
+        <div>
+          <h6 className='text-xs mb-2 text-muted-foreground'>Default</h6>
+          <code>`'default'`</code>
+        </div>
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="size">
+    <AccordionTrigger>size</AccordionTrigger>
+    <AccordionContent>
+      <div className="space-y-2 flex flex-col gap-3">
+        <p>Size of the avatar. <code>sm</code> is 32px, <code>md</code> is 40px, and <code>lg</code> is 48px.</p>
+        <div>
+          <h6 className='text-xs mb-2 text-muted-foreground'>Type</h6>
+          <code className='text-blue-500 border-blue-500'>`enum`</code>
+        </div>
+        <div>
+          <h6 className='text-xs mb-2 text-muted-foreground'>Values</h6>
+          <div className='flex items-center gap-2'>
+            <code>`'sm'`</code>
+            <code>`'md'`</code>
+            <code>`'lg'`</code>
+          </div>
+        </div>
+        <div>
+          <h6 className='text-xs mb-2 text-muted-foreground'>Default</h6>
+          <code>`'md'`</code>
+        </div>
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="color">
+    <AccordionTrigger>color</AccordionTrigger>
+    <AccordionContent>
+      <div className="space-y-2 flex flex-col gap-3">
+        <p>Background color of the avatar. Can be a theme palette color token or any valid color string.</p>
+        <div>
+          <h6 className='text-xs mb-2 text-muted-foreground'>Type</h6>
+          <code className='text-blue-500 border-blue-500'>`PaletteColorToken | string`</code>
+        </div>
+        <div>
+          <h6 className='text-xs mb-2 text-muted-foreground'>Default</h6>
+          <code>`'avatar'`</code>
+        </div>
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="source">
+    <AccordionTrigger>source</AccordionTrigger>
+    <AccordionContent>
+      <div className="space-y-2 flex flex-col gap-3">
+        <p>Image source to display in the avatar. When provided, the image will be displayed instead of children.</p>
+        <div>
+          <h6 className='text-xs mb-2 text-muted-foreground'>Type</h6>
+          <code className='text-blue-500 border-blue-500'>`ImageProps['source']`</code>
+        </div>
+        <div>
+          <h6 className='text-xs mb-2 text-muted-foreground'>Default</h6>
+          <code>`undefined`</code>
+        </div>
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="alt">
+    <AccordionTrigger>alt</AccordionTrigger>
+    <AccordionContent>
+      <div className="space-y-2 flex flex-col gap-3">
+        <p>Alternative text for the avatar image, used for accessibility.</p>
+        <div>
+          <h6 className='text-xs mb-2 text-muted-foreground'>Type</h6>
+          <code className='text-blue-500 border-blue-500'>`string`</code>
+        </div>
+        <div>
+          <h6 className='text-xs mb-2 text-muted-foreground'>Default</h6>
+          <code>`undefined`</code>
+        </div>
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="children">
+    <AccordionTrigger>children</AccordionTrigger>
+    <AccordionContent>
+      <div className="space-y-2 flex flex-col gap-3">
+        <p>Content to display inside the avatar when no image source is provided. Typically text, icons, or other React components.</p>
+        <div>
+          <h6 className='text-xs mb-2 text-muted-foreground'>Type</h6>
+          <code className='text-blue-500 border-blue-500'>`ReactNode`</code>
+        </div>
+        <div>
+          <h6 className='text-xs mb-2 text-muted-foreground'>Default</h6>
+          <code>`undefined`</code>
+        </div>
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="viewProps">
+    <AccordionTrigger>viewProps</AccordionTrigger>
+    <AccordionContent>
+      <div className="space-y-2 flex flex-col gap-3">
+        <p>Additional props to pass to the underlying Image or Text components.</p>
+        <div>
+          <h6 className='text-xs mb-2 text-muted-foreground'>Type</h6>
+          <code className='text-blue-500 border-blue-500'>{`{ image?: Omit<ImageProps, 'source'>, text?: TextProps }`}</code>
+        </div>
+        <div>
+          <h6 className='text-xs mb-2 text-muted-foreground'>Default</h6>
+          <code>`undefined`</code>
+        </div>
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+
+## Basic Usage
+
+The simplest avatar displays text content with a colored background.
+
+<CodeExample codes={BasicCodes} />
+
+## Variants
+
+Avatars support two shape variants: `default` (rounded square) and `circular` (fully rounded).
+
+<CodeExample codes={VariantCodes} />
+
+## Sizes
+
+Avatars come in three predefined sizes: `sm` (32px), `md` (40px), and `lg` (48px).
+
+<CodeExample codes={SizeCodes} />
+
+## Images
+
+Display user profile images by providing a `source` prop. The image will automatically fill the avatar container.
+
+<CodeExample codes={ImageCodes} />
+
+## Icons
+
+You can display icons or any custom React content as children of the Avatar component.
+
+<CodeExample codes={IconCodes} />
